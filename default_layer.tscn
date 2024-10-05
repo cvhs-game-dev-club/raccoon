@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=4 uid="uid://d2yx02pa10h2q"]
+[gd_scene load_steps=32 format=4 uid="uid://d2yx02pa10h2q"]
 
 [ext_resource type="Script" path="res://layer_holder.gd" id="1_uq2q8"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_uq5ct"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://7oops4rxxo2m" path="res://assets/2 Background/Night/3.png" id="14_iaj74"]
 [ext_resource type="PackedScene" uid="uid://csb63om7vsbqs" path="res://vent.tscn" id="15_xdqhx"]
 [ext_resource type="PackedScene" uid="uid://d2lhju3wftjy7" path="res://character.tscn" id="16_qhb2f"]
+[ext_resource type="PackedScene" uid="uid://cqpf0s0mg0u1c" path="res://characters/sneaky.tscn" id="17_vsstb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rdh73"]
 texture = ExtResource("2_uq5ct")
@@ -1138,6 +1139,5 @@ index = 1
 position = Vector2(-46, -170)
 index = 2
 
-[node name="Character3" parent="." instance=ExtResource("16_qhb2f")]
-position = Vector2(-111, -50)
-index = 3
+[node name="Sneaky" parent="." instance=ExtResource("17_vsstb")]
+position = Vector2(-55, -82)
