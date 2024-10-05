@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://d2yx02pa10h2q"]
+[gd_scene load_steps=31 format=4 uid="uid://d2yx02pa10h2q"]
 
 [ext_resource type="Script" path="res://layer_holder.gd" id="1_uq2q8"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_uq5ct"]
@@ -14,9 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://0fiu2wvylpfr" path="res://assets/2 Background/Night/1.png" id="12_rl7o7"]
 [ext_resource type="Texture2D" uid="uid://38i821653kep" path="res://assets/2 Background/Night/2.png" id="13_uv1h7"]
 [ext_resource type="Texture2D" uid="uid://7oops4rxxo2m" path="res://assets/2 Background/Night/3.png" id="14_iaj74"]
-[ext_resource type="Texture2D" uid="uid://cl1cbl0yx8o3m" path="res://assets/Base Character - Free/idle.png" id="15_r6m2v"]
 [ext_resource type="PackedScene" uid="uid://csb63om7vsbqs" path="res://vent.tscn" id="15_xdqhx"]
-[ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="17_3j4n0"]
+[ext_resource type="PackedScene" uid="uid://d2lhju3wftjy7" path="res://character.tscn" id="16_qhb2f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rdh73"]
 texture = ExtResource("2_uq5ct")
@@ -1102,319 +1101,43 @@ sources/11 = SubResource("TileSetAtlasSource_b5d4t")
 sources/14 = SubResource("TileSetAtlasSource_1bnhi")
 sources/15 = SubResource("TileSetAtlasSource_ytku5")
 
-[sub_resource type="GDScript" id="GDScript_i76s4"]
-script/source = "extends CharacterBody2D
-
-
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-@onready var vent: Area2D = $\"../Node2D/TileMapLayer3/vent\"
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-
-
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	if (Global.current == 1):
-		animation_player.play(\"select\")
-		$select.visible = true
-		
-
-
-		# Handle jump.
-		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-			
-
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
-		if direction:
-			velocity.x = direction * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-		if Input.is_action_just_pressed(\"ui_down\") and vent.has_overlapping_bodies():
-			print(\"hello\")
-			$CollisionShape2D.disabled = true
-	else:
-		animation_player.play(\"idle_right\")
-		$select.visible = false
-
-	move_and_slide()
-"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hu8i7"]
-size = Vector2(11, 15)
-
-[sub_resource type="Animation" id="Animation_hh8sg"]
-resource_name = "select"
-length = 2.25
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("select:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.633333, 1.26667, 1.86667),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [1, 2, 3, 4]
-}
-
-[sub_resource type="Animation" id="Animation_ajnrl"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("select:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [7]
-}
-
-[sub_resource type="Animation" id="Animation_ra4mm"]
-resource_name = "idle"
-length = 1.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("idle:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [5, 6]
-}
-
-[sub_resource type="Animation" id="Animation_e7qh0"]
-resource_name = "idle"
-length = 1.5
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("idle:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.7),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [1, 2]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_vsrh1"]
-_data = {
-"RESET": SubResource("Animation_ajnrl"),
-"idle_left": SubResource("Animation_ra4mm"),
-"idle_right": SubResource("Animation_e7qh0"),
-"select": SubResource("Animation_hh8sg")
-}
-
-[sub_resource type="GDScript" id="GDScript_swite"]
-script/source = "extends CharacterBody2D
-
-
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-@onready var vent: Area2D = $\"../Node2D/TileMapLayer3/vent\"
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-
-
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	if (Global.current == 2):
-		animation_player.play(\"select\")
-		$select.visible = true
-
-
-		# Handle jump.
-		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-			
-
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
-		if direction:
-			velocity.x = direction * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-		if Input.is_action_just_pressed(\"ui_down\") and vent.has_overlapping_bodies():
-			print(\"hello\")
-			$CollisionShape2D.disabled = true
-	else:
-		animation_player.play(\"idle_right\")
-		$select.visible = false
-
-	move_and_slide()
-"
-
-[sub_resource type="GDScript" id="GDScript_x2wob"]
-script/source = "extends CharacterBody2D
-
-
-const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
-@onready var vent: Area2D = $\"../Node2D/TileMapLayer3/vent\"
-@onready var animation_player: AnimationPlayer = $AnimationPlayer
-
-
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	if (Global.current == 3):
-		animation_player.play(\"select\")
-		$select.visible = true
-
-
-		# Handle jump.
-		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-			
-
-		# Get the input direction and handle the movement/deceleration.
-		# As good practice, you should replace UI actions with custom gameplay actions.
-		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
-		if direction:
-			velocity.x = direction * SPEED
-		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-		if Input.is_action_just_pressed(\"ui_down\") and vent.has_overlapping_bodies():
-			print(\"hello\")
-			$CollisionShape2D.disabled = true
-	else:
-		animation_player.play(\"idle_right\")
-		$select.visible = false
-
-	move_and_slide()
-"
-
 [node name="layer_holder" type="Node2D"]
 script = ExtResource("1_uq2q8")
 
 [node name="Node2D" type="Node2D" parent="."]
 
-[node name="TileMapLayer2" type="TileMapLayer" parent="Node2D"]
+[node name="Sky" type="TileMapLayer" parent="Node2D"]
 tile_map_data = PackedByteArray("AAD5////BwAAAAgAAAD6////BwABAAgAAAD7////BwACAAgAAAD8////BwADAAgAAAD9////BwAEAAgAAAD+////BwAFAAgAAAD/////BwAGAAgAAAAAAP7/BwAHAAcAAAAAAP//BwAHAAgAAAABAP3/BwAIAAYAAAABAP7/BwAIAAcAAAACAPz/BwAJAAUAAAACAP3/BwAJAAYAAAD5/wAABwAAAAkAAAD6/wAABwABAAkAAAD7/wAABwACAAkAAAD8/wAABwADAAkAAAD9/wAABwAEAAkAAAD+/wAAAQAEAAcAAAD//wAABwAGAAkAAAAAAAAABwAHAAkAAAABAAAABwAIAAkAAAACAAAABwAJAAkAAAADAAAABwAKAAkAAAABAP//BwAIAAgAAAACAP//BwAJAAgAAAADAP//BwAKAAgAAAADAP7/BwAKAAcAAAACAP7/BwAJAAcAAAADAP3/BwAKAAYAAAADAPz/BwAKAAUAAAAEAPz/BwALAAUAAAAFAPz/BwAMAAUAAAAGAPz/BwANAAUAAAAHAPz/BwAOAAUAAAAEAP3/BwALAAYAAAAEAP7/BwALAAcAAAAEAP//BwALAAgAAAAFAP//BwAMAAgAAAAGAP//BwANAAgAAAAHAP//BwAOAAgAAAAHAP7/BwAOAAcAAAAHAP3/BwAOAAYAAAAGAP3/BwANAAYAAAAFAP3/BwAMAAYAAAAFAP7/BwAMAAcAAAAGAP7/BwANAAcAAAAEAAAABwALAAkAAAAFAAAABwAMAAkAAAAGAAAABwANAAkAAAAHAAAABwAOAAkAAAAIAPz/BwAPAAUAAAAIAP3/BwAPAAYAAAAJAPz/BwAQAAUAAAAJAP3/BwAQAAYAAAAKAPz/BwARAAUAAAAKAP3/BwARAAYAAAAKAAAABwARAAkAAAAIAAAABwAPAAkAAAAJAAAABwAQAAkAAAAIAP7/BwAPAAcAAAAIAP//BwAPAAgAAAAJAP//BwAQAAgAAAAKAP//BwARAAgAAAAKAP7/BwARAAcAAAAJAP7/BwAQAAcAAAD5//v/BwAAAAQAAAD5//z/BwAAAAUAAAD5//3/BwAAAAYAAAD5//7/BwAAAAcAAAD6//v/BwABAAQAAAD6//z/BwABAAUAAAD6//3/BwABAAYAAAD6//7/BwABAAcAAAD7//v/BwACAAQAAAD7//z/BwACAAUAAAD7//3/BwACAAYAAAD7//7/BwACAAcAAAD8//v/BwADAAQAAAD8//z/BwADAAUAAAD8//3/BwADAAYAAAD8//7/BwADAAcAAAD9//v/BwAEAAQAAAD9//z/BwAEAAUAAAD9//3/BwAEAAYAAAD9//7/BwAEAAcAAAD+//v/BwAFAAQAAAD+//z/BwAFAAUAAAD+//3/BwAFAAYAAAD+//7/BwAFAAcAAAD///v/BwAGAAQAAAD///z/BwAGAAUAAAD///3/BwAGAAYAAAD///7/BwAGAAcAAAAAAPv/BwAHAAQAAAAAAPz/BwAHAAUAAAAAAP3/BwAHAAYAAAABAPv/BwAIAAQAAAABAPz/BwAIAAUAAAACAPv/BwAJAAQAAAADAPv/BwAKAAQAAAAEAPv/BwALAAQAAAAFAPv/BwAMAAQAAAAGAPv/BwANAAQAAAAHAPv/BwAOAAQAAAAIAPv/BwAPAAQAAAAJAPv/BwAQAAQAAAAKAPv/BwARAAQAAAD5//f/BwAAAAAAAAD5//j/BwAAAAEAAAD5//n/BwAAAAIAAAD5//r/BwAAAAMAAAD6//f/BwABAAAAAAD6//j/BwABAAEAAAD6//n/BwABAAIAAAD6//r/BwABAAMAAAD7//f/BwACAAAAAAD7//j/BwACAAEAAAD7//n/BwACAAIAAAD7//r/BwACAAMAAAD8//f/BwADAAAAAAD8//j/BwADAAEAAAD8//n/BwADAAIAAAD8//r/BwADAAMAAAD9//f/BwAEAAAAAAD9//j/BwAEAAEAAAD9//n/BwAEAAIAAAD9//r/BwAEAAMAAAD+//f/BwAFAAAAAAD+//j/BwAFAAEAAAD+//n/BwAFAAIAAAD+//r/BwAFAAMAAAD///f/BwAGAAAAAAD///j/BwAGAAEAAAD///n/BwAGAAIAAAD///r/BwAGAAMAAAAAAPf/BwAHAAAAAAAAAPj/BwAHAAEAAAAAAPn/BwAHAAIAAAAAAPr/BwAHAAMAAAABAPf/BwAIAAAAAAABAPj/BwAIAAEAAAABAPn/BwAIAAIAAAABAPr/BwAIAAMAAAACAPf/BwAJAAAAAAACAPj/BwAJAAEAAAACAPn/BwAJAAIAAAACAPr/BwAJAAMAAAADAPf/BwAKAAAAAAADAPj/BwAKAAEAAAADAPn/BwAKAAIAAAADAPr/BwAKAAMAAAAEAPf/BwALAAAAAAAEAPj/BwALAAEAAAAEAPn/BwALAAIAAAAEAPr/BwALAAMAAAAFAPf/BwAMAAAAAAAFAPj/BwAMAAEAAAAFAPn/BwAMAAIAAAAFAPr/BwAMAAMAAAAGAPf/BwANAAAAAAAGAPj/BwANAAEAAAAGAPn/BwANAAIAAAAGAPr/BwANAAMAAAAHAPf/BwAOAAAAAAAHAPj/BwAOAAEAAAAHAPn/BwAOAAIAAAAHAPr/BwAOAAMAAAAIAPf/BwAPAAAAAAAIAPj/BwAPAAEAAAAIAPn/BwAPAAIAAAAIAPr/BwAPAAMAAAAJAPf/BwAQAAAAAAAJAPj/BwAQAAEAAAAJAPn/BwAQAAIAAAAJAPr/BwAQAAMAAAAKAPf/BwARAAAAAAAKAPj/BwARAAEAAAAKAPn/BwARAAIAAAAKAPr/BwARAAMAAAD5/wEAAQAAAAYAAAD6/wEAAQAEAAcAAAD7/wIAAQAEAAcAAAD8/wIAAQAEAAYAAAD8/wMAAQAGAAYAAAD9/wMAAQAGAAYAAAD+/wMAAQAFAAcAAAD+/wQAAQAFAAcAAAD//wQAAQAAAAYAAAAAAAQAAQADAAYAAAAAAAMAAQAHAAYAAAD5/wIAAQAEAAcAAAD5/wMAAQAEAAcAAAD5/wQAAQAGAAYAAAD6/wQAAQAGAAYAAAD7/wEAAQAEAAcAAAD7/wMAAQAGAAYAAAD8/wEAAQAEAAcAAAD9/wEAAQAGAAYAAAD9/wIAAQAGAAYAAAD9/wQAAQAAAAYAAAD+/wEAAQAAAAYAAAD+/wIAAQAEAAcAAAD//wEAAQAGAAYAAAD//wIAAQAGAAYAAAD//wMAAQADAAYAAAAAAAEAAQACAAYAAAAAAAIAAQAAAAYAAAABAAEAAQADAAYAAAABAAIAAQADAAYAAAABAAMAAQAGAAcAAAABAAQAAQADAAcAAAACAAEAAQACAAYAAAACAAIAAQAAAAYAAAADAAEAAQAAAAYAAAADAAIAAQAAAAYAAAADAAMAAQABAAYAAAADAAQAAQAAAAcAAAAEAAEAAQAHAAcAAAAEAAIAAQACAAcAAAAEAAMAAQAEAAYAAAAEAAQAAQABAAcAAAAFAAEAAQAAAAYAAAAFAAIAAQAEAAcAAAAFAAMAAQAHAAcAAAAFAAQAAQAAAAYAAAAGAAEAAQAHAAcAAAAGAAIAAQAGAAYAAAAGAAMAAQAGAAYAAAAGAAQAAQAGAAYAAAAHAAEAAQAAAAYAAAAHAAIAAQAAAAYAAAAHAAMAAQAHAAYAAAAHAAQAAQAGAAYAAAAIAAEAAQAGAAYAAAAIAAIAAQAFAAcAAAAIAAMAAQAGAAYAAAAIAAQAAQAAAAYAAAAJAAEAAQAGAAYAAAAJAAIAAQAGAAYAAAAJAAMAAQAHAAYAAAAJAAQAAQAEAAcAAAAKAAEAAQAAAAYAAAAKAAIAAQAGAAYAAAAKAAMAAQAFAAcAAAAKAAQAAQAGAAYAAAD6/wIAAQAAAAYAAAD6/wMAAQAAAAYAAAD7/wQAAQABAAYAAAD8/wQAAQAGAAYAAAACAAQAAQACAAcAAAACAAMAAQACAAcAAAA=")
 tile_set = SubResource("TileSet_rsg85")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="Node2D"]
-tile_map_data = PackedByteArray("AAD5////AQAAAAAAAAD6////AQABAAAAAAD7////AQABAAAAAAD8////AQABAAAAAAD9////AQABAAAAAAD+////AQABAAAAAAD/////AQABAAAAAAAAAP7/AQAAAAAAAAAAAP//AQABAAEAAAABAP3/AQAAAAAAAAABAP7/AQABAAEAAAACAPz/AQABAAAAAAACAP3/AQABAAEAAAD5/wAAAQAAAAIAAAD6/wAAAQABAAIAAAD7/wAAAQABAAIAAAD8/wAAAQABAAIAAAD9/wAAAQABAAIAAAD//wAAAQABAAIAAAAAAAAAAQABAAIAAAABAAAAAQABAAIAAAACAAAAAQABAAIAAAADAAAAAQABAAIAAAABAP//AQABAAEAAAACAP//AQABAAEAAAADAP//AQABAAEAAAADAP7/AQABAAEAAAACAP7/AQABAAEAAAADAP3/AQABAAEAAAADAPz/AQABAAAAAAAEAPz/AQABAAAAAAAFAPz/AQABAAAAAAAGAPz/AQABAAAAAAAHAPz/AQABAAAAAAAEAP3/AQABAAEAAAAEAP7/AQABAAEAAAAEAP//AQABAAEAAAAFAP//AQABAAEAAAAGAP//AQABAAEAAAAHAP//AQABAAEAAAAHAP7/AQABAAEAAAAHAP3/AQABAAEAAAAGAP3/AQABAAEAAAAFAP3/AQABAAEAAAAFAP7/AQABAAEAAAAGAP7/AQABAAEAAAAEAAAAAQABAAIAAAAFAAAAAQABAAIAAAAGAAAAAQABAAIAAAAHAAAAAQABAAIAAAAIAPz/AQABAAAAAAAIAP3/AQABAAEAAAAJAPz/AQABAAAAAAAJAP3/AQABAAEAAAAKAPz/AQABAAAAAAAKAP3/AQABAAEAAAAKAAAAAQABAAIAAAAIAAAAAQABAAIAAAAJAAAAAQABAAIAAAAIAP7/AQABAAEAAAAIAP//AQABAAEAAAAJAP//AQABAAEAAAAKAP//AQABAAEAAAAKAP7/AQABAAEAAAAJAP7/AQABAAEAAAD5/wUAAQABAAAAAAD6/wUAAQABAAAAAAD7/wUAAQABAAAAAAD8/wUAAQABAAAAAAD9/wUAAQABAAAAAAD+/wUAAQABAAAAAAD//wUAAQABAAAAAAAAAAUAAQABAAAAAAABAAUAAQABAAAAAAACAAUAAQABAAAAAAADAAUAAQABAAAAAAAEAAUAAQABAAAAAAAFAAUAAQABAAAAAAAGAAUAAQABAAAAAAAHAAUAAQABAAAAAAAIAAUAAQABAAAAAAAJAAUAAQABAAAAAAAKAAUAAQABAAAAAAALAPz/AQABAAAAAAAMAPz/AQABAAAAAAANAPz/AQABAAAAAAAOAPz/AQABAAAAAAAPAPz/AQABAAAAAAAQAPz/AQACAAAAAAALAP3/AQABAAEAAAALAP7/AQABAAEAAAALAP//AQABAAEAAAAMAP//AQABAAEAAAANAP//AQABAAEAAAAOAP//AQABAAEAAAAPAP//AQABAAEAAAAPAP7/AQABAAEAAAAPAP3/AQABAAEAAAAOAP3/AQABAAEAAAANAP3/AQABAAEAAAAMAP3/AQABAAEAAAAMAP7/AQABAAEAAAANAP7/AQABAAEAAAAOAP7/AQABAAEAAAALAAAAAQABAAIAAAAMAAAAAQABAAIAAAANAAAAAQABAAIAAAAOAAAAAQABAAIAAAAPAAAAAQABAAIAAAAQAAAAAQACAAIAAAAQAP//AQACAAEAAAAQAP7/AQACAAEAAAAQAP3/AQACAAEAAAA=")
+[node name="Floor" type="TileMapLayer" parent="Node2D"]
+tile_map_data = PackedByteArray("AAD5////AQAAAAAAAAD6////AQABAAAAAAD7////AQABAAAAAAD8////AQABAAAAAAD9////AQABAAAAAAD+////AQABAAAAAAD/////AQABAAAAAAAAAP7/AQAAAAAAAAAAAP//AQABAAEAAAABAP3/AQAAAAAAAAABAP7/AQABAAEAAAACAPz/AQABAAAAAAACAP3/AQABAAEAAAD5/wAAAQAAAAIAAAD6/wAAAQABAAIAAAD7/wAAAQABAAIAAAD8/wAAAQABAAIAAAD9/wAAAQABAAIAAAD//wAAAQABAAIAAAAAAAAAAQABAAIAAAABAAAAAQABAAIAAAACAAAAAQABAAIAAAADAAAAAQABAAIAAAABAP//AQABAAEAAAACAP//AQABAAEAAAADAP//AQABAAEAAAADAP7/AQABAAEAAAACAP7/AQABAAEAAAADAP3/AQABAAEAAAADAPz/AQABAAAAAAAEAPz/AQABAAAAAAAFAPz/AQABAAAAAAAGAPz/AQABAAAAAAAHAPz/AQABAAAAAAAEAP3/AQABAAEAAAAEAP7/AQABAAEAAAAEAP//AQABAAEAAAAFAP//AQABAAEAAAAGAP//AQABAAEAAAAHAP//AQABAAEAAAAHAP7/AQABAAEAAAAHAP3/AQABAAEAAAAGAP3/AQABAAEAAAAFAP3/AQABAAEAAAAFAP7/AQABAAEAAAAGAP7/AQABAAEAAAAEAAAAAQABAAIAAAAFAAAAAQABAAIAAAAGAAAAAQABAAIAAAAHAAAAAQABAAIAAAAIAPz/AQABAAAAAAAIAP3/AQABAAEAAAAJAPz/AQABAAAAAAAJAP3/AQABAAEAAAAKAPz/AQABAAAAAAAKAP3/AQABAAEAAAAKAAAAAQABAAIAAAAIAAAAAQABAAIAAAAJAAAAAQABAAIAAAAIAP7/AQABAAEAAAAIAP//AQABAAEAAAAJAP//AQABAAEAAAAKAP//AQABAAEAAAAKAP7/AQABAAEAAAAJAP7/AQABAAEAAAD5/wUAAQABAAAAAAD6/wUAAQABAAAAAAD7/wUAAQABAAAAAAD8/wUAAQABAAAAAAD9/wUAAQABAAAAAAD+/wUAAQABAAAAAAD//wUAAQABAAAAAAAAAAUAAQABAAAAAAABAAUAAQABAAAAAAACAAUAAQABAAAAAAADAAUAAQABAAAAAAAEAAUAAQABAAAAAAAFAAUAAQABAAAAAAAGAAUAAQABAAAAAAAHAAUAAQABAAAAAAAIAAUAAQABAAAAAAAJAAUAAQABAAAAAAAKAAUAAQABAAAAAAALAPz/AQABAAAAAAAMAPz/AQABAAAAAAANAPz/AQABAAAAAAAOAPz/AQABAAAAAAAPAPz/AQABAAAAAAAQAPz/AQACAAAAAAALAP3/AQABAAEAAAALAP7/AQABAAEAAAALAP//AQABAAEAAAAMAP//AQABAAEAAAANAP//AQABAAEAAAAOAP//AQABAAEAAAAPAP//AQABAAEAAAAPAP7/AQABAAEAAAAPAP3/AQABAAEAAAAOAP3/AQABAAEAAAANAP3/AQABAAEAAAAMAP3/AQABAAEAAAAMAP7/AQABAAEAAAANAP7/AQABAAEAAAAOAP7/AQABAAEAAAALAAAAAQABAAIAAAAMAAAAAQABAAIAAAANAAAAAQABAAIAAAAOAAAAAQABAAIAAAAPAAAAAQABAAIAAAAQAAAAAQACAAIAAAAQAP//AQACAAEAAAAQAP7/AQACAAEAAAAQAP3/AQACAAEAAAALAAUAAQABAAAAAAAMAAUAAQABAAAAAAANAAUAAQABAAAAAAAOAAUAAQABAAAAAAAPAAUAAQABAAAAAAAQAAUAAQABAAAAAAALAAQAAQAAAAYAAAAMAAMAAQAGAAYAAAAOAAMAAQAFAAYAAAAOAAEAAQAAAAYAAAANAAEAAQAGAAYAAAANAAIAAQAGAAYAAAANAAMAAQAAAAYAAAAPAAMAAQAGAAYAAAAPAAQAAQAAAAYAAAAOAAQAAQAAAAYAAAANAAQAAQAFAAYAAAALAAMAAQAFAAYAAAALAAIAAQAGAAYAAAAKAAIAAQACAAYAAAALAAEAAQACAAYAAAAMAAEAAQACAAYAAAAMAAIAAQAFAAYAAAAPAAIAAQAGAAYAAAAMAAQAAQAHAAYAAAAOAAIAAQAGAAYAAAAPAAEAAQAHAAYAAAAQAAEAAQAGAAYAAAAQAAMAAQAHAAYAAAAQAAQAAQAGAAYAAAAQAAIAAQAGAAYAAAA=")
 tile_set = SubResource("TileSet_rsg85")
 
-[node name="TileMapLayer3" type="TileMapLayer" parent="Node2D"]
+[node name="Vent" type="TileMapLayer" parent="Node2D"]
 tile_map_data = PackedByteArray("AAD+////DgAAAAAAAAA=")
 tile_set = SubResource("TileSet_rsg85")
 
-[node name="vent" parent="Node2D/TileMapLayer3" instance=ExtResource("15_xdqhx")]
+[node name="vent" parent="Node2D/Vent" instance=ExtResource("15_xdqhx")]
 position = Vector2(-48, -28)
 
-[node name="TileMapLayer4" type="TileMapLayer" parent="Node2D"]
+[node name="Ladder" type="TileMapLayer" parent="Node2D"]
 tile_map_data = PackedByteArray("AAD+/wQADwAAAAAAAAD+/wMADwAAAAAAAAD+/wIADwAAAAAAAAD+/wEADwAAAAAAAAD+/wAADwAAAAAAAAA=")
 tile_set = SubResource("TileSet_rsg85")
-
-[node name="Character1" type="CharacterBody2D" parent="."]
-position = Vector2(0, -41)
-scale = Vector2(2, 2)
-script = SubResource("GDScript_i76s4")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Character1"]
-position = Vector2(-44.5, -78.5)
-shape = SubResource("RectangleShape2D_hu8i7")
-
-[node name="idle" type="Sprite2D" parent="Character1"]
-position = Vector2(-45, -79)
-texture = ExtResource("15_r6m2v")
-hframes = 4
-vframes = 4
-frame = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Character1"]
-libraries = {
-"": SubResource("AnimationLibrary_vsrh1")
-}
-
-[node name="select" type="Sprite2D" parent="Character1"]
-position = Vector2(-45, -79)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("17_3j4n0")
-hframes = 4
-vframes = 4
-frame = 7
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(160, -27)
 scale = Vector2(0.235967, -1102.99)
 zoom = Vector2(1.5, 1.5)
 
-[node name="Character2" type="CharacterBody2D" parent="."]
-position = Vector2(0, 3)
-scale = Vector2(2, 2)
-script = SubResource("GDScript_swite")
+[node name="Character" parent="." instance=ExtResource("16_qhb2f")]
+position = Vector2(-166, -164)
+index = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Character2"]
-position = Vector2(-44.5, -78.5)
-shape = SubResource("RectangleShape2D_hu8i7")
+[node name="Character2" parent="." instance=ExtResource("16_qhb2f")]
+position = Vector2(-46, -170)
+index = 2
 
-[node name="idle" type="Sprite2D" parent="Character2"]
-position = Vector2(-45, -79)
-texture = ExtResource("15_r6m2v")
-hframes = 4
-vframes = 4
-frame = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Character2"]
-libraries = {
-"": SubResource("AnimationLibrary_vsrh1")
-}
-
-[node name="select" type="Sprite2D" parent="Character2"]
-position = Vector2(-45, -79)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("17_3j4n0")
-hframes = 4
-vframes = 4
-frame = 7
-
-[node name="Character3" type="CharacterBody2D" parent="."]
-position = Vector2(0, -98)
-scale = Vector2(2, 2)
-script = SubResource("GDScript_x2wob")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Character3"]
-position = Vector2(-44.5, -78.5)
-shape = SubResource("RectangleShape2D_hu8i7")
-
-[node name="idle" type="Sprite2D" parent="Character3"]
-position = Vector2(-45, -79)
-texture = ExtResource("15_r6m2v")
-hframes = 4
-vframes = 4
-frame = 1
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Character3"]
-libraries = {
-"": SubResource("AnimationLibrary_vsrh1")
-}
-
-[node name="select" type="Sprite2D" parent="Character3"]
-position = Vector2(-45, -79)
-scale = Vector2(0.75, 0.75)
-texture = ExtResource("17_3j4n0")
-hframes = 4
-vframes = 4
-frame = 7
+[node name="Character3" parent="." instance=ExtResource("16_qhb2f")]
+position = Vector2(-111, -50)
+index = 3
