@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi7oiiyjh1381"]
+
+[sub_resource type="GDScript" id="GDScript_6mcvq"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qj0pf"]
+
+[node name="Area2D" type="Area2D"]
+script = SubResource("GDScript_6mcvq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_qj0pf")
