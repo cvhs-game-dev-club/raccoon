@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://cdw510bsfrnhw"]
+
+[ext_resource type="Script" path="res://scene_transition.gd" id="1_0vhux"]
+
+[sub_resource type="Animation" id="Animation_w18lh"]
+resource_name = "enter"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_bsshe"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CanvasLayer/ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mb0p2"]
+_data = {
+"RESET": SubResource("Animation_bsshe"),
+"enter": SubResource("Animation_w18lh")
+}
+
+[node name="scene_transition" type="Node2D"]
+script = ExtResource("1_0vhux")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -548.0
+offset_top = -130.0
+offset_right = 2036.0
+offset_bottom = 868.0
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="animation_player" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mb0p2")
+}
+
+[connection signal="animation_finished" from="animation_player" to="." method="_on_animation_player_animation_finished"]
