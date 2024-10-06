@@ -1767,7 +1767,7 @@ position = Vector2(12, -66)
 zoom = Vector2(1.56, 1.56)
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_b025k")]
-position = Vector2(446, 6)
+position = Vector2(446, -140)
 scale = Vector2(10.5662, 8.39341)
 sceneToChange = "res://levels/level_3.tscn"
 
@@ -1824,7 +1824,6 @@ label_settings = SubResource("LabelSettings_5ta21")
 
 [node name="barrel" parent="Object" instance=ExtResource("23_mth3i")]
 position = Vector2(258, -106)
-velocityIdeal = Vector2(-20, 0)
 
 [node name="Label2" type="Label" parent="Object"]
 offset_left = 124.0
