@@ -1837,7 +1837,7 @@ position = Vector2(356, -24)
 keyName = "key1"
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
-position = Vector2(436, -133)
+position = Vector2(409, -242)
 rotation = -3.14159
 scale = Vector2(10.9898, -7.94646)
 
