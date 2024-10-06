@@ -3,31 +3,64 @@
 [sub_resource type="GDScript" id="GDScript_k1ynd"]
 script/source = "extends Area2D
 
+var coatTime: bool = false
+
 @export var sceneToChange := \"res://levels/level_1.tscn\"
 @onready var animation_player: AnimationPlayer = $Node2D/AnimationPlayer
 
+
+@export var rSneakyPath: NodePath
+@export var rLoverPath: NodePath
+@export var rTallPath: NodePath
+
+@onready var rSneaky = get_node(rSneakyPath)
+@onready var rLover = get_node(rLoverPath)
+@onready var rTall = get_node(rTallPath)
+
+var counter: int = 0
+var characterArr: Array
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	characterArr = [rSneaky, rLover, rTall]
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	for i in characterArr:
+		#print(counter)
+		if(i.onSomeHead):
+			counter += 1
+	if(counter == 2):
+		coatTime = true
+	counter = 0
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if (body.name.contains(\"Character\")):
+	if (body.name.contains(\"Character\") and coatTime):
 		animation_player.play(\"fade_in\")
 		await get_tree().create_timer(.5).timeout
 		get_tree().change_scene_to_file(sceneToChange)
+		coatTime = false
 		
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qv50i"]
 
-[sub_resource type="Animation" id="Animation_gbtjw"]
-resource_name = "new_animation"
+[sub_resource type="Animation" id="Animation_cuf1n"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_pkfh4"]
 resource_name = "fade_in"
@@ -45,21 +78,6 @@ tracks/0/keys = {
 "values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_cuf1n"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_dq58j"]
 resource_name = "fade_out"
 length = 0.5
@@ -75,6 +93,9 @@ tracks/0/keys = {
 "update": 0,
 "values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
 }
+
+[sub_resource type="Animation" id="Animation_gbtjw"]
+resource_name = "new_animation"
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6gexo"]
 _data = {

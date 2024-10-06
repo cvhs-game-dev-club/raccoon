@@ -1,5 +1,7 @@
 extends Node2D
 
+var coatTime: bool = false
+
 @export var rSneakyPath: NodePath
 @export var rLoverPath: NodePath
 @export var rTallPath: NodePath
@@ -19,6 +21,7 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	for i in characterArr:
+		#print(counter)
 		if(i.onSomeHead):
 			counter += 1
 	if(counter == 2):

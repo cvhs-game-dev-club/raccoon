@@ -102,7 +102,7 @@ func _on_ladder_checker_body_exited(body: Node2D) -> void:
 size = Vector2(18, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5hxi"]
-size = Vector2(18, 5)
+size = Vector2(31.25, 5)
 
 [sub_resource type="Animation" id="Animation_6sreg"]
 length = 0.001

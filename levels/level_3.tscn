@@ -1862,5 +1862,8 @@ targets = [NodePath("../LoverCharacter"), NodePath("../SneakyCharacter"), NodePa
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
 position = Vector2(522, 165)
 scale = Vector2(-10.9898, 7.94646)
+rSneakyPath = NodePath("../SneakyCharacter")
+rLoverPath = NodePath("../LoverCharacter")
+rTallPath = NodePath("../tallCharacter")
 
 [editable path="SceneChanger"]
