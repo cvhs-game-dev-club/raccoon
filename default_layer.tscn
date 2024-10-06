@@ -1346,11 +1346,12 @@ collision_layer = 3
 collision_mask = 3
 index = 1
 
-[node name="SneakyCharacter" parent="." instance=ExtResource("17_vsstb")]
+[node name="SneakyCharacter" parent="." node_paths=PackedStringArray("head") instance=ExtResource("17_vsstb")]
 position = Vector2(162, -200)
 collision_layer = 66
 collision_mask = 66
 index = 2
+head = NodePath("../sneakytop")
 
 [node name="tallCharacter" parent="." instance=ExtResource("16_2ce8l")]
 position = Vector2(313, -183)
@@ -1369,4 +1370,6 @@ script = ExtResource("21_xlo80")
 topIdealPosPath = NodePath("../LoverCharacter")
 
 [node name="key" parent="." instance=ExtResource("18_oatgr")]
+light_mask = 3
+visibility_layer = 3
 position = Vector2(234, -164)

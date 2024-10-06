@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p7q11kj0vpc0"
-path="res://.godot/imported/bandana(bottom).png-092f1c548e67487f3ada0e27d2f5f0ea.ctex"
+uid="uid://cglbgqcmyjq4a"
+path="res://.godot/imported/Sneaky_Run_Jump6.png-c2a061ecb1bb4c10e8b5f10234447bd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/bandana(bottom).png"
-dest_files=["res://.godot/imported/bandana(bottom).png-092f1c548e67487f3ada0e27d2f5f0ea.ctex"]
+source_file="res://assets/characters/sneaky/jump/Sneaky_Run_Jump6.png"
+dest_files=["res://.godot/imported/Sneaky_Run_Jump6.png-c2a061ecb1bb4c10e8b5f10234447bd0.ctex"]
 
 [params]
 
