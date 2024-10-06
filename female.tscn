@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwc7lcpapnbc0"]
+
+[ext_resource type="Texture2D" uid="uid://di2beu2l6peuv" path="res://assets/3 Objects/kenny_objects/city/Tiles/tile_0105.png" id="1_mnr80"]
+
+[node name="Female" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mnr80")
