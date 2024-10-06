@@ -21,6 +21,7 @@ var playerStorage
 @export var height: float
 
 func _physics_process(delta: float) -> void:
+	#print(onSomeHead, \"tall\")
 	#if(not is_on_floor()):
 		#inAir = true
 	#else: 
@@ -72,7 +73,7 @@ func _on_tall_area_body_exited(body):
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vqmwe"]
-size = Vector2(38, 8.25)
+size = Vector2(22, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tr46f"]
 size = Vector2(42, 85)
@@ -126,7 +127,7 @@ texture = ExtResource("1_k8pek")
 position = Vector2(0, -48)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tallArea"]
-position = Vector2(0, -52.875)
+position = Vector2(0, -50)
 shape = SubResource("RectangleShape2D_vqmwe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

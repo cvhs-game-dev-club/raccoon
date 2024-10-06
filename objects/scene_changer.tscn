@@ -3,55 +3,32 @@
 [sub_resource type="GDScript" id="GDScript_k1ynd"]
 script/source = "extends Area2D
 
-var coatTime: bool = false
+
 
 @export var sceneToChange := \"res://levels/level_1.tscn\"
 @onready var animation_player: AnimationPlayer = $Node2D/AnimationPlayer
 
 
-@export var rSneakyPath: NodePath
-@export var rLoverPath: NodePath
-@export var rTallPath: NodePath
 
-@onready var rSneaky = get_node(rSneakyPath)
-@onready var rLover = get_node(rLoverPath)
-@onready var rTall = get_node(rTallPath)
-
-var entered: bool
-var counter: int = 0
-var characterArr: Array
-var playerStorage
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	characterArr = [rSneaky, rLover, rTall]
+	pass
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	for i in characterArr:
-		if(i.onSomeHead):
-			counter += 1
-	if(counter == 2):
-		coatTime = true
-	else:
-		coatTime = false
-	counter = 0
-	print(coatTime)
-	if(coatTime and entered and global_transform.origin.distance_to(playerStorage.global_transform.origin) < 30):
-		animation_player.play(\"fade_in\")
-		await get_tree().create_timer(.5).timeout
-		get_tree().change_scene_to_file(sceneToChange)
-		coatTime = false
-		entered = false
+	pass
 
 func _on_body_entered(body: Node2D) -> void:
 	if (body.name.contains(\"Character\")):
-		entered = true
-		playerStorage = body
+		animation_player.play(\"fade_in\")
+		await get_tree().create_timer(.5).timeout
+		get_tree().change_scene_to_file(sceneToChange)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qv50i"]
+size = Vector2(20, 4.51951)
 
 [sub_resource type="Animation" id="Animation_cuf1n"]
 length = 0.001
