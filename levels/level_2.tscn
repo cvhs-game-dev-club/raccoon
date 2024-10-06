@@ -1786,7 +1786,7 @@ to get over obstacles"
 label_settings = SubResource("LabelSettings_5ta21")
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_b025k")]
-position = Vector2(487, -146)
+position = Vector2(446, 6)
 scale = Vector2(10.5662, 8.39341)
 sceneToChange = "res://levels/level_3.tscn"
 
