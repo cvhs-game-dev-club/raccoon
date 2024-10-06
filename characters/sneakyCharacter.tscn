@@ -80,7 +80,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 
 func _on_sneaky_area_body_entered(body):
-	if body.name.contains(\"Character\") and body.index != index and not onLadder:
+	if body.name.contains(\"Character\") and body.index != index and not onLadder and !body.onSomeHead:
 		someoneOnHead = true
 		playerStorage = body
 		playerStorage.onSomeHead = true
@@ -88,8 +88,8 @@ func _on_sneaky_area_body_entered(body):
 func _on_sneaky_area_body_exited(body):
 	if body.name.contains(\"Character\") and body.index != index:
 		someoneOnHead = false
-		if playerStorage != null:
-			playerStorage.onSomeHead = false
+		playerStorage = body
+		playerStorage.onSomeHead = false
 
 func _on_ladder_checker_body_entered(body: Node2D) -> void:
 	onLadder = true
@@ -102,7 +102,7 @@ func _on_ladder_checker_body_exited(body: Node2D) -> void:
 size = Vector2(18, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5hxi"]
-size = Vector2(31.25, 5)
+size = Vector2(40.625, 5)
 
 [sub_resource type="Animation" id="Animation_6sreg"]
 length = 0.001

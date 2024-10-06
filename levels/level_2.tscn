@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://dv4kkrk13chnn"]
+[gd_scene load_steps=46 format=4 uid="uid://dv4kkrk13chnn"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_q2fu3"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_tq4yy"]
@@ -23,7 +23,6 @@
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_b025k"]
 [ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="23_ljsfo"]
 [ext_resource type="PackedScene" uid="uid://dq4yawa2biqq8" path="res://barrel.tscn" id="23_mth3i"]
-[ext_resource type="PackedScene" uid="uid://djtw4u34h08xd" path="res://coat_detector.tscn" id="24_rk1vc"]
 
 [sub_resource type="GDScript" id="GDScript_pdvab"]
 script/source = "extends Node2D
@@ -1818,10 +1817,5 @@ shape = SubResource("RectangleShape2D_w4726")
 [node name="barrel" parent="." instance=ExtResource("23_mth3i")]
 position = Vector2(258, -106)
 velocityIdeal = Vector2(-20, 0)
-
-[node name="coatDetector" parent="." instance=ExtResource("24_rk1vc")]
-rSneakyPath = NodePath("../SneakyCharacter")
-rLoverPath = NodePath("../LoverCharacter")
-rTallPath = NodePath("../tallCharacter")
 
 [editable path="SceneChanger"]

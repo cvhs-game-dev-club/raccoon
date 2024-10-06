@@ -63,7 +63,7 @@ func _physics_process(delta: float) -> void:
 	
 
 func _on_area_2d_body_entered(body):
-	if body.name.contains(\"Character\") and body.index != index:
+	if body.name.contains(\"Character\") and body.index != index and !body.onSomeHead:
 		someoneOnHead = true
 		playerStorage = body
 		playerStorage.onSomeHead = true
@@ -71,6 +71,7 @@ func _on_area_2d_body_entered(body):
 func _on_area_2d_body_exited(body):
 	if body.name.contains(\"Character\") and body.index != index:
 		someoneOnHead = false
+		playerStorage = body
 		playerStorage.onSomeHead = false
 "
 

@@ -17,8 +17,10 @@ var coatTime: bool = false
 @onready var rLover = get_node(rLoverPath)
 @onready var rTall = get_node(rTallPath)
 
+var entered: bool
 var counter: int = 0
 var characterArr: Array
+var playerStorage
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,23 +28,27 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(delta):
 	for i in characterArr:
-		#print(counter)
 		if(i.onSomeHead):
 			counter += 1
 	if(counter == 2):
 		coatTime = true
+	else:
+		coatTime = false
 	counter = 0
-
-
-func _on_body_entered(body: Node2D) -> void:
-	if (body.name.contains(\"Character\") and coatTime):
+	print(coatTime)
+	if(coatTime and entered and global_transform.origin.distance_to(playerStorage.global_transform.origin) < 30):
 		animation_player.play(\"fade_in\")
 		await get_tree().create_timer(.5).timeout
 		get_tree().change_scene_to_file(sceneToChange)
 		coatTime = false
-		
+		entered = false
+
+func _on_body_entered(body: Node2D) -> void:
+	if (body.name.contains(\"Character\")):
+		entered = true
+		playerStorage = body
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qv50i"]
