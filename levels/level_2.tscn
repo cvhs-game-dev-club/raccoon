@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://dv4kkrk13chnn"]
+[gd_scene load_steps=44 format=4 uid="uid://dv4kkrk13chnn"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_q2fu3"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_tq4yy"]
@@ -17,9 +17,28 @@
 [ext_resource type="PackedScene" uid="uid://dh4cg0lumld53" path="res://characters/loverCharacter.tscn" id="15_ecofk"]
 [ext_resource type="PackedScene" uid="uid://cqpf0s0mg0u1c" path="res://characters/sneakyCharacter.tscn" id="16_xyihr"]
 [ext_resource type="PackedScene" uid="uid://cxfkas0dug2l0" path="res://characters/tallCharacter.tscn" id="17_3gfuv"]
-[ext_resource type="PackedScene" uid="uid://f8wuowp4nau7" path="res://sneakyTop.tscn" id="18_gfe0p"]
-[ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://lover_top.tscn" id="19_7whp4"]
+[ext_resource type="PackedScene" uid="uid://f8wuowp4nau7" path="res://characters/sneakyTop.tscn" id="18_gfe0p"]
+[ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="19_7whp4"]
 [ext_resource type="Script" path="res://characters/top.gd" id="20_t50tv"]
+[ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_b025k"]
+[ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="23_ljsfo"]
+
+[sub_resource type="GDScript" id="GDScript_pdvab"]
+script/source = "extends Node2D
+
+@onready var animation_player: AnimationPlayer = $SceneChanger/Node2D/AnimationPlayer
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$SceneChanger/Node2D/ColorRect.color.a = 255
+	animation_player.play(\"fade_out\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_147ec"]
 texture = ExtResource("1_q2fu3")
@@ -1692,10 +1711,13 @@ terrain_set_0/terrain_0/name = "autotile"
 terrain_set_0/terrain_0/color = Color(0.716168, 0, 0.259985, 1)
 sources/2 = SubResource("TileSetAtlasSource_ckotx")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_uow3w"]
-size = Vector2(93, 56)
+[sub_resource type="LabelSettings" id="LabelSettings_5ta21"]
+font = ExtResource("23_ljsfo")
+font_size = 36
+font_color = Color(0, 0, 0, 1)
 
 [node name="Level2" type="Node2D"]
+script = SubResource("GDScript_pdvab")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -1715,14 +1737,8 @@ collision_visibility_mode = 1
 tile_set = SubResource("TileSet_uodao")
 
 [node name="Floor" type="TileMapLayer" parent="Node2D"]
-tile_map_data = PackedByteArray("AAD6/wEAAgABAAAAAAD7/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAEAAAAIAAEAAgABAAEAAAAJAAEAAgABAAEAAAAKAAEAAgABAAEAAAAKAAIAAgABAAEAAAALAAIAAgACAAEAAAALAAMAAgACAAEAAAAKAAMAAgABAAEAAAAJAAIAAgABAAEAAAAIAAIAAgABAAEAAAAHAAIAAgABAAEAAAAGAAIAAgABAAEAAAAFAAIAAgABAAEAAAAEAAIAAgABAAEAAAADAAIAAgABAAEAAAACAAIAAgABAAEAAAABAAIAAgABAAEAAAAAAAIAAgABAAEAAAD//wIAAgABAAEAAAD+/wIAAgABAAEAAAD9/wIAAgABAAEAAAD8/wIAAgABAAEAAAD7/wIAAgABAAEAAAD6/wIAAgABAAEAAAD6/wMAAgABAAEAAAD7/wMAAgABAAEAAAD8/wMAAgABAAEAAAD9/wMAAgABAAEAAAD+/wMAAgABAAEAAAD//wMAAgABAAEAAAAAAAMAAgABAAEAAAABAAMAAgABAAEAAAACAAMAAgABAAEAAAADAAMAAgABAAEAAAAEAAMAAgABAAEAAAAFAAMAAgABAAEAAAAGAAMAAgABAAEAAAAHAAMAAgABAAEAAAAIAAMAAgABAAEAAAAJAAMAAgABAAEAAAALAAEAAgACAAEAAAD5/wEAAgABAAAAAAD4/wEAAgABAAAAAAD3/wEAAgABAAAAAAD2/wEAAgABAAAAAAD1/wEAAgABAAAAAAD1/wIAAgABAAEAAAD1/wMAAgABAAEAAAD2/wMAAgABAAEAAAD3/wMAAgABAAEAAAD4/wMAAgABAAEAAAD5/wMAAgABAAEAAAD5/wIAAgABAAEAAAD4/wIAAgABAAEAAAD3/wIAAgABAAEAAAD2/wIAAgABAAEAAAD0/wEAAgAAAAAAAAD0/wIAAgAAAAEAAAD0/wMAAgAAAAEAAAD0/wQAAgAAAAIAAAD1/wQAAgABAAIAAAD2/wQAAgABAAIAAAD3/wQAAgABAAIAAAD4/wQAAgABAAIAAAD5/wQAAgABAAIAAAD6/wQAAgABAAIAAAD7/wQAAgABAAIAAAD8/wQAAgABAAIAAAD9/wQAAgABAAIAAAD+/wQAAgABAAIAAAD//wQAAgABAAIAAAAAAAQAAgABAAIAAAABAAQAAgABAAIAAAACAAQAAgABAAIAAAADAAQAAgABAAIAAAAEAAQAAgABAAIAAAAFAAQAAgABAAIAAAAGAAQAAgABAAIAAAAHAAQAAgABAAIAAAAIAAQAAgABAAIAAAAJAAQAAgABAAIAAAAKAAQAAgABAAIAAAALAAQAAgACAAIAAAAHAAAAAgAAAAEAAAAIAAAAAgABAAEAAAAJAAAAAgABAAEAAAAKAAAAAgABAAEAAAALAAAAAgACAAEAAAALAP//AgACAAEAAAAKAP//AgABAAEAAAAJAP//AgABAAEAAAAIAP//AgABAAEAAAAHAP//AgAAAAEAAAAHAP7/AgAAAAAAAAAIAP7/AgABAAAAAAAJAP7/AgABAAAAAAAKAP7/AgABAAAAAAALAP7/AgACAAAAAAA=")
+tile_map_data = PackedByteArray("AAD6/wEAAgABAAAAAAD7/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAEAAAAIAAEAAgABAAEAAAAJAAEAAgABAAEAAAAKAAEAAgABAAEAAAAKAAIAAgABAAEAAAALAAIAAgACAAEAAAALAAMAAgACAAEAAAAKAAMAAgABAAEAAAAJAAIAAgABAAEAAAAIAAIAAgABAAEAAAAHAAIAAgABAAEAAAAGAAIAAgABAAEAAAAFAAIAAgABAAEAAAAEAAIAAgABAAEAAAADAAIAAgABAAEAAAACAAIAAgABAAEAAAABAAIAAgABAAEAAAAAAAIAAgABAAEAAAD//wIAAgABAAEAAAD+/wIAAgABAAEAAAD9/wIAAgABAAEAAAD8/wIAAgABAAEAAAD7/wIAAgABAAEAAAD6/wIAAgABAAEAAAD6/wMAAgABAAEAAAD7/wMAAgABAAEAAAD8/wMAAgABAAEAAAD9/wMAAgABAAEAAAD+/wMAAgABAAEAAAD//wMAAgABAAEAAAAAAAMAAgABAAEAAAABAAMAAgABAAEAAAACAAMAAgABAAEAAAADAAMAAgABAAEAAAAEAAMAAgABAAEAAAAFAAMAAgABAAEAAAAGAAMAAgABAAEAAAAHAAMAAgABAAEAAAAIAAMAAgABAAEAAAAJAAMAAgABAAEAAAALAAEAAgACAAEAAAD5/wEAAgABAAAAAAD4/wEAAgABAAAAAAD3/wEAAgABAAAAAAD2/wEAAgABAAAAAAD1/wEAAgABAAAAAAD1/wIAAgABAAEAAAD1/wMAAgABAAEAAAD2/wMAAgABAAEAAAD3/wMAAgABAAEAAAD4/wMAAgABAAEAAAD5/wMAAgABAAEAAAD5/wIAAgABAAEAAAD4/wIAAgABAAEAAAD3/wIAAgABAAEAAAD2/wIAAgABAAEAAAD0/wEAAgAAAAAAAAD0/wIAAgAAAAEAAAD0/wMAAgAAAAEAAAD0/wQAAgAAAAIAAAD1/wQAAgABAAIAAAD2/wQAAgABAAIAAAD3/wQAAgABAAIAAAD4/wQAAgABAAIAAAD5/wQAAgABAAIAAAD6/wQAAgABAAIAAAD7/wQAAgABAAIAAAD8/wQAAgABAAIAAAD9/wQAAgABAAIAAAD+/wQAAgABAAIAAAD//wQAAgABAAIAAAAAAAQAAgABAAIAAAABAAQAAgABAAIAAAACAAQAAgABAAIAAAADAAQAAgABAAIAAAAEAAQAAgABAAIAAAAFAAQAAgABAAIAAAAGAAQAAgABAAIAAAAHAAQAAgABAAIAAAAIAAQAAgABAAIAAAAJAAQAAgABAAIAAAAKAAQAAgABAAIAAAALAAQAAgACAAIAAAAHAAAAAgAAAAEAAAAIAAAAAgABAAEAAAAJAAAAAgABAAEAAAAKAAAAAgABAAEAAAALAAAAAgABAAEAAAALAP//AgABAAEAAAAKAP//AgABAAEAAAAJAP//AgABAAEAAAAIAP//AgABAAEAAAAHAP//AgAAAAEAAAAHAP7/AgAAAAAAAAAIAP7/AgABAAAAAAAJAP7/AgABAAAAAAAKAP7/AgABAAAAAAALAP7/AgABAAAAAAAMAP7/AgABAAAAAAAMAP//AgABAAEAAAAMAAAAAgABAAIAAAANAP//AgABAAEAAAANAP7/AgABAAAAAAAOAP7/AgABAAAAAAAOAP//AgABAAEAAAAPAP//AgABAAEAAAAPAP7/AgABAAAAAAAQAP7/AgACAAAAAAAQAP//AgACAAEAAAAQAAAAAgACAAIAAAAPAAAAAgABAAIAAAAOAAAAAgABAAIAAAANAAAAAgABAAIAAAA=")
 tile_set = SubResource("TileSet_m4vma")
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(431, 12)
-shape = SubResource("RectangleShape2D_uow3w")
 
 [node name="LoverCharacter" parent="." instance=ExtResource("15_ecofk")]
 position = Vector2(-320, -59)
@@ -1756,3 +1772,21 @@ topIdealPosPath = NodePath("../LoverCharacter")
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(12, -66)
 zoom = Vector2(1.56, 1.56)
+
+[node name="Label" type="Label" parent="."]
+offset_left = -355.0
+offset_top = -258.0
+offset_right = 140.0
+offset_bottom = -165.0
+text = "Climb on each other 
+to get over obstacles"
+label_settings = SubResource("LabelSettings_5ta21")
+
+[node name="SceneChanger" parent="." instance=ExtResource("22_b025k")]
+position = Vector2(487, -146)
+scale = Vector2(10.5662, 8.39341)
+
+[node name="ColorRect" parent="SceneChanger/Node2D" index="0"]
+metadata/_edit_use_anchors_ = true
+
+[editable path="SceneChanger"]

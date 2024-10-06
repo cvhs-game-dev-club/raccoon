@@ -1,0 +1,185 @@
+[gd_scene load_steps=11 format=3 uid="uid://d2lhju3wftjy7"]
+
+[ext_resource type="Texture2D" uid="uid://cl1cbl0yx8o3m" path="res://assets/Base Character - Free/idle.png" id="1_5mu8k"]
+[ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="2_35inl"]
+
+[sub_resource type="GDScript" id="GDScript_i76s4"]
+script/source = "extends CharacterBody2D
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+var someoneOnHead: bool = false
+var onSomeHead: bool = false
+var playerStorage
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@export var vent: Area2D 
+
+@export var index : int = 0
+@export var height : int = 30
+
+func _physics_process(delta: float) -> void:
+	# Add gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if (Global.current == index):
+		animation_player.play(\"select\")
+		$select.visible = true
+
+		# Handle jump.
+		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and !someoneOnHead:
+			velocity.y = JUMP_VELOCITY
+
+		# Handle movement input.
+		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+		if direction:
+			velocity.x = direction * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+
+		if index == 3 and Input.is_action_just_pressed(\"ui_down\") and vent.has_overlapping_bodies():
+			$CollisionShape2D.disabled = true
+	else:
+		animation_player.play(\"idle_right\")
+		$select.visible = false
+		
+	if someoneOnHead and Global.current == index:
+		# Align the character on top to the character below
+		playerStorage.position.x = transform.origin.x
+		playerStorage.position.y = transform.origin.y - playerStorage.height
+	if (Global.current != index):
+		velocity.x = 0
+	if(!onSomeHead):
+		move_and_slide()
+
+	
+
+func _on_area_2d_body_entered(body):
+	if body.name.contains(\"Character\") and body.index != index:
+		someoneOnHead = true
+		playerStorage = body
+		playerStorage.onSomeHead = true
+
+func _on_area_2d_body_exited(body):
+	if body.name.contains(\"Character\") and body.index != index:
+		someoneOnHead = false
+		playerStorage.onSomeHead = false
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hu8i7"]
+size = Vector2(10, 14)
+
+[sub_resource type="Animation" id="Animation_ajnrl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("select:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+
+[sub_resource type="Animation" id="Animation_ra4mm"]
+resource_name = "idle"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_e7qh0"]
+resource_name = "idle"
+length = 1.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("idle:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_hh8sg"]
+resource_name = "select"
+length = 2.25
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("select:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.633333, 1.26667, 1.86667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vsrh1"]
+_data = {
+"RESET": SubResource("Animation_ajnrl"),
+"idle_left": SubResource("Animation_ra4mm"),
+"idle_right": SubResource("Animation_e7qh0"),
+"select": SubResource("Animation_hh8sg")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0w5id"]
+size = Vector2(7, 0.5)
+
+[node name="Character" type="CharacterBody2D"]
+position = Vector2(0, -41)
+scale = Vector2(2, 2)
+script = SubResource("GDScript_i76s4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0.5)
+shape = SubResource("RectangleShape2D_hu8i7")
+
+[node name="idle" type="Sprite2D" parent="."]
+texture = ExtResource("1_5mu8k")
+hframes = 4
+vframes = 4
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vsrh1")
+}
+
+[node name="select" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("2_35inl")
+hframes = 4
+vframes = 4
+frame = 7
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0.5, -7.75)
+shape = SubResource("RectangleShape2D_0w5id")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

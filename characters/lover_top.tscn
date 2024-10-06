@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://uyppqxbxmb8b"]
+
+[ext_resource type="Texture2D" uid="uid://c4mke4licuvol" path="res://assets/characters/lvoer(top).png" id="1_ojivn"]
+
+[node name="loverTop" type="Sprite2D"]
+texture = ExtResource("1_ojivn")

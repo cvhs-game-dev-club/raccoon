@@ -16,7 +16,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://Global/Global.gd"
+AudioPlayerr="*res://Global/audio_playerr.tscn"
 
 [display]
 
