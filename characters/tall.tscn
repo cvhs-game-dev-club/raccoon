@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqpf0s0mg0u1c"]
+[gd_scene load_steps=9 format=3 uid="uid://dnv4n00na3kwd"]
 
-[ext_resource type="Texture2D" uid="uid://w7rw184qh6hc" path="res://assets/characters/banada.png" id="2_bp6sw"]
-[ext_resource type="Texture2D" uid="uid://de2vyo4wph6ap" path="res://assets/characters/bandana.png" id="3_eluv5"]
-[ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="4_fsfhh"]
+[ext_resource type="Texture2D" uid="uid://du32fbbiixrkx" path="res://assets/characters/tall.png" id="1_k8pek"]
+[ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="2_57rqu"]
 
-[sub_resource type="GDScript" id="GDScript_75fyf"]
+[sub_resource type="GDScript" id="GDScript_pvwe8"]
 script/source = "extends CharacterBody2D
 
 const SPEED = 300.0
@@ -49,7 +48,7 @@ func _physics_process(delta: float) -> void:
 		playerStorage.position.x = transform.origin.x
 		playerStorage.position.y = transform.origin.y - playerStorage.height
 	if (Global.current != index):
-		velocity.x = 0	
+		velocity.x = 0
 	move_and_slide()
 
 	
@@ -66,13 +65,13 @@ func _on_area_2d_body_exited(body):
 		playerStorage.onSomeHead = false
 "
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ju0oo"]
-size = Vector2(43, 39)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vqmwe"]
+size = Vector2(40, 7)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_q5hxi"]
-size = Vector2(35, 5)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tr46f"]
+size = Vector2(42, 94)
 
-[sub_resource type="Animation" id="Animation_t7gey"]
+[sub_resource type="Animation" id="Animation_seube"]
 resource_name = "select"
 length = 1.5
 tracks/0/type = "value"
@@ -82,13 +81,13 @@ tracks/0/path = NodePath("select:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.4, 0.8, 1.2),
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.16667),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_6sreg"]
+[sub_resource type="Animation" id="Animation_f1bn4"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -103,38 +102,35 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_30l6q"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o606c"]
 _data = {
-"RESET": SubResource("Animation_6sreg"),
-"select": SubResource("Animation_t7gey")
+"RESET": SubResource("Animation_f1bn4"),
+"select": SubResource("Animation_seube")
 }
 
-[node name="Sneaky" type="CharacterBody2D"]
-script = SubResource("GDScript_75fyf")
+[node name="tall" type="CharacterBody2D"]
+script = SubResource("GDScript_pvwe8")
 
-[node name="on" type="Sprite2D" parent="."]
-visible = false
-texture = ExtResource("2_bp6sw")
-
-[node name="off" type="Sprite2D" parent="."]
-texture = ExtResource("3_eluv5")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 4.5)
-shape = SubResource("RectangleShape2D_ju0oo")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_k8pek")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -19)
-shape = SubResource("RectangleShape2D_q5hxi")
+position = Vector2(-1, -54)
+shape = SubResource("RectangleShape2D_vqmwe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_tr46f")
 
 [node name="select" type="Sprite2D" parent="."]
-texture = ExtResource("4_fsfhh")
+position = Vector2(0, -29)
+texture = ExtResource("2_57rqu")
 hframes = 4
 vframes = 4
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_30l6q")
+"": SubResource("AnimationLibrary_o606c")
 }

@@ -25,7 +25,6 @@ func _physics_process(delta: float) -> void:
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_up") and is_on_floor() and !someoneOnHead:
 			velocity.y = JUMP_VELOCITY
-
 		# Handle movement input.
 		var direction := Input.get_axis("ui_left", "ui_right")
 		if direction:
@@ -36,7 +35,6 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("ui_down") and vent.has_overlapping_bodies() and index == 3:
 			$CollisionShape2D.disabled = true
 	else:
-		animation_player.play("idle_right")
 		$select.visible = false
 		
 	if someoneOnHead and Global.current == index:

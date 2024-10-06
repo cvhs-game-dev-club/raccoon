@@ -1,6 +1,5 @@
-[gd_scene load_steps=32 format=4 uid="uid://d2yx02pa10h2q"]
+[gd_scene load_steps=31 format=4 uid="uid://d2yx02pa10h2q"]
 
-[ext_resource type="Script" path="res://layer_holder.gd" id="1_uq2q8"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_uq5ct"]
 [ext_resource type="Texture2D" uid="uid://xgs13fqnwogm" path="res://assets/2 Background/Night/4.png" id="3_eesd5"]
 [ext_resource type="Texture2D" uid="uid://bgep0oegnhvvj" path="res://assets/2 Background/Night/5.png" id="4_g42ni"]
@@ -14,8 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://0fiu2wvylpfr" path="res://assets/2 Background/Night/1.png" id="12_rl7o7"]
 [ext_resource type="Texture2D" uid="uid://38i821653kep" path="res://assets/2 Background/Night/2.png" id="13_uv1h7"]
 [ext_resource type="Texture2D" uid="uid://7oops4rxxo2m" path="res://assets/2 Background/Night/3.png" id="14_iaj74"]
-[ext_resource type="PackedScene" uid="uid://csb63om7vsbqs" path="res://vent.tscn" id="15_xdqhx"]
-[ext_resource type="PackedScene" uid="uid://d2lhju3wftjy7" path="res://character.tscn" id="16_qhb2f"]
+[ext_resource type="PackedScene" uid="uid://dnv4n00na3kwd" path="res://characters/tall.tscn" id="16_2ce8l"]
+[ext_resource type="PackedScene" uid="uid://dhjopwb62rr5c" path="res://characters/lover.tscn" id="16_te2ka"]
 [ext_resource type="PackedScene" uid="uid://cqpf0s0mg0u1c" path="res://characters/sneaky.tscn" id="17_vsstb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rdh73"]
@@ -1103,7 +1102,6 @@ sources/14 = SubResource("TileSetAtlasSource_1bnhi")
 sources/15 = SubResource("TileSetAtlasSource_ytku5")
 
 [node name="layer_holder" type="Node2D"]
-script = ExtResource("1_uq2q8")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -1119,9 +1117,6 @@ tile_set = SubResource("TileSet_rsg85")
 tile_map_data = PackedByteArray("AAD+////DgAAAAAAAAA=")
 tile_set = SubResource("TileSet_rsg85")
 
-[node name="vent" parent="Node2D/Vent" instance=ExtResource("15_xdqhx")]
-position = Vector2(-48, -28)
-
 [node name="Ladder" type="TileMapLayer" parent="Node2D"]
 tile_map_data = PackedByteArray("AAD+/wQADwAAAAAAAAD+/wMADwAAAAAAAAD+/wIADwAAAAAAAAD+/wEADwAAAAAAAAD+/wAADwAAAAAAAAA=")
 tile_set = SubResource("TileSet_rsg85")
@@ -1131,13 +1126,17 @@ position = Vector2(160, -27)
 scale = Vector2(0.235967, -1102.99)
 zoom = Vector2(1.5, 1.5)
 
-[node name="Character" parent="." instance=ExtResource("16_qhb2f")]
-position = Vector2(-166, -164)
-index = 1
-
-[node name="Character2" parent="." instance=ExtResource("16_qhb2f")]
-position = Vector2(-46, -170)
-index = 2
-
 [node name="Sneaky" parent="." instance=ExtResource("17_vsstb")]
 position = Vector2(-55, -82)
+index = 3
+height = 5
+
+[node name="Lover" parent="." instance=ExtResource("16_te2ka")]
+position = Vector2(123, -171)
+index = 1
+height = 5
+
+[node name="tall" parent="." instance=ExtResource("16_2ce8l")]
+position = Vector2(-164, -137)
+index = 2
+height = 5
