@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://dv4kkrk13chnn"]
+[gd_scene load_steps=45 format=4 uid="uid://dv4kkrk13chnn"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_q2fu3"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_tq4yy"]
@@ -1716,6 +1716,9 @@ font = ExtResource("23_ljsfo")
 font_size = 36
 font_color = Color(0, 0, 0, 1)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4726"]
+size = Vector2(20, 471)
+
 [node name="Level2" type="Node2D"]
 script = SubResource("GDScript_pdvab")
 
@@ -1788,5 +1791,23 @@ scale = Vector2(10.5662, 8.39341)
 
 [node name="ColorRect" parent="SceneChanger/Node2D" index="0"]
 metadata/_edit_use_anchors_ = true
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
+position = Vector2(-394, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_w4726")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
+position = Vector2(142, -299)
+rotation = 1.57308
+scale = Vector2(1, 3.15999)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_w4726")
 
 [editable path="SceneChanger"]
