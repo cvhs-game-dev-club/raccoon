@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b8dghy5hqorkm"]
+[gd_scene load_steps=8 format=3 uid="uid://b8dghy5hqorkm"]
 
 [ext_resource type="Texture2D" uid="uid://b8rodx4bkall3" path="res://assets/3 Objects/kenny_objects/tile_0150.png" id="1_2c8y1"]
 
@@ -7,15 +7,56 @@ script/source = "extends Node2D
 
 @onready var doorCollider = %DoorCollision
 
+@export var keyName : String
+
 func _on_door_area_2d_body_entered(body):
 	if(body.name.contains(\"SneakyCharacter\")):
-		if(body.holdItemName.contains(\"key\")):
+		print(\"collideing\")
+		if(body.holdItemName.contains(keyName)):
 			print(\"OPEN DOOR\")
-			doorCollider.disabled = true
+			$StaticBody2D/AnimationPlayer.play(\"fade_out\")
+			%DoorCollision.set_deferred(\"disabled\", true)
+			get_parent().key.queue_free()
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ptnyw"]
 size = Vector2(60, 60)
+
+[sub_resource type="Animation" id="Animation_gwwja"]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ra7ko"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tmabp"]
+_data = {
+"RESET": SubResource("Animation_ra7ko"),
+"fade_out": SubResource("Animation_gwwja")
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rk771"]
 size = Vector2(120, 180)
@@ -25,6 +66,8 @@ script = SubResource("GDScript_ovtv5")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 scale = Vector2(1, 1.92)
+collision_layer = 3
+collision_mask = 3
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 scale = Vector2(3.18386, 3.29913)
@@ -34,7 +77,14 @@ texture = ExtResource("1_2c8y1")
 unique_name_in_owner = true
 shape = SubResource("RectangleShape2D_ptnyw")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StaticBody2D"]
+libraries = {
+"": SubResource("AnimationLibrary_tmabp")
+}
+
 [node name="DoorArea2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorArea2D"]
 shape = SubResource("RectangleShape2D_rk771")

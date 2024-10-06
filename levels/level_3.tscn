@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=48 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_lpqjl"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_g0kye"]
@@ -21,7 +21,9 @@
 [ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="19_6iv3w"]
 [ext_resource type="Script" path="res://characters/top.gd" id="20_grwsq"]
 [ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="21_mj6i7"]
+[ext_resource type="PackedScene" uid="uid://chsqwcq1647rw" path="res://objects/key.tscn" id="22_gapre"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
+[ext_resource type="PackedScene" uid="uid://b8dghy5hqorkm" path="res://objects/door.tscn" id="24_0nobo"]
 
 [sub_resource type="GDScript" id="GDScript_tp7yp"]
 script/source = "extends Node2D
@@ -1719,57 +1721,19 @@ font = ExtResource("21_mj6i7")
 font_size = 36
 font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="GDScript" id="GDScript_41y33"]
-script/source = "extends Camera2D
+[sub_resource type="GDScript" id="GDScript_67e8f"]
+script/source = "extends Node2D
 
-@export var targets: Array[Node2D]
-@export var boundary_top_left: Vector2 = Vector2(-1000, -1000)  # Define the top-left corner of the boundary
-@export var boundary_bottom_right: Vector2 = Vector2(1000, 1000)  # Define the bottom-right corner of the boundary
-@export var min_zoom: float = 0.5  # Define the minimum zoom level
-@export var max_zoom: float = 2.0  # Define the maximum zoom level
+@onready var key: Node2D = $\"../key\"
 
-var target_pos: Vector2 = Vector2.ZERO
-
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# Set initial zoom to the maximum zoom level for testing
-	zoom.x = max_zoom
-	zoom.y = max_zoom
+	pass # Replace with function body.
 
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	target_pos = Vector2.ZERO
-
-	# Calculate the average position of all targets
-	for i in targets:
-		target_pos += i.position / len(targets)
-
-	var max_distance: Vector2 = Vector2.ZERO
-
-	# Calculate the maximum distance between targets on the x-axis
-	targets.sort_custom(func(a, b): return a.position.x > b.position.x)
-	max_distance.x = (targets[0].position.x - targets[-1].position.x)
-	
-	# Calculate the maximum distance between targets on the y-axis
-	targets.sort_custom(func(a, b): return a.position.y > b.position.y)
-	max_distance.y = (targets[0].position.y - targets[-1].position.y)
-
-	# Adjust the zoom based on the maximum distances between the players
-	zoom.x = min(600.0 / max_distance.x, max_zoom)
-	zoom.y = min(336.0 / max_distance.y, max_zoom)
-
-	# Make sure zoom is uniform
-	if zoom.x > zoom.y:
-		zoom.x = zoom.y
-	if zoom.y > zoom.x:
-		zoom.y = zoom.x
-
-	# Clamp the zoom to the defined min and max limits
-	zoom.x = clamp(zoom.x, min_zoom, max_zoom)
-	zoom.y = clamp(zoom.y, min_zoom, max_zoom)
-
-	# Clamp the position to keep it within the defined boundary
-	position = target_pos
-	position.x = clamp(position.x, boundary_top_left.x, boundary_bottom_right.x)
-	position.y = clamp(position.y, boundary_top_left.y, boundary_bottom_right.y)
+	pass
 "
 
 [node name="Level3" type="Node2D"]
@@ -1794,73 +1758,93 @@ tile_map_data = PackedByteArray("AAD7/wEAAQABAAAAAAA=")
 tile_set = SubResource("TileSet_cs11v")
 
 [node name="Floor" type="TileMapLayer" parent="Node2D"]
-tile_map_data = PackedByteArray("AAD0/wEAAgAAAAAAAAD1/wEAAgABAAAAAAD2/wEAAgABAAAAAAD3/wEAAgABAAAAAAD4/wEAAgABAAAAAAD5/wEAAgABAAAAAAD6/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAAAAAAIAAEAAgABAAAAAAAJAAEAAgABAAAAAAAKAAEAAgABAAAAAAALAAEAAgABAAAAAAAMAAEAAgACAAEAAAAMAAIAAgACAAIAAAALAAIAAgABAAIAAAAKAAIAAgABAAIAAAAJAAIAAgABAAIAAAAIAAIAAgABAAIAAAAHAAIAAgABAAIAAAAGAAIAAgABAAIAAAAFAAIAAgABAAIAAAAEAAIAAgABAAIAAAADAAIAAgABAAIAAAACAAIAAgABAAIAAAABAAIAAgABAAIAAAAAAAIAAgABAAIAAAD//wIAAgABAAIAAAD+/wIAAgABAAIAAAD9/wIAAgABAAIAAAD8/wIAAgAAAAIAAAD6/wIAAgACAAIAAAD5/wIAAgABAAIAAAD4/wIAAgABAAIAAAD3/wIAAgABAAIAAAD2/wIAAgABAAIAAAD1/wIAAgABAAIAAAD0/wIAAgAAAAEAAAD0/wMAAgADAAEAAAD0/wQAAgADAAEAAAD0/wUAAgADAAEAAAD0/wYAAgADAAEAAAD0/wcAAgAAAAEAAAD1/wcAAgABAAAAAAD2/wcAAgABAAAAAAD3/wcAAgABAAAAAAD4/wcAAgABAAAAAAD5/wcAAgABAAAAAAD6/wcAAgABAAAAAAD7/wcAAgABAAAAAAD8/wcAAgABAAAAAAD9/wcAAgABAAAAAAD+/wcAAgABAAAAAAD//wcAAgABAAAAAAAAAAcAAgABAAAAAAABAAcAAgABAAAAAAACAAcAAgABAAAAAAADAAcAAgABAAAAAAAEAAcAAgABAAAAAAAFAAcAAgABAAAAAAAGAAcAAgABAAAAAAAHAAcAAgABAAAAAAAIAAcAAgABAAAAAAAJAAcAAgABAAAAAAAKAAcAAgABAAAAAAALAAcAAgABAAAAAAAMAAcAAgACAAAAAAALAAgAAgABAAIAAAAMAAgAAgACAAIAAAAKAAgAAgABAAIAAAAJAAgAAgABAAIAAAAIAAgAAgABAAIAAAAHAAgAAgABAAIAAAAGAAgAAgABAAIAAAAFAAgAAgABAAIAAAAEAAgAAgABAAIAAAADAAgAAgABAAIAAAACAAgAAgABAAIAAAABAAgAAgABAAIAAAAAAAgAAgABAAIAAAD//wgAAgABAAIAAAD+/wgAAgABAAIAAAD9/wgAAgABAAIAAAD8/wgAAgABAAIAAAD7/wgAAgABAAIAAAD6/wgAAgABAAIAAAD5/wgAAgABAAIAAAD4/wgAAgABAAIAAAD3/wgAAgABAAIAAAD2/wgAAgABAAIAAAD1/wgAAgABAAIAAAD0/wgAAgAAAAIAAAAMAAAAAgADAAEAAAAMAP//AgADAAEAAAAMAP7/AgADAAEAAAAMAP3/AgADAAEAAAAMAPz/AgADAAEAAAAMAPv/AgADAAEAAAAMAPr/AgADAAEAAAAMAPn/AgADAAEAAAAMAPj/AgADAAAAAAA=")
+tile_map_data = PackedByteArray("AAD0/wEAAgAAAAAAAAD1/wEAAgABAAAAAAD2/wEAAgABAAAAAAD3/wEAAgABAAAAAAD4/wEAAgABAAAAAAD5/wEAAgABAAAAAAD6/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAAAAAAIAAEAAgABAAAAAAAJAAEAAgABAAAAAAAKAAEAAgABAAAAAAALAAEAAgABAAAAAAAMAAEAAgACAAEAAAAMAAIAAgACAAEAAAALAAIAAgABAAIAAAAKAAIAAgABAAIAAAAJAAIAAgABAAIAAAAIAAIAAgABAAIAAAAHAAIAAgABAAIAAAAGAAIAAgABAAIAAAAFAAIAAgABAAIAAAAEAAIAAgABAAIAAAADAAIAAgABAAIAAAACAAIAAgABAAIAAAABAAIAAgABAAIAAAAAAAIAAgABAAIAAAD//wIAAgABAAIAAAD+/wIAAgABAAIAAAD9/wIAAgABAAIAAAD8/wIAAgAAAAIAAAD6/wIAAgACAAIAAAD5/wIAAgABAAIAAAD4/wIAAgABAAIAAAD3/wIAAgABAAIAAAD2/wIAAgABAAIAAAD1/wIAAgABAAIAAAD0/wIAAgAAAAEAAAD0/wMAAgADAAEAAAD0/wQAAgADAAEAAAD0/wUAAgADAAEAAAD0/wYAAgADAAEAAAD0/wcAAgAAAAEAAAD1/wcAAgABAAAAAAD2/wcAAgABAAAAAAD3/wcAAgABAAAAAAD4/wcAAgABAAAAAAD5/wcAAgABAAAAAAD6/wcAAgABAAAAAAD7/wcAAgABAAAAAAD8/wcAAgABAAAAAAD9/wcAAgABAAAAAAD+/wcAAgABAAAAAAD//wcAAgABAAAAAAAAAAcAAgABAAAAAAABAAcAAgABAAAAAAACAAcAAgABAAAAAAADAAcAAgABAAAAAAAEAAcAAgABAAAAAAAFAAcAAgABAAAAAAAGAAcAAgABAAAAAAAHAAcAAgABAAAAAAAIAAcAAgABAAAAAAAJAAcAAgABAAAAAAAKAAcAAgABAAAAAAALAAcAAgABAAAAAAAMAAcAAgACAAEAAAALAAgAAgABAAIAAAAMAAgAAgACAAIAAAAKAAgAAgABAAIAAAAJAAgAAgABAAIAAAAIAAgAAgABAAIAAAAHAAgAAgABAAIAAAAGAAgAAgABAAIAAAAFAAgAAgABAAIAAAAEAAgAAgABAAIAAAADAAgAAgABAAIAAAACAAgAAgABAAIAAAABAAgAAgABAAIAAAAAAAgAAgABAAIAAAD//wgAAgABAAIAAAD+/wgAAgABAAIAAAD9/wgAAgABAAIAAAD8/wgAAgABAAIAAAD7/wgAAgABAAIAAAD6/wgAAgABAAIAAAD5/wgAAgABAAIAAAD4/wgAAgABAAIAAAD3/wgAAgABAAIAAAD2/wgAAgABAAIAAAD1/wgAAgABAAIAAAD0/wgAAgAAAAIAAAAMAAAAAgADAAEAAAAMAP//AgADAAEAAAAMAP7/AgADAAEAAAAMAP3/AgADAAEAAAAMAPz/AgADAAEAAAAMAPv/AgADAAEAAAAMAPr/AgADAAEAAAAMAPn/AgADAAEAAAAMAPj/AgADAAAAAAAMAAMAAgADAAEAAAAMAAQAAgADAAEAAAAMAAUAAgADAAEAAAAMAAYAAgADAAEAAAA=")
 tile_set = SubResource("TileSet_l8f1i")
 
-[node name="LoverCharacter" parent="." instance=ExtResource("15_h1qtm")]
+[node name="Walls" type="Node2D" parent="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(-394, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_fa5gi")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(142, -299)
+rotation = 1.57308
+scale = Vector2(1, 3.15999)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D2"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_fa5gi")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -360.0
+offset_top = -190.0
+offset_right = 164.0
+offset_bottom = -97.0
+text = "Sneaky can climb underground"
+label_settings = SubResource("LabelSettings_iftbq")
+
+[node name="Characters" type="Node2D" parent="."]
+
+[node name="LoverCharacter" parent="Characters" instance=ExtResource("15_h1qtm")]
 position = Vector2(-320, -59)
 collision_layer = 3
 collision_mask = 3
 index = 1
 
-[node name="SneakyCharacter" parent="." instance=ExtResource("16_ecdv2")]
+[node name="SneakyCharacter" parent="Characters" instance=ExtResource("16_ecdv2")]
 position = Vector2(-237, -58)
 collision_layer = 66
 collision_mask = 66
 index = 2
 
-[node name="tallCharacter" parent="." instance=ExtResource("17_nr10b")]
+[node name="tallCharacter" parent="Characters" instance=ExtResource("17_nr10b")]
 position = Vector2(-149, -43)
 rotation = -0.0375353
 collision_layer = 3
 collision_mask = 3
 index = 3
 
-[node name="sneakytop" parent="." instance=ExtResource("18_sns8q")]
+[node name="sneakytop" parent="Characters" instance=ExtResource("18_sns8q")]
 position = Vector2(162, -230)
 topIdealPosPath = NodePath("../SneakyCharacter")
 jumpEffectTime = 0.25
 
-[node name="loverTop" parent="." instance=ExtResource("19_6iv3w")]
+[node name="loverTop" parent="Characters" instance=ExtResource("19_6iv3w")]
 unique_name_in_owner = true
 script = ExtResource("20_grwsq")
 topIdealPosPath = NodePath("../LoverCharacter")
 
-[node name="Walls" type="Node2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
-position = Vector2(-394, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
-position = Vector2(0, -62.5)
-shape = SubResource("RectangleShape2D_fa5gi")
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
-position = Vector2(142, -299)
-rotation = 1.57308
-scale = Vector2(1, 3.15999)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
-position = Vector2(0, -62.5)
-shape = SubResource("RectangleShape2D_fa5gi")
-
-[node name="Label" type="Label" parent="."]
-offset_left = -355.0
-offset_top = -258.0
-offset_right = 140.0
-offset_bottom = -165.0
-text = "Sneaky can climb underground"
-label_settings = SubResource("LabelSettings_iftbq")
-
-[node name="Camera2D2" type="Camera2D" parent="." node_paths=PackedStringArray("targets")]
-position = Vector2(9, -128)
+[node name="Camera2D2" type="Camera2D" parent="."]
+position = Vector2(10, 26)
 scale = Vector2(0.235967, -1102.99)
 zoom = Vector2(1.5, 1.5)
-script = SubResource("GDScript_41y33")
-targets = [NodePath("../LoverCharacter"), NodePath("../SneakyCharacter"), NodePath("../tallCharacter")]
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="key" parent="Objects" instance=ExtResource("22_gapre")]
+position = Vector2(215, 145)
+itemName = "key1"
+
+[node name="DoorData" type="Node2D" parent="Objects"]
+script = SubResource("GDScript_67e8f")
+
+[node name="door" parent="Objects/DoorData" instance=ExtResource("24_0nobo")]
+position = Vector2(356, -24)
+keyName = "key1"
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
-position = Vector2(522, 165)
-scale = Vector2(-10.9898, 7.94646)
+position = Vector2(436, -133)
+rotation = -3.14159
+scale = Vector2(10.9898, -7.94646)
+
+[node name="ColorRect" parent="SceneChanger/Node2D" index="0"]
+offset_left = -2936.45
+offset_top = -1246.22
+offset_right = -2896.45
+offset_bottom = -1206.22
 
 [editable path="SceneChanger"]
