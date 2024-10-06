@@ -11,7 +11,7 @@ var playerStorage
 @export var vent: Area2D 
 
 @export var index : int = 0
-@export var height : int = 30
+@export var height: float
 
 func _physics_process(delta: float) -> void:
 	# Add gravity.
@@ -25,7 +25,6 @@ func _physics_process(delta: float) -> void:
 		# Handle jump.
 		if Input.is_action_just_pressed("ui_up") and is_on_floor() and !someoneOnHead:
 			velocity.y = JUMP_VELOCITY
-
 		# Handle movement input.
 		var direction := Input.get_axis("ui_left", "ui_right")
 		if direction:
@@ -36,16 +35,16 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_just_pressed("ui_down") and vent.has_overlapping_bodies() and index == 3:
 			$CollisionShape2D.disabled = true
 	else:
-		animation_player.play("idle_right")
 		$select.visible = false
 		
 	if someoneOnHead and Global.current == index:
 		# Align the character on top to the character below
 		playerStorage.position.x = transform.origin.x
-		playerStorage.position.y = transform.origin.y - playerStorage.height
-	if (Global.current != index):
+		playerStorage.position.y = transform.origin.y - height
+	if (Global.current != index and onSomeHead):
 		velocity.x = 0
-	move_and_slide()
+	else:
+		move_and_slide()
 
 	
 
