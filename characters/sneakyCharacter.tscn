@@ -195,6 +195,7 @@ shape = SubResource("RectangleShape2D_ju0oo")
 
 [node name="sneakyArea" type="Area2D" parent="."]
 position = Vector2(0, -24)
+scale = Vector2(0.64, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sneakyArea"]
 position = Vector2(0, -14)

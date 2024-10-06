@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp34lsdl8f0gg"]
+
+[ext_resource type="AudioStream" uid="uid://dkypnsq0jxdyn" path="res://assets/music/chill.mp3" id="1_ssuju"]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_ssuju")
+autoplay = true
