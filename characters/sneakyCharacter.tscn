@@ -82,7 +82,7 @@ func _on_sneaky_area_body_exited(body):
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ju0oo"]
-size = Vector2(43, 39)
+size = Vector2(43, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5hxi"]
 size = Vector2(41, 5)
@@ -126,7 +126,7 @@ _data = {
 
 [node name="SneakyCharacter" type="CharacterBody2D"]
 script = SubResource("GDScript_75fyf")
-height = 43.0
+height = 35.0
 
 [node name="racoon" type="Node2D" parent="."]
 position = Vector2(0, -24)
@@ -148,7 +148,7 @@ position = Vector2(0, -24)
 texture = ExtResource("3_eluv5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -19.5)
+position = Vector2(0.5, -16.5)
 shape = SubResource("RectangleShape2D_ju0oo")
 
 [node name="sneakyArea" type="Area2D" parent="."]

@@ -75,7 +75,7 @@ func _on_tall_area_body_exited(body):
 size = Vector2(38, 8.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tr46f"]
-size = Vector2(42, 94)
+size = Vector2(42, 85)
 
 [sub_resource type="Animation" id="Animation_f1bn4"]
 length = 0.001
@@ -116,7 +116,7 @@ _data = {
 
 [node name="tallCharacter" type="CharacterBody2D"]
 script = SubResource("GDScript_pvwe8")
-height = 100.0
+height = 95.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -48)
@@ -130,7 +130,7 @@ position = Vector2(0, -52.875)
 shape = SubResource("RectangleShape2D_vqmwe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -47)
+position = Vector2(0, -42.5)
 shape = SubResource("RectangleShape2D_tr46f")
 
 [node name="select" type="Sprite2D" parent="."]

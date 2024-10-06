@@ -6,6 +6,9 @@ const JUMP_VELOCITY = -400.0
 var someoneOnHead: bool = false
 var onSomeHead: bool = false
 var playerStorage
+var inAir: bool = false
+
+@onready var topIdealPos = %topIdealPos
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var vent: Area2D 
@@ -15,6 +18,11 @@ var playerStorage
 
 func _physics_process(delta: float) -> void:
 	# Add gravity.
+	if(not is_on_floor()):
+		inAir = true
+	else: 
+		inAir = false
+		
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 

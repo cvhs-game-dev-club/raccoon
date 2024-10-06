@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://d2yx02pa10h2q"]
+[gd_scene load_steps=39 format=4 uid="uid://d2yx02pa10h2q"]
 
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_uq5ct"]
 [ext_resource type="Texture2D" uid="uid://xgs13fqnwogm" path="res://assets/2 Background/Night/4.png" id="3_eesd5"]
@@ -19,7 +19,9 @@
 [ext_resource type="PackedScene" uid="uid://dh4cg0lumld53" path="res://characters/loverCharacter.tscn" id="16_te2ka"]
 [ext_resource type="PackedScene" uid="uid://cqpf0s0mg0u1c" path="res://characters/sneakyCharacter.tscn" id="17_vsstb"]
 [ext_resource type="PackedScene" uid="uid://chsqwcq1647rw" path="res://key.tscn" id="18_oatgr"]
+[ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://lover_top.tscn" id="20_0hehm"]
 [ext_resource type="PackedScene" uid="uid://f8wuowp4nau7" path="res://sneakyTop.tscn" id="20_tgh86"]
+[ext_resource type="Script" path="res://characters/top.gd" id="21_xlo80"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rdh73"]
 texture = ExtResource("2_uq5ct")
@@ -1351,10 +1353,15 @@ index = 2
 position = Vector2(313, -183)
 index = 3
 
-[node name="key" parent="." instance=ExtResource("18_oatgr")]
-position = Vector2(234, -164)
-
-[node name="top" parent="." instance=ExtResource("20_tgh86")]
+[node name="sneakytop" parent="." instance=ExtResource("20_tgh86")]
 position = Vector2(162, -230)
 topIdealPosPath = NodePath("../SneakyCharacter")
 jumpEffectTime = 0.25
+
+[node name="loverTop" parent="." instance=ExtResource("20_0hehm")]
+unique_name_in_owner = true
+script = ExtResource("21_xlo80")
+topIdealPosPath = NodePath("../LoverCharacter")
+
+[node name="key" parent="." instance=ExtResource("18_oatgr")]
+position = Vector2(234, -164)
