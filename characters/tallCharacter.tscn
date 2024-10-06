@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dnv4n00na3kwd"]
+[gd_scene load_steps=9 format=3 uid="uid://cxfkas0dug2l0"]
 
 [ext_resource type="Texture2D" uid="uid://du32fbbiixrkx" path="res://assets/characters/tall.png" id="1_k8pek"]
 [ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="2_57rqu"]
@@ -17,7 +17,7 @@ var playerStorage
 @export var vent: Area2D 
 
 @export var index : int = 0
-@export var height : int = 30
+@export var height: float
 
 func _physics_process(delta: float) -> void:
 	# Add gravity.
@@ -45,31 +45,49 @@ func _physics_process(delta: float) -> void:
 		
 	if someoneOnHead and Global.current == index:
 		# Align the character on top to the character below
-		playerStorage.position.x = transform.origin.x
-		playerStorage.position.y = transform.origin.y - playerStorage.height
+		playerStorage.transform.origin.x = transform.origin.x
+		playerStorage.transform.origin.y = transform.origin.y - height
 	if (Global.current != index):
 		velocity.x = 0
-	move_and_slide()
+	else:
+		move_and_slide()
 
 	
 
-func _on_area_2d_body_entered(body):
+func _on_tall_area_body_entered(body):
 	if body.name.contains(\"Character\") and body.index != index:
 		someoneOnHead = true
 		playerStorage = body
 		playerStorage.onSomeHead = true
 
-func _on_area_2d_body_exited(body):
+
+
+func _on_tall_area_body_exited(body):
 	if body.name.contains(\"Character\") and body.index != index:
 		someoneOnHead = false
 		playerStorage.onSomeHead = false
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vqmwe"]
-size = Vector2(40, 7)
+size = Vector2(43, 8.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tr46f"]
 size = Vector2(42, 94)
+
+[sub_resource type="Animation" id="Animation_f1bn4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("select:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_seube"]
 resource_name = "select"
@@ -87,45 +105,33 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_f1bn4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("select:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o606c"]
 _data = {
 "RESET": SubResource("Animation_f1bn4"),
 "select": SubResource("Animation_seube")
 }
 
-[node name="tall" type="CharacterBody2D"]
+[node name="tallCharacter" type="CharacterBody2D"]
 script = SubResource("GDScript_pvwe8")
+height = 100.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -48)
 texture = ExtResource("1_k8pek")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="tallArea" type="Area2D" parent="."]
+position = Vector2(0, -48)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-1, -54)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tallArea"]
+position = Vector2(0.5, -53)
 shape = SubResource("RectangleShape2D_vqmwe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1)
+position = Vector2(0, -47)
 shape = SubResource("RectangleShape2D_tr46f")
 
 [node name="select" type="Sprite2D" parent="."]
-position = Vector2(0, -29)
+position = Vector2(0, -77)
 texture = ExtResource("2_57rqu")
 hframes = 4
 vframes = 4
@@ -134,3 +140,6 @@ vframes = 4
 libraries = {
 "": SubResource("AnimationLibrary_o606c")
 }
+
+[connection signal="body_entered" from="tallArea" to="." method="_on_tall_area_body_entered"]
+[connection signal="body_exited" from="tallArea" to="." method="_on_tall_area_body_exited"]

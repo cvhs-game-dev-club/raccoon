@@ -51,7 +51,8 @@ func _physics_process(delta: float) -> void:
 		playerStorage.position.y = transform.origin.y - playerStorage.height
 	if (Global.current != index):
 		velocity.x = 0
-	move_and_slide()
+	if(!onSomeHead):
+		move_and_slide()
 
 	
 

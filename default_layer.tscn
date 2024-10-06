@@ -13,9 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://0fiu2wvylpfr" path="res://assets/2 Background/Night/1.png" id="12_rl7o7"]
 [ext_resource type="Texture2D" uid="uid://38i821653kep" path="res://assets/2 Background/Night/2.png" id="13_uv1h7"]
 [ext_resource type="Texture2D" uid="uid://7oops4rxxo2m" path="res://assets/2 Background/Night/3.png" id="14_iaj74"]
-[ext_resource type="PackedScene" uid="uid://dnv4n00na3kwd" path="res://characters/tall.tscn" id="16_2ce8l"]
-[ext_resource type="PackedScene" uid="uid://dhjopwb62rr5c" path="res://characters/lover.tscn" id="16_te2ka"]
-[ext_resource type="PackedScene" uid="uid://cqpf0s0mg0u1c" path="res://characters/sneaky.tscn" id="17_vsstb"]
+[ext_resource type="PackedScene" uid="uid://cxfkas0dug2l0" path="res://characters/tallCharacter.tscn" id="16_2ce8l"]
+[ext_resource type="PackedScene" uid="uid://dh4cg0lumld53" path="res://characters/loverCharacter.tscn" id="16_te2ka"]
+[ext_resource type="PackedScene" uid="uid://cqpf0s0mg0u1c" path="res://characters/sneakyCharacter.tscn" id="17_vsstb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rdh73"]
 texture = ExtResource("2_uq5ct")
@@ -1126,17 +1126,14 @@ position = Vector2(160, -27)
 scale = Vector2(0.235967, -1102.99)
 zoom = Vector2(1.5, 1.5)
 
-[node name="Sneaky" parent="." instance=ExtResource("17_vsstb")]
-position = Vector2(-55, -82)
-index = 3
-height = 5
-
-[node name="Lover" parent="." instance=ExtResource("16_te2ka")]
-position = Vector2(123, -171)
+[node name="LoverCharacter" parent="." instance=ExtResource("16_te2ka")]
+position = Vector2(-104, -90)
 index = 1
-height = 5
 
-[node name="tall" parent="." instance=ExtResource("16_2ce8l")]
-position = Vector2(-164, -137)
+[node name="SneakyCharacter" parent="." instance=ExtResource("17_vsstb")]
+position = Vector2(162, -200)
 index = 2
-height = 5
+
+[node name="tallCharacter" parent="." instance=ExtResource("16_2ce8l")]
+position = Vector2(313, -183)
+index = 3

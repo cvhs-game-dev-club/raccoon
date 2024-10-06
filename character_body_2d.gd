@@ -11,7 +11,7 @@ var playerStorage
 @export var vent: Area2D 
 
 @export var index : int = 0
-@export var height : int = 30
+@export var height: float
 
 func _physics_process(delta: float) -> void:
 	# Add gravity.
@@ -40,10 +40,11 @@ func _physics_process(delta: float) -> void:
 	if someoneOnHead and Global.current == index:
 		# Align the character on top to the character below
 		playerStorage.position.x = transform.origin.x
-		playerStorage.position.y = transform.origin.y - playerStorage.height
+		playerStorage.position.y = transform.origin.y - height
 	if (Global.current != index):
 		velocity.x = 0
-	move_and_slide()
+	else:
+		move_and_slide()
 
 	
 

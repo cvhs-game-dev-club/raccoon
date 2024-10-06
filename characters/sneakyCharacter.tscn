@@ -18,7 +18,7 @@ var playerStorage
 @export var vent: Area2D 
 
 @export var index : int = 0
-@export var height : int = 30
+@export var height: float
 
 func _physics_process(delta: float) -> void:
 	# Add gravity.
@@ -47,21 +47,23 @@ func _physics_process(delta: float) -> void:
 	if someoneOnHead and Global.current == index:
 		# Align the character on top to the character below
 		playerStorage.position.x = transform.origin.x
-		playerStorage.position.y = transform.origin.y - playerStorage.height
+		playerStorage.position.y = transform.origin.y - height
 	if (Global.current != index):
-		velocity.x = 0	
-	move_and_slide()
+		velocity.x = 0
+	else:
+		move_and_slide()
 
 	
-
-func _on_area_2d_body_entered(body):
-	if body.name.contains(\"Character\") and body.index != index:
+func _on_sneaky_area_body_entered(body):
+	if (body.name.contains(\"Character\") and body.index != index):
+		print(\"HERE\")
 		someoneOnHead = true
 		playerStorage = body
 		playerStorage.onSomeHead = true
 
-func _on_area_2d_body_exited(body):
-	if body.name.contains(\"Character\") and body.index != index:
+
+func _on_sneaky_area_body_exited(body):
+	if (body.name.contains(\"Character\") and body.index != index):
 		someoneOnHead = false
 		playerStorage.onSomeHead = false
 "
@@ -70,7 +72,22 @@ func _on_area_2d_body_exited(body):
 size = Vector2(43, 39)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5hxi"]
-size = Vector2(35, 5)
+size = Vector2(36.5, 8.5)
+
+[sub_resource type="Animation" id="Animation_6sreg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("select:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_t7gey"]
 resource_name = "select"
@@ -88,48 +105,37 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_6sreg"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("select:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_30l6q"]
 _data = {
 "RESET": SubResource("Animation_6sreg"),
 "select": SubResource("Animation_t7gey")
 }
 
-[node name="Sneaky" type="CharacterBody2D"]
+[node name="SneakyCharacter" type="CharacterBody2D"]
 script = SubResource("GDScript_75fyf")
+height = 43.0
 
 [node name="on" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("2_bp6sw")
 
 [node name="off" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
 texture = ExtResource("3_eluv5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, 4.5)
+position = Vector2(0.5, -19.5)
 shape = SubResource("RectangleShape2D_ju0oo")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="sneakyArea" type="Area2D" parent="."]
+position = Vector2(0, -24)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -19)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="sneakyArea"]
+position = Vector2(0.75, -20.75)
 shape = SubResource("RectangleShape2D_q5hxi")
 
 [node name="select" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
 texture = ExtResource("4_fsfhh")
 hframes = 4
 vframes = 4
@@ -138,3 +144,6 @@ vframes = 4
 libraries = {
 "": SubResource("AnimationLibrary_30l6q")
 }
+
+[connection signal="body_entered" from="sneakyArea" to="." method="_on_sneaky_area_body_entered"]
+[connection signal="body_exited" from="sneakyArea" to="." method="_on_sneaky_area_body_exited"]
