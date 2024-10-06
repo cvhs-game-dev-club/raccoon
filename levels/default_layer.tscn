@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=4 uid="uid://d2yx02pa10h2q"]
+[gd_scene load_steps=39 format=4 uid="uid://d2yx02pa10h2q"]
 
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="1_j27tf"]
 [ext_resource type="Texture2D" uid="uid://xgs13fqnwogm" path="res://assets/2 Background/Night/4.png" id="2_5s6fd"]
@@ -20,6 +20,7 @@
 [ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="18_tsilh"]
 [ext_resource type="Script" path="res://characters/top.gd" id="19_ynr4r"]
 [ext_resource type="PackedScene" uid="uid://chsqwcq1647rw" path="res://objects/key.tscn" id="20_w2o2f"]
+[ext_resource type="PackedScene" uid="uid://djtw4u34h08xd" path="res://coat_detector.tscn" id="21_iepum"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_434w2"]
 texture = ExtResource("1_j27tf")
@@ -1420,8 +1421,15 @@ jumpEffectTime = 0.25
 unique_name_in_owner = true
 script = ExtResource("19_ynr4r")
 topIdealPosPath = NodePath("../LoverCharacter")
+jumpEffectTime = 0.25
 
 [node name="key" parent="." instance=ExtResource("20_w2o2f")]
 light_mask = 3
 visibility_layer = 3
 position = Vector2(234, -164)
+
+[node name="coatDetector" parent="." instance=ExtResource("21_iepum")]
+position = Vector2(-192, -186)
+rSneakyPath = NodePath("../SneakyCharacter")
+rLoverPath = NodePath("../LoverCharacter")
+rTallPath = NodePath("../tallCharacter")

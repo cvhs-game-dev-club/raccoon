@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://djtw4u34h08xd"]
+
+[ext_resource type="Script" path="res://coat_detector.gd" id="1_tghe4"]
+
+[node name="coatDetector" type="Node2D"]
+script = ExtResource("1_tghe4")

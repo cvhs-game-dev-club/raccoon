@@ -119,6 +119,7 @@ _data = {
 
 [node name="LoverCharacter" type="CharacterBody2D"]
 script = SubResource("GDScript_s628m")
+height = 50.0
 
 [node name="topIdealPos" type="Node2D" parent="."]
 unique_name_in_owner = true

@@ -32,6 +32,10 @@ var holdItemName: String
 
 func _physics_process(delta: float) -> void:
 	# Add gravity only if not on the ladder.
+	if(not is_on_floor()):
+		inAir = true
+	else: 
+		inAir = false
 	if not is_on_floor() and not onLadder:
 		velocity += get_gravity() * delta
 	
