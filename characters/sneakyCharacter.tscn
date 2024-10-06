@@ -70,9 +70,10 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()  # Handle movement while on the ladder
 		return  # Skip the rest of the movement logic
 
-	if (Global.current != index):
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-	move_and_slide()
+	if (Global.current != index and onSomeHead):
+		velocity.x = 0
+	else:
+		move_and_slide()
 
 func _on_sneaky_area_body_entered(body):
 	if body.name.contains(\"Character\") and body.index != index and not onLadder:

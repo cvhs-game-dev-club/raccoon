@@ -1,7 +1,18 @@
 [gd_scene load_steps=5 format=3 uid="uid://b8dghy5hqorkm"]
 
 [ext_resource type="Texture2D" uid="uid://b8rodx4bkall3" path="res://assets/3 Objects/kenny_objects/tile_0150.png" id="1_3lnj6"]
-[ext_resource type="Script" path="res://door.gd" id="1_as2lq"]
+
+[sub_resource type="GDScript" id="GDScript_ovtv5"]
+script/source = "extends Node2D
+
+@onready var doorCollider = %DoorCollision
+
+func _on_door_area_2d_body_entered(body):
+	if(body.name.contains(\"SneakyCharacter\")):
+		if(body.holdItemName.contains(\"key\")):
+			print(\"OPEN DOOR\")
+			doorCollider.disabled = true
+"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ptnyw"]
 size = Vector2(60, 60)
@@ -10,7 +21,7 @@ size = Vector2(60, 60)
 size = Vector2(120, 180)
 
 [node name="door" type="Node2D"]
-script = ExtResource("1_as2lq")
+script = SubResource("GDScript_ovtv5")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 scale = Vector2(1, 1.92)
