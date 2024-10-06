@@ -24,9 +24,11 @@ func _physics_process(delta):
 		playerStorage.holdItemName = ""
 
 func _on_key_area_2d_body_entered(body):
+	print("enter")
 	if(body.name.contains("SneakyCharacter")):
 		entered = true
 		playerStorage = body
+		print("enter1")
 func easyLerp(from: Vector2, to: Vector2, weight: float, delta: float):
 	from.x = move_toward(from.x, to.x, weight * delta)
 	from.y = move_toward(from.y, to.y, weight * delta)
