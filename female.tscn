@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dnlkl6ptc3dix"]
+
+[ext_resource type="Script" path="res://female.gd" id="1_3ovjk"]
+[ext_resource type="Texture2D" uid="uid://di2beu2l6peuv" path="res://assets/3 Objects/kenny_objects/city/Tiles/tile_0105.png" id="1_mnr80"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6n027"]
+radius = 15.0
+
+[node name="Female" type="Node2D"]
+scale = Vector2(4, 4)
+script = ExtResource("1_3ovjk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_mnr80")
+
+[node name="Marker2D" type="Marker2D" parent="Sprite2D"]
+
+[node name="chatDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="chatDetector"]
+shape = SubResource("CircleShape2D_6n027")
+
+[connection signal="body_entered" from="chatDetector" to="." method="_on_chat_detector_body_entered"]
+[connection signal="body_exited" from="chatDetector" to="." method="_on_chat_detector_body_exited"]
