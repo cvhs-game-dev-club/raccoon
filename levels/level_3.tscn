@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=50 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_lpqjl"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_g0kye"]
@@ -1716,9 +1716,42 @@ sources/2 = SubResource("TileSetAtlasSource_f7grf")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fa5gi"]
 size = Vector2(20, 471)
 
+[sub_resource type="GDScript" id="GDScript_jfq11"]
+script/source = "extends Area2D
+
+@onready var animated_sprite_2d: AnimatedSprite2D = $\"../../Characters/sneakytop/AnimatedSprite2D\"
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+	
+	
+
+
+func _on_body_entered(body: Node2D) -> void:
+	print(\"enter\")
+	if body.name.contains(\"Sneaky\"):
+		animated_sprite_2d.play(\"on\")
+		print(\"on\")
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if body.name.contains(\"Sneaky\"):
+		animated_sprite_2d.play(\"default\")
+		print(\"on\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_21lsi"]
+size = Vector2(754, 168)
+
 [sub_resource type="LabelSettings" id="LabelSettings_iftbq"]
 font = ExtResource("21_mj6i7")
-font_size = 36
+font_size = 24
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="GDScript" id="GDScript_67e8f"]
@@ -1779,12 +1812,29 @@ scale = Vector2(1, 3.15999)
 position = Vector2(0, -62.5)
 shape = SubResource("RectangleShape2D_fa5gi")
 
+[node name="Area2D" type="Area2D" parent="Node2D"]
+collision_layer = 2
+collision_mask = 2
+script = SubResource("GDScript_jfq11")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Area2D"]
+position = Vector2(20, 147)
+shape = SubResource("RectangleShape2D_21lsi")
+
 [node name="Label" type="Label" parent="."]
 offset_left = -360.0
 offset_top = -190.0
 offset_right = 164.0
 offset_bottom = -97.0
 text = "Sneaky can climb underground"
+label_settings = SubResource("LabelSettings_iftbq")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 18.0
+offset_top = 92.0
+offset_right = 542.0
+offset_bottom = 185.0
+text = "Use F to interact with objects"
 label_settings = SubResource("LabelSettings_iftbq")
 
 [node name="Characters" type="Node2D" parent="."]
@@ -1837,7 +1887,7 @@ position = Vector2(356, -24)
 keyName = "key1"
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
-position = Vector2(409, -242)
+position = Vector2(407, -181)
 rotation = -3.14159
 scale = Vector2(10.9898, -7.94646)
 
@@ -1847,4 +1897,9 @@ offset_top = -1246.22
 offset_right = -2896.45
 offset_bottom = -1206.22
 
+[connection signal="body_entered" from="Node2D/Area2D" to="Node2D/Area2D" method="_on_body_entered"]
+[connection signal="body_exited" from="Node2D/Area2D" to="." method="_on_area_2d_body_exited"]
+[connection signal="body_exited" from="Node2D/Area2D" to="Node2D/Area2D" method="_on_body_exited"]
+
+[editable path="Characters/sneakytop"]
 [editable path="SceneChanger"]

@@ -1822,4 +1822,12 @@ shape = SubResource("RectangleShape2D_w4726")
 position = Vector2(258, -106)
 velocityIdeal = Vector2(-20, 0)
 
+[node name="Label2" type="Label" parent="."]
+offset_left = 124.0
+offset_top = -190.0
+offset_right = 670.0
+offset_bottom = -97.0
+text = "Use F to interact with objects"
+label_settings = SubResource("LabelSettings_5ta21")
+
 [editable path="SceneChanger"]
