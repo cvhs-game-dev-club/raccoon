@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://chsqwcq1647rw"]
+
+[ext_resource type="Script" path="res://key.gd" id="1_ele20"]
+[ext_resource type="Texture2D" uid="uid://bfjx2fxoyw5l4" path="res://assets/3 Objects/kenny_objects/tile_0027.png" id="1_xvwh1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vonpr"]
+size = Vector2(20, 14)
+
+[node name="key" type="Node2D"]
+script = ExtResource("1_ele20")
+itemName = "key"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_xvwh1")
+
+[node name="KeyArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KeyArea2D"]
+shape = SubResource("RectangleShape2D_vonpr")
+
+[connection signal="body_entered" from="KeyArea2D" to="." method="_on_key_area_2d_body_entered"]

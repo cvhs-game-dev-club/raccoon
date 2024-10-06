@@ -13,7 +13,9 @@ const JUMP_VELOCITY = -400.0
 var someoneOnHead: bool = false
 var onSomeHead: bool = false
 var playerStorage
+var holdItemName: String
 
+@onready var holdItemPos = %holdItemPos
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var vent: Area2D 
 
@@ -22,6 +24,7 @@ var playerStorage
 
 func _physics_process(delta: float) -> void:
 	# Add gravity.
+	#print(holdItemName)
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 
@@ -39,8 +42,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
-		if Input.is_action_just_pressed(\"ui_down\") and vent.has_overlapping_bodies() and index == 3:
-			$CollisionShape2D.disabled = true
 	else:
 		$select.visible = false
 		
@@ -56,7 +57,7 @@ func _physics_process(delta: float) -> void:
 	
 func _on_sneaky_area_body_entered(body):
 	if (body.name.contains(\"Character\") and body.index != index):
-		print(\"HERE\")
+		#print(\"HERE\")
 		someoneOnHead = true
 		playerStorage = body
 		playerStorage.onSomeHead = true
@@ -72,7 +73,7 @@ func _on_sneaky_area_body_exited(body):
 size = Vector2(43, 39)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5hxi"]
-size = Vector2(36.5, 8.5)
+size = Vector2(41, 5)
 
 [sub_resource type="Animation" id="Animation_6sreg"]
 length = 0.001
@@ -131,7 +132,7 @@ shape = SubResource("RectangleShape2D_ju0oo")
 position = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sneakyArea"]
-position = Vector2(0.75, -20.75)
+position = Vector2(0.5, -19.5)
 shape = SubResource("RectangleShape2D_q5hxi")
 
 [node name="select" type="Sprite2D" parent="."]
@@ -144,6 +145,10 @@ vframes = 4
 libraries = {
 "": SubResource("AnimationLibrary_30l6q")
 }
+
+[node name="holdItemPos" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -12)
 
 [connection signal="body_entered" from="sneakyArea" to="." method="_on_sneaky_area_body_entered"]
 [connection signal="body_exited" from="sneakyArea" to="." method="_on_sneaky_area_body_exited"]

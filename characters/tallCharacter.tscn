@@ -38,8 +38,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
-		if Input.is_action_just_pressed(\"ui_down\") and vent.has_overlapping_bodies() and index == 3:
-			$CollisionShape2D.disabled = true
 	else:
 		$select.visible = false
 		
@@ -69,7 +67,7 @@ func _on_tall_area_body_exited(body):
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vqmwe"]
-size = Vector2(43, 8.5)
+size = Vector2(38, 8.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tr46f"]
 size = Vector2(42, 94)
@@ -123,7 +121,7 @@ texture = ExtResource("1_k8pek")
 position = Vector2(0, -48)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tallArea"]
-position = Vector2(0.5, -53)
+position = Vector2(0, -52.875)
 shape = SubResource("RectangleShape2D_vqmwe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

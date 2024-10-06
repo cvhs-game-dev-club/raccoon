@@ -32,8 +32,6 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
-		if Input.is_action_just_pressed("ui_down") and vent.has_overlapping_bodies() and index == 3:
-			$CollisionShape2D.disabled = true
 	else:
 		$select.visible = false
 		
