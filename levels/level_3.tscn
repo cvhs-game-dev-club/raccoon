@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=46 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_lpqjl"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_g0kye"]
@@ -21,6 +21,24 @@
 [ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="19_6iv3w"]
 [ext_resource type="Script" path="res://characters/top.gd" id="20_grwsq"]
 [ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="21_mj6i7"]
+[ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
+
+[sub_resource type="GDScript" id="GDScript_tp7yp"]
+script/source = "extends Node2D
+
+@onready var animation_player: AnimationPlayer = $SceneChanger/Node2D/AnimationPlayer
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$SceneChanger/Node2D/ColorRect.color.a = 255
+	animation_player.play(\"fade_out\")
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2ktpl"]
 texture = ExtResource("1_lpqjl")
@@ -1755,6 +1773,7 @@ func _process(delta: float) -> void:
 "
 
 [node name="Level3" type="Node2D"]
+script = SubResource("GDScript_tp7yp")
 
 [node name="Node2D" type="Node2D" parent="."]
 
@@ -1839,3 +1858,9 @@ scale = Vector2(0.235967, -1102.99)
 zoom = Vector2(1.5, 1.5)
 script = SubResource("GDScript_41y33")
 targets = [NodePath("../LoverCharacter"), NodePath("../SneakyCharacter"), NodePath("../tallCharacter")]
+
+[node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
+position = Vector2(522, 165)
+scale = Vector2(-10.9898, 7.94646)
+
+[editable path="SceneChanger"]
