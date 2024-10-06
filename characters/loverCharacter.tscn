@@ -1,10 +1,81 @@
-[gd_scene load_steps=9 format=3 uid="uid://dh4cg0lumld53"]
+[gd_scene load_steps=11 format=3 uid="uid://dh4cg0lumld53"]
 
-[ext_resource type="Script" path="res://character_body_2d.gd" id="1_8c33q"]
+[ext_resource type="Script" path="res://characters/top_ideal_pos.gd" id="2_f6t6p"]
+[ext_resource type="Texture2D" uid="uid://btaxfxjkknw1v" path="res://assets/characters/lvoer(bottom).png" id="2_jnj6k"]
 [ext_resource type="Texture2D" uid="uid://cktdmf3xc1f85" path="res://assets/characters/lvoer.png" id="2_nd3ak"]
 [ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="3_c1gii"]
 
+[sub_resource type="GDScript" id="GDScript_s628m"]
+script/source = "extends CharacterBody2D
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+var someoneOnHead: bool = false
+var onSomeHead: bool = false
+var playerStorage
+var inAir: bool = false
+
+@onready var topIdealPos = %topIdealPos
+
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@export var vent: Area2D 
+
+@export var index : int = 0
+@export var height: float
+
+func _physics_process(delta: float) -> void:
+	# Add gravity.
+	if(not is_on_floor()):
+		inAir = true
+	else: 
+		inAir = false
+		
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	if (Global.current == index):
+		animation_player.play(\"select\")
+		$select.visible = true
+
+		# Handle jump.
+		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and !someoneOnHead:
+			velocity.y = JUMP_VELOCITY
+		# Handle movement input.
+		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+		if direction:
+			velocity.x = direction * SPEED
+		else:
+			velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	else:
+		$select.visible = false
+		
+	if someoneOnHead and Global.current == index:
+		# Align the character on top to the character below
+		playerStorage.position.x = transform.origin.x
+		playerStorage.position.y = transform.origin.y - height
+	if (Global.current != index and onSomeHead):
+		velocity.x = 0
+	else:
+		move_and_slide()
+
+	
+
+func _on_area_2d_body_entered(body):
+	if body.name.contains(\"Character\") and body.index != index:
+		someoneOnHead = true
+		playerStorage = body
+		playerStorage.onSomeHead = true
+
+func _on_area_2d_body_exited(body):
+	if body.name.contains(\"Character\") and body.index != index:
+		someoneOnHead = false
+		playerStorage.onSomeHead = false
+"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vf6m4"]
+size = Vector2(20, 18.3333)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwxi6"]
 size = Vector2(37, 6.5)
@@ -47,15 +118,24 @@ _data = {
 }
 
 [node name="LoverCharacter" type="CharacterBody2D"]
-script = ExtResource("1_8c33q")
-height = 50.0
+script = SubResource("GDScript_s628m")
+
+[node name="topIdealPos" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -25)
+script = ExtResource("2_f6t6p")
+
+[node name="Lvoer(bottom)" type="Sprite2D" parent="."]
+position = Vector2(0, -24)
+texture = ExtResource("2_jnj6k")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -24)
 texture = ExtResource("2_nd3ak")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -23)
+position = Vector2(0, -21.1)
 scale = Vector2(2.04, 2.28)
 shape = SubResource("RectangleShape2D_vf6m4")
 
@@ -68,6 +148,7 @@ shape = SubResource("RectangleShape2D_lwxi6")
 
 [node name="select" type="Sprite2D" parent="."]
 position = Vector2(0, -24)
+scale = Vector2(1.8945, 2.23829)
 texture = ExtResource("3_c1gii")
 hframes = 4
 vframes = 4

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://w7rw184qh6hc"
-path="res://.godot/imported/banada.png-2cf136d1cfcc6b333a078accda5d1199.ctex"
+uid="uid://25c5580ks3kv"
+path="res://.godot/imported/Sneaky_Run_Jump1.png-4f9a570f17c87e211d83015860e66cfb.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/characters/banada.png"
-dest_files=["res://.godot/imported/banada.png-2cf136d1cfcc6b333a078accda5d1199.ctex"]
+source_file="res://assets/characters/sneaky/jump/Sneaky_Run_Jump1.png"
+dest_files=["res://.godot/imported/Sneaky_Run_Jump1.png-4f9a570f17c87e211d83015860e66cfb.ctex"]
 
 [params]
 

@@ -1,8 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cqpf0s0mg0u1c"]
+[gd_scene load_steps=16 format=3 uid="uid://cqpf0s0mg0u1c"]
 
-[ext_resource type="Texture2D" uid="uid://w7rw184qh6hc" path="res://assets/characters/banada.png" id="2_bp6sw"]
-[ext_resource type="Texture2D" uid="uid://de2vyo4wph6ap" path="res://assets/characters/bandana.png" id="3_eluv5"]
+[ext_resource type="Script" path="res://characters/top_ideal_pos.gd" id="1_jsmq1"]
+[ext_resource type="Texture2D" uid="uid://p7q11kj0vpc0" path="res://assets/characters/sneaky/bandana(bottom).png" id="1_l1tee"]
+[ext_resource type="Texture2D" uid="uid://w7rw184qh6hc" path="res://assets/characters/sneaky/banada.png" id="2_bp6sw"]
+[ext_resource type="Texture2D" uid="uid://de2vyo4wph6ap" path="res://assets/characters/sneaky/bandana.png" id="3_eluv5"]
 [ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="4_fsfhh"]
+[ext_resource type="Texture2D" uid="uid://b8ux0yphwhwvp" path="res://assets/characters/sneaky/jump/Sneaky_Run_Jump2.png" id="6_v7rcn"]
+[ext_resource type="Texture2D" uid="uid://8lxldrqv0lpf" path="res://assets/characters/sneaky/jump/Sneaky_Run_Jump5.png" id="9_4gep3"]
 
 [sub_resource type="GDScript" id="GDScript_75fyf"]
 script/source = "extends CharacterBody2D
@@ -13,25 +17,32 @@ const JUMP_VELOCITY = -400.0
 var someoneOnHead: bool = false
 var onSomeHead: bool = false
 var playerStorage
+var onLadder: bool = false
+var inAir: bool = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var vent: Area2D 
-
-@export var index : int = 0
+@export var index: int = 0
 @export var height: float
+@export var head: Sprite2D
+var holdItemName: String
+@onready var topIdealPos = %topIdealPos
+@onready var holdItemPos = %holdItemPos
+
 
 func _physics_process(delta: float) -> void:
-	# Add gravity.
-	if not is_on_floor():
+	# Add gravity only if not on the ladder.
+	if not is_on_floor() and not onLadder:
 		velocity += get_gravity() * delta
-
+	
 	if (Global.current == index):
 		animation_player.play(\"select\")
 		$select.visible = true
 
 		# Handle jump.
-		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and !someoneOnHead:
+		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and not someoneOnHead and not onLadder:
 			velocity.y = JUMP_VELOCITY
+		
 		# Handle movement input.
 		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
 		if direction:
@@ -39,40 +50,55 @@ func _physics_process(delta: float) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
-		if Input.is_action_just_pressed(\"ui_down\") and vent.has_overlapping_bodies() and index == 3:
-			$CollisionShape2D.disabled = true
 	else:
 		$select.visible = false
-		
+	
 	if someoneOnHead and Global.current == index:
 		# Align the character on top to the character below
 		playerStorage.position.x = transform.origin.x
 		playerStorage.position.y = transform.origin.y - height
+	
+	if onLadder and Global.current == index:
+		# Adjust the vertical velocity while on the ladder.\\
+		if Input.is_action_pressed(\"up_ladder\"):
+			velocity.y -= 5
+		elif Input.is_action_pressed(\"down_ladder\"):
+			velocity.y += 5
+		else:
+			velocity.y = 0  # Prevent falling or being pushed down
+		
+		move_and_slide()  # Handle movement while on the ladder
+		return  # Skip the rest of the movement logic
+
 	if (Global.current != index and onSomeHead):
 		velocity.x = 0
 	else:
 		move_and_slide()
 
-	
 func _on_sneaky_area_body_entered(body):
-	if (body.name.contains(\"Character\") and body.index != index):
-		print(\"HERE\")
+	if body.name.contains(\"Character\") and body.index != index and not onLadder:
 		someoneOnHead = true
 		playerStorage = body
 		playerStorage.onSomeHead = true
 
-
 func _on_sneaky_area_body_exited(body):
-	if (body.name.contains(\"Character\") and body.index != index):
+	if body.name.contains(\"Character\") and body.index != index:
 		someoneOnHead = false
-		playerStorage.onSomeHead = false
+		if playerStorage != null:
+			playerStorage.onSomeHead = false
+
+func _on_ladder_checker_body_entered(body: Node2D) -> void:
+	onLadder = true
+
+func _on_ladder_checker_body_exited(body: Node2D) -> void:
+	onLadder = false
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ju0oo"]
-size = Vector2(43, 39)
+size = Vector2(18, 33)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q5hxi"]
-size = Vector2(36.5, 8.5)
+size = Vector2(18, 5)
 
 [sub_resource type="Animation" id="Animation_6sreg"]
 length = 0.001
@@ -111,31 +137,72 @@ _data = {
 "select": SubResource("Animation_t7gey")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2g76y"]
+size = Vector2(20, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g5l16"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("9_4gep3")
+}],
+"loop": true,
+"name": &"startDown",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_v7rcn")
+}],
+"loop": true,
+"name": &"startUp",
+"speed": 5.0
+}]
+
 [node name="SneakyCharacter" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
 script = SubResource("GDScript_75fyf")
-height = 43.0
+height = 35.0
+
+[node name="racoon" type="Node2D" parent="."]
+position = Vector2(0, -24)
+
+[node name="topIdealPos" type="Node2D" parent="racoon"]
+unique_name_in_owner = true
+script = ExtResource("1_jsmq1")
+
+[node name="bottom" type="Sprite2D" parent="racoon"]
+texture = ExtResource("1_l1tee")
 
 [node name="on" type="Sprite2D" parent="."]
 visible = false
 texture = ExtResource("2_bp6sw")
 
 [node name="off" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -24)
 texture = ExtResource("3_eluv5")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0.5, -19.5)
+position = Vector2(0, -16.5)
 shape = SubResource("RectangleShape2D_ju0oo")
 
 [node name="sneakyArea" type="Area2D" parent="."]
 position = Vector2(0, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="sneakyArea"]
-position = Vector2(0.75, -20.75)
+position = Vector2(0, -14)
 shape = SubResource("RectangleShape2D_q5hxi")
 
 [node name="select" type="Sprite2D" parent="."]
 position = Vector2(0, -24)
+scale = Vector2(2.23746, 2.33004)
 texture = ExtResource("4_fsfhh")
 hframes = 4
 vframes = 4
@@ -145,5 +212,25 @@ libraries = {
 "": SubResource("AnimationLibrary_30l6q")
 }
 
+[node name="holdItemPos" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -12)
+
+[node name="LadderChecker" type="Area2D" parent="."]
+collision_layer = 128
+collision_mask = 128
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderChecker"]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_2g76y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+visible = false
+position = Vector2(-2, -24)
+sprite_frames = SubResource("SpriteFrames_g5l16")
+animation = &"none"
+
 [connection signal="body_entered" from="sneakyArea" to="." method="_on_sneaky_area_body_entered"]
 [connection signal="body_exited" from="sneakyArea" to="." method="_on_sneaky_area_body_exited"]
+[connection signal="body_entered" from="LadderChecker" to="." method="_on_ladder_checker_body_entered"]
+[connection signal="body_exited" from="LadderChecker" to="." method="_on_ladder_checker_body_exited"]
