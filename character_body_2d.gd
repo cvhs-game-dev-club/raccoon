@@ -41,7 +41,7 @@ func _physics_process(delta: float) -> void:
 		# Align the character on top to the character below
 		playerStorage.position.x = transform.origin.x
 		playerStorage.position.y = transform.origin.y - height
-	if (Global.current != index):
+	if (Global.current != index and onSomeHead):
 		velocity.x = 0
 	else:
 		move_and_slide()
