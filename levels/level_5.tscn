@@ -1824,7 +1824,7 @@ offset_left = -363.0
 offset_top = -253.0
 offset_right = 161.0
 offset_bottom = -160.0
-text = "Launch sneeky across"
+text = "Launch blue  across"
 label_settings = SubResource("LabelSettings_vn1ev")
 
 [node name="SceneChanger" parent="." instance=ExtResource("23_peqej")]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://d216dkquocyrk"]
+[gd_scene load_steps=51 format=4 uid="uid://d216dkquocyrk"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_2fgcy"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_f46ni"]
@@ -26,6 +26,7 @@
 [ext_resource type="PackedScene" uid="uid://bagyidhuwkiuw" path="res://lever.tscn" id="23_x7b72"]
 [ext_resource type="PackedScene" uid="uid://bi4dqv4sgmva7" path="res://button.tscn" id="25_716p2"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="26_iubmb"]
+[ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="27_7teev"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u4olr"]
 texture = ExtResource("1_2fgcy")
@@ -1725,6 +1726,10 @@ func _process(delta: float) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4w5f8"]
 size = Vector2(123, 316)
 
+[sub_resource type="LabelSettings" id="LabelSettings_75fji"]
+font = ExtResource("27_7teev")
+font_size = 24
+
 [node name="Level6" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1866,3 +1871,12 @@ color = Color(0.321569, 0.462745, 0.270588, 0.470588)
 position = Vector2(230, 336)
 scale = Vector2(42.9701, 13.1361)
 sceneToChange = "res://levels/level_6.tscn"
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -372.0
+offset_top = 88.0
+offset_right = 123.0
+offset_bottom = 181.0
+text = "Press F to interact 
+with an Object"
+label_settings = SubResource("LabelSettings_75fji")

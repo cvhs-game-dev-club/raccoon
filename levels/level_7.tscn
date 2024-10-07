@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://de3urnndyxobj"]
+[gd_scene load_steps=51 format=4 uid="uid://de3urnndyxobj"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_ncfai"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_v1ejh"]
@@ -25,6 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://chsqwcq1647rw" path="res://objects/key.tscn" id="23_5geuv"]
 [ext_resource type="PackedScene" uid="uid://b8dghy5hqorkm" path="res://objects/door.tscn" id="24_1l1xd"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="26_ffp2u"]
+[ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="26_reg5b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_8ysh7"]
 texture = ExtResource("1_ncfai")
@@ -1739,6 +1740,10 @@ func _process(delta: float) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tlt6h"]
 size = Vector2(123, 252)
 
+[sub_resource type="LabelSettings" id="LabelSettings_dtggj"]
+font = ExtResource("26_reg5b")
+font_size = 24
+
 [node name="Level7" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1886,3 +1891,12 @@ offset_right = -12.0
 offset_bottom = -188.0
 scale = Vector2(1.41683, 1.88069)
 color = Color(0.321569, 0.462745, 0.270588, 0.470588)
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -363.0
+offset_top = 92.0
+offset_right = 132.0
+offset_bottom = 185.0
+text = "Pipes take you to
+other pipes"
+label_settings = SubResource("LabelSettings_dtggj")

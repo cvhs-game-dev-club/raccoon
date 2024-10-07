@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://bdxxoh3bjwbu7"]
+[gd_scene load_steps=48 format=4 uid="uid://bdxxoh3bjwbu7"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_ifagc"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_c2e7s"]
@@ -1724,6 +1724,10 @@ func _process(delta: float) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ba4oe"]
 size = Vector2(111, 201)
 
+[sub_resource type="LabelSettings" id="LabelSettings_8iwfj"]
+font = ExtResource("22_ss8l1")
+font_size = 24
+
 [node name="Level1" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1841,3 +1845,12 @@ offset_right = 24.0
 offset_bottom = -78.0
 scale = Vector2(1.41683, 1.88069)
 color = Color(0.321569, 0.462745, 0.270588, 0.470588)
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 61.0
+offset_top = 51.0
+offset_right = 556.0
+offset_bottom = 144.0
+text = "Green checkpoints require
+everyone to proceed"
+label_settings = SubResource("LabelSettings_8iwfj")

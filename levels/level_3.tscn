@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://3cbwna2a7do2"]
+[gd_scene load_steps=48 format=4 uid="uid://3cbwna2a7do2"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_lpqjl"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_g0kye"]
@@ -20,9 +20,9 @@
 [ext_resource type="PackedScene" uid="uid://f8wuowp4nau7" path="res://characters/sneakyTop.tscn" id="18_sns8q"]
 [ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="19_6iv3w"]
 [ext_resource type="Script" path="res://characters/top.gd" id="20_grwsq"]
+[ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="21_mj6i7"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
 [ext_resource type="PackedScene" path="res://arrow.tscn" id="25_x6h88"]
-[ext_resource type="PackedScene" uid="uid://dq4yawa2biqq8" path="res://barrel.tscn" id="29_2ixyl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e75i3"]
 texture = ExtResource("1_lpqjl")
@@ -1721,6 +1721,15 @@ func _process(delta: float) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5hfg8"]
 size = Vector2(111, 205)
 
+[sub_resource type="LabelSettings" id="LabelSettings_jhxbb"]
+font = ExtResource("21_mj6i7")
+font_size = 26
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_osshv"]
+font = ExtResource("21_mj6i7")
+font_size = 18
+
 [node name="Level3" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1836,5 +1845,24 @@ color = Color(0.25636, 0.384503, 0.771867, 0.470588)
 [node name="Arrow" parent="." instance=ExtResource("25_x6h88")]
 position = Vector2(0, -269)
 
-[node name="barrel" parent="Arrow" instance=ExtResource("29_2ixyl")]
-position = Vector2(329, 182)
+[node name="Label" type="Label" parent="."]
+offset_left = -377.0
+offset_top = -257.0
+offset_right = 118.0
+offset_bottom = -120.0
+text = "
+Superjump:
+Stack raccoons from shortest
+to tallest, then expand."
+label_settings = SubResource("LabelSettings_jhxbb")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 230.0
+offset_top = -50.0
+offset_right = 725.0
+offset_bottom = 79.0
+text = "Color checkpoint 
+only means 
+that color is 
+needed"
+label_settings = SubResource("LabelSettings_osshv")

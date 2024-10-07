@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=4 uid="uid://dv4kkrk13chnn"]
+[gd_scene load_steps=50 format=4 uid="uid://dv4kkrk13chnn"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_q2fu3"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_tq4yy"]
@@ -1735,12 +1735,19 @@ func _process(delta: float) -> void:
 	var z = 0
 	if (has_overlapping_bodies()):
 		var a = get_overlapping_bodies()
-		if (len(a) == 3):
-			$\"../SceneChanger\".switch()
+		for x in a:
+			if x.name.contains(\"Char\"):
+				z += 1
+	if (z == 3):
+		$\"../SceneChanger\".switch()
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r5b45"]
 size = Vector2(111, 205)
+
+[sub_resource type="LabelSettings" id="LabelSettings_gblbc"]
+font = ExtResource("23_ljsfo")
+font_size = 24
 
 [node name="Level2" type="Node2D"]
 script = SubResource("GDScript_pdvab")
@@ -1880,5 +1887,22 @@ scale = Vector2(0.5, 0.5)
 position = Vector2(250, -92)
 mass = 200.0
 gravity_scale = 8.0
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 190.0
+offset_top = 47.0
+offset_right = 685.0
+offset_bottom = 140.0
+text = "Push the barrel
+and climb ontop"
+label_settings = SubResource("LabelSettings_gblbc")
+
+[node name="Label3" type="Label" parent="."]
+offset_left = -310.0
+offset_top = 88.0
+offset_right = 185.0
+offset_bottom = 181.0
+text = "Purple can expand with G"
+label_settings = SubResource("LabelSettings_gblbc")
 
 [editable path="SceneChanger"]

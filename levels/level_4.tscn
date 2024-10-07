@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=52 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_v6juq"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_moah6"]
@@ -1761,6 +1761,10 @@ func _process(delta: float) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pknrc"]
 size = Vector2(49, 316)
 
+[sub_resource type="LabelSettings" id="LabelSettings_eqts6"]
+font = ExtResource("15_2c3cs")
+font_size = 24
+
 [node name="Level3" type="Node2D"]
 script = SubResource("GDScript_tp7yp")
 
@@ -1814,7 +1818,7 @@ offset_left = -360.0
 offset_top = -190.0
 offset_right = 164.0
 offset_bottom = -97.0
-text = "Sneaky can climb underground"
+text = "Blue  can climb underground"
 label_settings = SubResource("LabelSettings_iftbq")
 
 [node name="Characters" type="Node2D" parent="."]
@@ -1899,5 +1903,13 @@ offset_right = 9.0
 offset_bottom = -171.0
 scale = Vector2(1.41683, 1.88069)
 color = Color(0.321569, 0.462745, 0.270588, 0.470588)
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -23.0
+offset_top = 53.0
+offset_right = 472.0
+offset_bottom = 146.0
+text = "Press F to interact with an Object"
+label_settings = SubResource("LabelSettings_eqts6")
 
 [editable path="SceneChanger"]
