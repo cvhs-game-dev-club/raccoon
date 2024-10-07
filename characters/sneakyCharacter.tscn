@@ -175,8 +175,8 @@ animations = [{
 }]
 
 [node name="SneakyCharacter" type="CharacterBody2D"]
-collision_layer = 2
-collision_mask = 2
+collision_layer = 130
+collision_mask = 130
 script = SubResource("GDScript_75fyf")
 height = 35.0
 

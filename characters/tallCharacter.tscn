@@ -306,6 +306,8 @@ size = Vector2(46, 96)
 size = Vector2(20, 93)
 
 [node name="tallCharacter" type="CharacterBody2D"]
+collision_layer = 129
+collision_mask = 129
 script = SubResource("GDScript_pvwe8")
 height = 65.0
 
