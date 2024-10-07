@@ -44,4 +44,5 @@ script = ExtResource("2_u5r1c")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_vs8wj")
+animation = &"on"
 script = SubResource("GDScript_7k5wf")

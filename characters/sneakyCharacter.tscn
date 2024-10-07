@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cqpf0s0mg0u1c"]
+[gd_scene load_steps=20 format=3 uid="uid://cqpf0s0mg0u1c"]
 
 [ext_resource type="Script" path="res://characters/top_ideal_pos.gd" id="1_jsmq1"]
 [ext_resource type="Texture2D" uid="uid://p7q11kj0vpc0" path="res://assets/characters/sneaky/bandana(bottom).png" id="1_l1tee"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://de2vyo4wph6ap" path="res://assets/characters/sneaky/bandana.png" id="3_eluv5"]
 [ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="4_fsfhh"]
 [ext_resource type="Texture2D" uid="uid://b8ux0yphwhwvp" path="res://assets/characters/sneaky/jump/Sneaky_Run_Jump2.png" id="6_v7rcn"]
+[ext_resource type="Texture2D" uid="uid://bmnxmt1ehvqoe" path="res://assets/characters/sneaky/sneaky_bandana_on.png" id="8_bt6ip"]
 [ext_resource type="Texture2D" uid="uid://8lxldrqv0lpf" path="res://assets/characters/sneaky/jump/Sneaky_Run_Jump5.png" id="9_4gep3"]
 
 [sub_resource type="GDScript" id="GDScript_75fyf"]
@@ -19,6 +20,7 @@ var onSomeHead: bool = false
 var playerStorage
 var onLadder: bool = false
 var inAir: bool = false
+var maskOn := false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @export var vent: Area2D 
@@ -104,6 +106,25 @@ func _on_ladder_checker_body_entered(body: Node2D) -> void:
 
 func _on_ladder_checker_body_exited(body: Node2D) -> void:
 	onLadder = false
+	
+func flipMask():
+	if (!maskOn):
+		$racoon.set_deferred(\"visible\", false)
+		$PuttingOnMask.set_deferred(\"visible\", true)
+		$Mask.play(\"mask_on\")
+		await get_tree().create_timer(1.6).timeout
+		$racoon.set_deferred(\"visible\", true)
+		$PuttingOnMask.set_deferred(\"visible\", false)
+		maskOn = true
+	else:
+		$racoon.set_deferred(\"visible\", false)
+		$PuttingOnMask.set_deferred(\"visible\", true)
+		$Mask.play_backwards(\"mask_on\")
+		await get_tree().create_timer(1.6).timeout
+		$racoon.set_deferred(\"visible\", true)
+		$PuttingOnMask.set_deferred(\"visible\", false)
+		maskOn = false
+	
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ju0oo"]
@@ -176,6 +197,43 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_7kv8h"]
+resource_name = "mask_on"
+length = 1.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PuttingOnMask:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.466667, 0.966667, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_xbwmm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PuttingOnMask:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mw3me"]
+_data = {
+"RESET": SubResource("Animation_xbwmm"),
+"mask_on": SubResource("Animation_7kv8h")
+}
+
 [node name="SneakyCharacter" type="CharacterBody2D"]
 collision_layer = 130
 collision_mask = 130
@@ -244,7 +302,20 @@ sprite_frames = SubResource("SpriteFrames_g5l16")
 animation = &"none"
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
+visible = false
 target_position = Vector2(0, 14)
+
+[node name="PuttingOnMask" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -24)
+texture = ExtResource("8_bt6ip")
+hframes = 2
+vframes = 2
+
+[node name="Mask" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mw3me")
+}
 
 [connection signal="body_entered" from="sneakyArea" to="." method="_on_sneaky_area_body_entered"]
 [connection signal="body_exited" from="sneakyArea" to="." method="_on_sneaky_area_body_exited"]

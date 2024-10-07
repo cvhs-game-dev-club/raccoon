@@ -48,3 +48,17 @@ func easyLerp(from: Vector2, to: Vector2, weight: float, delta: float):
 	from.x = move_toward(from.x, to.x, weight * delta)
 	from.y = move_toward(from.y, to.y, weight * delta)
 	return from
+	
+func flip():
+	if (!isOn):
+		$AnimatedSprite2D.set_deferred("visible", false)
+		await get_tree().create_timer(1.6).timeout
+		$AnimatedSprite2D.play("on")
+		$AnimatedSprite2D.set_deferred("visible", true)
+		isOn = true
+	else:
+		$AnimatedSprite2D.set_deferred("visible", false)
+		await get_tree().create_timer(1.6).timeout
+		$AnimatedSprite2D.play("default")
+		$AnimatedSprite2D.set_deferred("visible", true)
+		isOn = false

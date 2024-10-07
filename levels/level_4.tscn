@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=54 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_v6juq"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_moah6"]
@@ -41,6 +41,10 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_sneaky_switch_body_exited(body: Node2D) -> void:
+	pass # Replace with function body.
 "
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nntjk"]
@@ -1765,6 +1769,38 @@ size = Vector2(49, 316)
 font = ExtResource("15_2c3cs")
 font_size = 24
 
+[sub_resource type="GDScript" id="GDScript_w5csw"]
+script/source = "extends Area2D
+
+@export var sneaky: CharacterBody2D 
+@export var head: Sprite2D
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if (body.name.contains(\"Sneaky\")):
+		sneaky.flipMask()
+		head.flip()
+	
+
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if (body.name.contains(\"Sneaky\")):
+		sneaky.flipMask()
+		head.flip()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qb4vj"]
+size = Vector2(752, 172)
+
 [node name="Level3" type="Node2D"]
 script = SubResource("GDScript_tp7yp")
 
@@ -1911,5 +1947,19 @@ offset_right = 472.0
 offset_bottom = 146.0
 text = "Press F to interact with an Object"
 label_settings = SubResource("LabelSettings_eqts6")
+
+[node name="SneakySwitch" type="Area2D" parent="." node_paths=PackedStringArray("sneaky", "head")]
+collision_layer = 2
+collision_mask = 2
+script = SubResource("GDScript_w5csw")
+sneaky = NodePath("../Characters/SneakyCharacter")
+head = NodePath("../Characters/sneakytop")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SneakySwitch"]
+position = Vector2(6, 152)
+shape = SubResource("RectangleShape2D_qb4vj")
+
+[connection signal="body_entered" from="SneakySwitch" to="SneakySwitch" method="_on_body_entered"]
+[connection signal="body_exited" from="SneakySwitch" to="SneakySwitch" method="_on_body_exited"]
 
 [editable path="SceneChanger"]
