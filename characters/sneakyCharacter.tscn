@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cqpf0s0mg0u1c"]
+[gd_scene load_steps=24 format=3 uid="uid://cqpf0s0mg0u1c"]
 
 [ext_resource type="Script" path="res://characters/top_ideal_pos.gd" id="1_jsmq1"]
 [ext_resource type="Texture2D" uid="uid://p7q11kj0vpc0" path="res://assets/characters/sneaky/bandana(bottom).png" id="1_l1tee"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://b8ux0yphwhwvp" path="res://assets/characters/sneaky/jump/Sneaky_Run_Jump2.png" id="6_v7rcn"]
 [ext_resource type="Texture2D" uid="uid://bmnxmt1ehvqoe" path="res://assets/characters/sneaky/sneaky_bandana_on.png" id="8_bt6ip"]
 [ext_resource type="Texture2D" uid="uid://8lxldrqv0lpf" path="res://assets/characters/sneaky/jump/Sneaky_Run_Jump5.png" id="9_4gep3"]
+[ext_resource type="Texture2D" uid="uid://bxokxfh08bh30" path="res://assets/characters/sneaky/walking.png" id="9_jsoch"]
 
 [sub_resource type="GDScript" id="GDScript_75fyf"]
 script/source = "extends CharacterBody2D
@@ -31,64 +32,72 @@ var holdItemName: String
 @onready var topIdealPos = %topIdealPos
 @onready var holdItemPos = %holdItemPos
 
-
 func _physics_process(delta: float) -> void:
-	# Add gravity only if not on the ladder.
-	#print(onSomeHead, \"sneak\")
-	#	print(str(someoneOnHead) + \" \" + str(onSomeHead) + \" \" + str(playerStorage))
+	# Handle collision with another character's head
 	if (!$RayCast2D.is_colliding()):
 		onSomeHead = false
 		if ($RayCast2D.get_collider() != null and $RayCast2D.get_collider().name.contains(\"Character\")):
 			onSomeHead = true
 			
-		
-	if(not is_on_floor()):
+	if not is_on_floor():
 		inAir = true
 	else: 
 		inAir = false
+
+	# Add gravity when the character is not on the ladder
 	if not is_on_floor() and not onLadder:
 		velocity += get_gravity() * delta
-	
-	if (Global.current == index):
+
+	# Handle movement and animation logic when this character is active
+	if Global.current == index:
 		animation_player.play(\"select\")
 		$select.visible = true
 
-		# Handle jump.
+		# Handle jump
 		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and not someoneOnHead and not onLadder:
 			velocity.y = JUMP_VELOCITY
 		
-		# Handle movement input.
+		# Handle movement input and walking animations
 		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
 		if direction:
 			velocity.x = direction * SPEED
+			
+			# Play walking animations based on the movement direction
+			if direction < 0:
+				walkingLeft()  # Moving left
+			elif direction > 0:
+				walkingRight()  # Moving right
 		else:
+			stopWalking()  # Stop walking animation when idle or in air
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	else:
 		$select.visible = false
 	
+	# Handle when the character is on top of another
 	if someoneOnHead and Global.current == index:
-		# Align the character on top to the character below
 		playerStorage.position.x = transform.origin.x
 		playerStorage.position.y = transform.origin.y - height
-	
+
+	# Handle movement when on a ladder
 	if onLadder and Global.current == index:
-		# Adjust the vertical velocity while on the ladder.\\
 		if Input.is_action_pressed(\"up_ladder\"):
 			velocity.y -= 5
 		elif Input.is_action_pressed(\"down_ladder\"):
 			velocity.y += 5
 		else:
-			velocity.y = 0  # Prevent falling or being pushed down
+			velocity.y = 0  # Stop vertical movement on the ladder
 		
-		move_and_slide()  # Handle movement while on the ladder
-		return  # Skip the rest of the movement logic
+		move_and_slide()  # Skip further processing if on a ladder
+		return
 
-	if (Global.current != index and onSomeHead):
+	# Prevent movement when on top of another character and inactive
+	if Global.current != index and onSomeHead:
 		velocity.x = 0
 	else:
 		move_and_slide()
 
+# Handle body entering/exiting area events
 func _on_sneaky_area_body_entered(body):
 	if body.name.contains(\"Character\") and body.index != index and not onLadder and !body.onSomeHead:
 		someoneOnHead = true
@@ -106,9 +115,10 @@ func _on_ladder_checker_body_entered(body: Node2D) -> void:
 
 func _on_ladder_checker_body_exited(body: Node2D) -> void:
 	onLadder = false
-	
+
+# Toggle mask on/off
 func flipMask():
-	if (!maskOn):
+	if not maskOn:
 		$racoon.set_deferred(\"visible\", false)
 		$PuttingOnMask.set_deferred(\"visible\", true)
 		$Mask.play(\"mask_on\")
@@ -124,7 +134,25 @@ func flipMask():
 		$racoon.set_deferred(\"visible\", true)
 		$PuttingOnMask.set_deferred(\"visible\", false)
 		maskOn = false
-	
+
+# Walking animation for left movement
+func walkingLeft():
+	$Walking.set_deferred(\"visible\", true)
+	$Walking.flip_h = true
+	$racoon.set_deferred(\"visible\", false)
+	$Walk.play(\"Walk_Right\")
+
+# Walking animation for right movement
+func walkingRight():
+	$Walking.set_deferred(\"visible\", true)
+	$Walking.flip_h = false
+	$racoon.set_deferred(\"visible\", false)
+	$Walk.play(\"Walk_Right\")
+
+# Stop walking animation when idle or in the air
+func stopWalking():
+	$Walking.set_deferred(\"visible\", false)
+	$racoon.set_deferred(\"visible\", true)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ju0oo"]
@@ -197,6 +225,21 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="Animation" id="Animation_xbwmm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PuttingOnMask:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
 [sub_resource type="Animation" id="Animation_7kv8h"]
 resource_name = "mask_on"
 length = 1.6
@@ -213,12 +256,34 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3]
 }
 
-[sub_resource type="Animation" id="Animation_xbwmm"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mw3me"]
+_data = {
+"RESET": SubResource("Animation_xbwmm"),
+"mask_on": SubResource("Animation_7kv8h")
+}
+
+[sub_resource type="Animation" id="Animation_30vt8"]
+resource_name = "Walk_Right"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Walking:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.766667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_tet3k"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PuttingOnMask:frame")
+tracks/0/path = NodePath("Walking:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -228,10 +293,10 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_mw3me"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_iovcl"]
 _data = {
-"RESET": SubResource("Animation_xbwmm"),
-"mask_on": SubResource("Animation_7kv8h")
+"RESET": SubResource("Animation_tet3k"),
+"Walk_Right": SubResource("Animation_30vt8")
 }
 
 [node name="SneakyCharacter" type="CharacterBody2D"]
@@ -315,6 +380,17 @@ vframes = 2
 [node name="Mask" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_mw3me")
+}
+
+[node name="Walking" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(-1, -24)
+texture = ExtResource("9_jsoch")
+hframes = 2
+
+[node name="Walk" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_iovcl")
 }
 
 [connection signal="body_entered" from="sneakyArea" to="." method="_on_sneaky_area_body_entered"]
