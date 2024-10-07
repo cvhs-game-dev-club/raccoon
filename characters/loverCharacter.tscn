@@ -26,6 +26,9 @@ var inAir: bool = false
 func _physics_process(delta: float) -> void:
 	# Add gravity.
 	#print(onSomeHead, \"lover\")
+	
+	if (!$RayCast2D.is_colliding()):
+		onSomeHead = false
 	if(not is_on_floor()):
 		inAir = true
 	else: 
@@ -164,6 +167,9 @@ root_node = NodePath("")
 libraries = {
 "": SubResource("AnimationLibrary_3vf21")
 }
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 22)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
