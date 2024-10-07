@@ -2,8 +2,10 @@ extends Node2D
 
 var playeInArea := false
 var is_chatting := false
+@export var key : Node2D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	Dialogic.signal_event.connect(DialogicSignalEvent)
 	pass # Replace with function body.
 
 
@@ -20,7 +22,8 @@ func _on_chat_detector_body_entered(body: Node2D) -> void:
 		
 	
 	pass # Replace with function body.
-
+func DialogicSignalEvent(arg: String):
+	if arg == ""
 
 func _on_chat_detector_body_exited(body: Node2D) -> void:
 	if (body.name.contains("Lover")):

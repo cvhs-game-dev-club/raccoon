@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://cufrlfhu56jyi"]
+[gd_scene load_steps=45 format=4 uid="uid://cufrlfhu56jyi"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_nn0i3"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_h2uv2"]
@@ -22,6 +22,7 @@
 [ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="21_t0wam"]
 [ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="22_b4ul3"]
 [ext_resource type="Script" path="res://characters/top.gd" id="22_p5ft5"]
+[ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="23_peqej"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b6dp6"]
 texture = ExtResource("1_nn0i3")
@@ -1802,3 +1803,6 @@ offset_right = 161.0
 offset_bottom = -160.0
 text = "Launch sneeky across"
 label_settings = SubResource("LabelSettings_vn1ev")
+
+[node name="SceneChanger" parent="." instance=ExtResource("23_peqej")]
+sceneToChange = "res://levels/level_6.tscn"

@@ -1,9 +1,0 @@
-join character center
-character: Hello...
-character: I have a key
-character: Would you want it
-- Yes... of course!
-	character: Alright, here you go
-- No, why would I?
-	character: Okay
-	[signal arg="given_key"]
