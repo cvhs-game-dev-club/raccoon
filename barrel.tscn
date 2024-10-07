@@ -25,6 +25,8 @@ shape = SubResource("CircleShape2D_vw062")
 
 [node name="BarrelArea2D" type="Area2D" parent="."]
 unique_name_in_owner = true
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BarrelArea2D"]
 shape = SubResource("CircleShape2D_8trvp")

@@ -13,8 +13,9 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if entered and collideWithPlayer:
+	if entered and collideWithPlayer and playerStorage.index == Global.current:
 		var push_direction = Vector2.ZERO
+		
 		
 		# Check for directional input to determine push direction
 		if Input.is_action_pressed("ui_right"):
