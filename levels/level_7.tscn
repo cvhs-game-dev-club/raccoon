@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://de3urnndyxobj"]
+[gd_scene load_steps=53 format=4 uid="uid://de3urnndyxobj"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_ncfai"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_v1ejh"]
@@ -1744,6 +1744,38 @@ size = Vector2(123, 252)
 font = ExtResource("26_reg5b")
 font_size = 24
 
+[sub_resource type="GDScript" id="GDScript_kj1oe"]
+script/source = "extends Area2D
+
+@export var sneaky: CharacterBody2D 
+@export var head: Sprite2D
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if (body.name.contains(\"Sneaky\")):
+		sneaky.flipMask()
+		head.flip()
+	
+
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if (body.name.contains(\"Sneaky\")):
+		sneaky.flipMask()
+		head.flip()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r0f08"]
+size = Vector2(255, 169)
+
 [node name="Level7" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1900,3 +1932,15 @@ offset_bottom = 185.0
 text = "Pipes take you to
 other pipes"
 label_settings = SubResource("LabelSettings_dtggj")
+
+[node name="SneakySwitch" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+script = SubResource("GDScript_kj1oe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SneakySwitch"]
+position = Vector2(187.5, 165.5)
+shape = SubResource("RectangleShape2D_r0f08")
+
+[connection signal="body_entered" from="SneakySwitch" to="SneakySwitch" method="_on_body_entered"]
+[connection signal="body_exited" from="SneakySwitch" to="SneakySwitch" method="_on_body_exited"]
