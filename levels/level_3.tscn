@@ -25,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
 [ext_resource type="PackedScene" uid="uid://b8dghy5hqorkm" path="res://objects/door.tscn" id="24_0nobo"]
 [ext_resource type="PackedScene" uid="uid://bagyidhuwkiuw" path="res://lever.tscn" id="25_32asd"]
-[ext_resource type="PackedScene" path="res://arrow.tscn" id="25_x6h88"]
+[ext_resource type="PackedScene" uid="uid://df6yepulalalp" path="res://arrow.tscn" id="25_x6h88"]
 [ext_resource type="PackedScene" uid="uid://bbv83qkol0vd2" path="res://platform(lever).tscn" id="26_yrdtk"]
 
 [sub_resource type="GDScript" id="GDScript_tp7yp"]

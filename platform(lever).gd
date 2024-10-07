@@ -5,6 +5,7 @@ var rotationOG = rotation
 var locationIdeal: float = 0
 var entered: bool = false
 var playerStorage
+var playerStorIndex: int = 0
 var previousPlatformPos: float
 var PlatformPosOGy: float
 
@@ -53,7 +54,7 @@ func easyLerp(from: float, to: float, weight: float, delta: float):
 func _on_platform_area_2d_body_entered(body):
 	entered = true
 	playerStorage = body
-
+	
 
 	
 
