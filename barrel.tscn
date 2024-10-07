@@ -17,10 +17,11 @@ gravity_scale = 5.0
 script = ExtResource("1_t5ci8")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2.3, 2.3)
+scale = Vector2(3.3, 3.3)
 texture = ExtResource("1_ed3ni")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_vw062")
 
 [node name="BarrelArea2D" type="Area2D" parent="."]
@@ -29,6 +30,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BarrelArea2D"]
+scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_8trvp")
 
 [connection signal="body_entered" from="BarrelArea2D" to="." method="_on_barrel_area_2d_body_entered"]

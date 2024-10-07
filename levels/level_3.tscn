@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=55 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_lpqjl"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_g0kye"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://0fiu2wvylpfr" path="res://assets/2 Background/Night/1.png" id="12_xfxbv"]
 [ext_resource type="Texture2D" uid="uid://38i821653kep" path="res://assets/2 Background/Night/2.png" id="13_bhry1"]
 [ext_resource type="Texture2D" uid="uid://7oops4rxxo2m" path="res://assets/2 Background/Night/3.png" id="14_kqvhv"]
+[ext_resource type="Script" path="res://levels/floor_2.gd" id="15_4ukhv"]
 [ext_resource type="PackedScene" uid="uid://dh4cg0lumld53" path="res://characters/loverCharacter.tscn" id="15_h1qtm"]
 [ext_resource type="PackedScene" uid="uid://cqpf0s0mg0u1c" path="res://characters/sneakyCharacter.tscn" id="16_ecdv2"]
 [ext_resource type="PackedScene" uid="uid://cxfkas0dug2l0" path="res://characters/tallCharacter.tscn" id="17_nr10b"]
@@ -24,9 +25,11 @@
 [ext_resource type="PackedScene" uid="uid://chsqwcq1647rw" path="res://objects/key.tscn" id="22_gapre"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
 [ext_resource type="PackedScene" uid="uid://b8dghy5hqorkm" path="res://objects/door.tscn" id="24_0nobo"]
-[ext_resource type="PackedScene" uid="uid://bagyidhuwkiuw" path="res://lever.tscn" id="25_32asd"]
-[ext_resource type="PackedScene" path="res://arrow.tscn" id="25_x6h88"]
-[ext_resource type="PackedScene" uid="uid://bbv83qkol0vd2" path="res://platform(lever).tscn" id="26_yrdtk"]
+[ext_resource type="PackedScene" uid="uid://df6yepulalalp" path="res://arrow.tscn" id="25_x6h88"]
+[ext_resource type="Script" path="res://levels/area_2d.gd" id="27_e4nnn"]
+[ext_resource type="PackedScene" uid="uid://cbwe4qnaxaarq" path="res://pipe_enter.tscn" id="28_cfkih"]
+[ext_resource type="PackedScene" uid="uid://dq4yawa2biqq8" path="res://barrel.tscn" id="29_2ixyl"]
+[ext_resource type="PackedScene" uid="uid://bi4dqv4sgmva7" path="res://button.tscn" id="30_tape4"]
 
 [sub_resource type="GDScript" id="GDScript_tp7yp"]
 script/source = "extends Node2D
@@ -1739,7 +1742,11 @@ func _process(delta: float) -> void:
 	pass
 "
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4glam"]
+size = Vector2(188, 153.847)
+
 [node name="Level3" type="Node2D"]
+position = Vector2(0, -12)
 script = SubResource("GDScript_tp7yp")
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1761,20 +1768,41 @@ tile_map_data = PackedByteArray("AAD7/wEAAQABAAAAAAA=")
 tile_set = SubResource("TileSet_cs11v")
 
 [node name="Floor" type="TileMapLayer" parent="Node2D"]
-tile_map_data = PackedByteArray("AAD0/wEAAgAAAAAAAAD1/wEAAgABAAAAAAD2/wEAAgABAAAAAAD3/wEAAgABAAAAAAD4/wEAAgABAAAAAAD5/wEAAgABAAAAAAD6/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAAAAAAIAAEAAgABAAAAAAAJAAEAAgABAAAAAAAKAAEAAgABAAAAAAALAAEAAgABAAAAAAAMAAEAAgACAAEAAAAMAAIAAgACAAEAAAALAAIAAgABAAIAAAAKAAIAAgABAAIAAAAJAAIAAgABAAIAAAAIAAIAAgABAAIAAAAHAAIAAgABAAIAAAAGAAIAAgABAAIAAAAFAAIAAgABAAIAAAAEAAIAAgABAAIAAAADAAIAAgABAAIAAAACAAIAAgABAAIAAAABAAIAAgABAAIAAAAAAAIAAgABAAIAAAD//wIAAgABAAIAAAD+/wIAAgABAAIAAAD9/wIAAgABAAIAAAD8/wIAAgAAAAIAAAD6/wIAAgACAAIAAAD5/wIAAgABAAIAAAD4/wIAAgABAAIAAAD3/wIAAgABAAIAAAD2/wIAAgABAAIAAAD1/wIAAgABAAIAAAD0/wIAAgAAAAEAAAD0/wMAAgADAAEAAAD0/wQAAgADAAEAAAD0/wUAAgADAAEAAAD0/wYAAgADAAEAAAD0/wcAAgAAAAEAAAD1/wcAAgABAAAAAAD2/wcAAgABAAAAAAD3/wcAAgABAAAAAAD4/wcAAgABAAAAAAD5/wcAAgABAAAAAAD6/wcAAgABAAAAAAD7/wcAAgABAAAAAAD8/wcAAgABAAAAAAD9/wcAAgABAAAAAAD+/wcAAgABAAAAAAD//wcAAgABAAAAAAAAAAcAAgABAAAAAAABAAcAAgABAAAAAAACAAcAAgABAAAAAAADAAcAAgABAAAAAAAEAAcAAgABAAAAAAAFAAcAAgABAAAAAAAGAAcAAgABAAAAAAAHAAcAAgABAAAAAAAIAAcAAgABAAAAAAAJAAcAAgABAAAAAAAKAAcAAgABAAAAAAALAAcAAgABAAAAAAAMAAcAAgACAAEAAAALAAgAAgABAAIAAAAMAAgAAgACAAIAAAAKAAgAAgABAAIAAAAJAAgAAgABAAIAAAAIAAgAAgABAAIAAAAHAAgAAgABAAIAAAAGAAgAAgABAAIAAAAFAAgAAgABAAIAAAAEAAgAAgABAAIAAAADAAgAAgABAAIAAAACAAgAAgABAAIAAAABAAgAAgABAAIAAAAAAAgAAgABAAIAAAD//wgAAgABAAIAAAD+/wgAAgABAAIAAAD9/wgAAgABAAIAAAD8/wgAAgABAAIAAAD7/wgAAgABAAIAAAD6/wgAAgABAAIAAAD5/wgAAgABAAIAAAD4/wgAAgABAAIAAAD3/wgAAgABAAIAAAD2/wgAAgABAAIAAAD1/wgAAgABAAIAAAD0/wgAAgAAAAIAAAAMAAAAAgADAAEAAAAMAP//AgADAAEAAAAMAP7/AgADAAEAAAAMAP3/AgADAAEAAAAMAPz/AgADAAEAAAAMAPv/AgADAAEAAAAMAPr/AgADAAEAAAAMAPn/AgADAAEAAAAMAPj/AgADAAAAAAAMAAMAAgADAAEAAAAMAAQAAgADAAEAAAAMAAUAAgADAAEAAAAMAAYAAgADAAEAAAA=")
+tile_map_data = PackedByteArray("AAD0/wEAAgAAAAAAAAD1/wEAAgABAAAAAAD2/wEAAgABAAAAAAD3/wEAAgABAAAAAAD4/wEAAgABAAAAAAD5/wEAAgABAAAAAAD6/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAAAAAAIAAEAAgABAAAAAAAJAAEAAgABAAAAAAAKAAEAAgABAAAAAAALAAEAAgABAAAAAAAMAAEAAgACAAEAAAAMAAIAAgACAAEAAAALAAIAAgABAAIAAAAKAAIAAgABAAIAAAAJAAIAAgABAAIAAAAIAAIAAgABAAIAAAAHAAIAAgABAAIAAAAGAAIAAgABAAIAAAAFAAIAAgABAAIAAAAEAAIAAgABAAIAAAADAAIAAgABAAIAAAACAAIAAgABAAIAAAABAAIAAgABAAIAAAAAAAIAAgABAAIAAAD//wIAAgABAAIAAAD+/wIAAgABAAIAAAD9/wIAAgABAAIAAAD8/wIAAgAAAAIAAAD6/wIAAgACAAIAAAD5/wIAAgABAAIAAAD4/wIAAgABAAIAAAD3/wIAAgABAAIAAAD2/wIAAgABAAIAAAD1/wIAAgABAAIAAAD0/wIAAgAAAAEAAAD0/wMAAgADAAEAAAD0/wQAAgADAAEAAAD0/wUAAgADAAEAAAD0/wYAAgADAAEAAAD0/wcAAgAAAAEAAAAMAAcAAgACAAEAAAALAAgAAgABAAIAAAAMAAgAAgACAAIAAAAKAAgAAgABAAIAAAAJAAgAAgABAAIAAAAIAAgAAgABAAIAAAAHAAgAAgABAAIAAAAGAAgAAgABAAIAAAAFAAgAAgABAAIAAAAEAAgAAgABAAIAAAADAAgAAgABAAIAAAACAAgAAgABAAIAAAABAAgAAgABAAIAAAAAAAgAAgABAAIAAAD//wgAAgABAAIAAAD+/wgAAgABAAIAAAD9/wgAAgABAAIAAAD8/wgAAgABAAIAAAD7/wgAAgABAAIAAAD6/wgAAgABAAIAAAD5/wgAAgABAAIAAAD4/wgAAgABAAIAAAD3/wgAAgABAAIAAAD2/wgAAgABAAIAAAD1/wgAAgABAAIAAAD0/wgAAgAAAAIAAAAMAAAAAgADAAEAAAAMAP//AgADAAEAAAAMAP7/AgADAAEAAAAMAP3/AgADAAEAAAAMAPz/AgADAAEAAAAMAPv/AgADAAEAAAAMAPr/AgADAAEAAAAMAPn/AgADAAEAAAAMAPj/AgADAAAAAAAMAAMAAgADAAEAAAAMAAQAAgADAAEAAAAMAAUAAgADAAEAAAAMAAYAAgADAAEAAAD0//z/AgABAAEAAAD1//z/AgABAAEAAAD2//z/AgABAAEAAAA=")
 tile_set = SubResource("TileSet_l8f1i")
+
+[node name="Floor2" type="TileMapLayer" parent="Node2D"]
+position = Vector2(0, 252)
+tile_map_data = PackedByteArray("AAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAADAAcAAgABAAEAAAAEAAcAAgABAAEAAAAFAAcAAgABAAEAAAAFAAgAAgABAAIAAAAEAAgAAgABAAIAAAADAAgAAgABAAIAAAADAAIAAgABAAEAAAAEAAIAAgABAAEAAAAFAAIAAgABAAEAAAADAAMAAgABAAEAAAADAAQAAgABAAEAAAADAAUAAgABAAEAAAADAAYAAgABAAEAAAAEAAMAAgABAAEAAAAEAAQAAgABAAEAAAAEAAUAAgABAAEAAAAEAAYAAgABAAEAAAAFAAMAAgABAAEAAAAFAAQAAgABAAEAAAAFAAUAAgABAAEAAAAFAAYAAgABAAEAAAA=")
+tile_set = SubResource("TileSet_l8f1i")
+script = ExtResource("15_4ukhv")
+moveTo = -250
+
+[node name="Floor3" type="TileMapLayer" parent="Node2D"]
+position = Vector2(-114, -462)
+tile_map_data = PackedByteArray("AAADAAcAAgABAAEAAAAEAAcAAgABAAEAAAAFAAcAAgABAAEAAAADAAUAAgABAAEAAAADAAYAAgABAAEAAAAEAAUAAgABAAEAAAAEAAYAAgABAAEAAAAFAAQAAgABAAAAAAAFAAUAAgABAAEAAAAFAAYAAgABAAEAAAADAAQAAgABAAAAAAAEAAQAAgABAAAAAAA=")
+tile_set = SubResource("TileSet_l8f1i")
+script = ExtResource("15_4ukhv")
+moveTo = 200
+
+[node name="Floor4" type="TileMapLayer" parent="Node2D"]
+position = Vector2(-414, -255)
+tile_map_data = PackedByteArray("AAADAAcAAgABAAEAAAADAAUAAgABAAEAAAADAAYAAgABAAEAAAADAAQAAgABAAAAAAADAAgAAgABAAEAAAADAAkAAgABAAIAAAA=")
+tile_set = SubResource("TileSet_l8f1i")
+script = ExtResource("15_4ukhv")
+moveTo = 200
 
 [node name="Walls" type="Node2D" parent="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Node2D/Walls"]
-position = Vector2(-394, 0)
+position = Vector2(-394, -107)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D"]
 position = Vector2(0, -62.5)
 shape = SubResource("RectangleShape2D_fa5gi")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="Node2D/Walls"]
-position = Vector2(142, -299)
+position = Vector2(137, -407)
 rotation = 1.57308
 scale = Vector2(1, 3.15999)
 
@@ -1793,7 +1821,7 @@ label_settings = SubResource("LabelSettings_iftbq")
 [node name="Characters" type="Node2D" parent="."]
 
 [node name="LoverCharacter" parent="Characters" instance=ExtResource("15_h1qtm")]
-position = Vector2(-320, -59)
+position = Vector2(-262, -119)
 collision_layer = 3
 collision_mask = 3
 index = 1
@@ -1822,14 +1850,14 @@ script = ExtResource("20_grwsq")
 topIdealPosPath = NodePath("../LoverCharacter")
 
 [node name="Camera2D2" type="Camera2D" parent="."]
-position = Vector2(10, 26)
+position = Vector2(0, 74)
 scale = Vector2(0.235967, -1102.99)
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(1.25, 1.25)
 
 [node name="Objects" type="Node2D" parent="."]
 
 [node name="key" parent="Objects" instance=ExtResource("22_gapre")]
-position = Vector2(215, 145)
+position = Vector2(279, 104)
 itemName = "key1"
 
 [node name="DoorData" type="Node2D" parent="Objects"]
@@ -1844,24 +1872,75 @@ position = Vector2(403, -144)
 rotation = -3.14159
 scale = Vector2(10.9898, -7.94646)
 
+[node name="CollisionShape2D" parent="SceneChanger" index="0"]
+position = Vector2(-0.0909992, 3.14605)
+
 [node name="ColorRect" parent="SceneChanger/Node2D" index="0"]
 offset_left = -2936.45
 offset_top = -1246.22
 offset_right = -2896.45
 offset_bottom = -1206.22
 
-[node name="lever" parent="." instance=ExtResource("25_32asd")]
-position = Vector2(133, 25)
-
-[node name="platform(lever)" parent="." instance=ExtResource("26_yrdtk")]
-position = Vector2(0, -107)
-locationLeft = -200.0
-locationRight = 200.0
-leverPath = NodePath("../lever")
-
 [node name="Arrow" parent="." instance=ExtResource("25_x6h88")]
 position = Vector2(3.05176e-05, -166)
 rotation = -3.14159
 scale = Vector2(1.32847, -1.19197)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("27_e4nnn")
+groundPath = NodePath("../Node2D/Floor2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(290, 172.135)
+scale = Vector2(1.07005, 1.09024)
+shape = SubResource("RectangleShape2D_4glam")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(-239, -288)
+scale = Vector2(0.72, 1.4)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("27_e4nnn")
+groundPath = NodePath("../Node2D/Floor3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(290, 157.5)
+scale = Vector2(1.07005, 1.09024)
+shape = SubResource("RectangleShape2D_4glam")
+
+[node name="pipeEnter" parent="." instance=ExtResource("28_cfkih")]
+position = Vector2(351, 238)
+scale = Vector2(2, 2)
+pipeExitPath = NodePath("../pipeEnter2")
+
+[node name="pipeEnter2" parent="." instance=ExtResource("28_cfkih")]
+position = Vector2(-364, -151)
+rotation = -4.71238
+scale = Vector2(2, 2)
+pipeExitPath = NodePath("../pipeEnter")
+
+[node name="pipeEnter3" parent="." instance=ExtResource("28_cfkih")]
+position = Vector2(25, -372)
+rotation = 3.14159
+scale = Vector2(2, 2)
+pipeExitPath = NodePath("../pipeEnter4")
+
+[node name="pipeEnter4" parent="." instance=ExtResource("28_cfkih")]
+position = Vector2(-365, 0)
+rotation = -4.71238
+scale = Vector2(2, 2)
+pipeExitPath = NodePath("../pipeEnter3")
+
+[node name="barrel" parent="." instance=ExtResource("29_2ixyl")]
+position = Vector2(-335, 191)
+
+[node name="button" parent="." instance=ExtResource("30_tape4")]
+position = Vector2(202, 29)
+groundPath = NodePath("../Node2D/Floor4")
+
+[connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]
 
 [editable path="SceneChanger"]

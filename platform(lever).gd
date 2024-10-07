@@ -37,7 +37,7 @@ func _process(delta):
 		rotation = rotationOG
 		platform.global_transform.origin.x = locationIdeal
 	else:
-		platform.global_transform.origin.x = easyLerp(platform.global_transform.origin.x, locationIdeal, 500, delta)
+		platform.global_transform.origin.x = easyLerp(platform.global_transform.origin.x, locationIdeal, 150, delta)
 		if(abs(locationIdeal - platform.global_transform.origin.x) >= 1):
 			if(previousPos > platform.global_transform.origin.x):
 				rotation = rotationOG - deg_to_rad(3.5)
