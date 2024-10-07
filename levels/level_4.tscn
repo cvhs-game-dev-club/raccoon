@@ -1840,6 +1840,7 @@ keyName = "key1"
 position = Vector2(403, -144)
 rotation = -3.14159
 scale = Vector2(10.9898, -7.94646)
+sceneToChange = "res://levels/level_5.tscn"
 
 [node name="ColorRect" parent="SceneChanger/Node2D" index="0"]
 offset_left = -2942.91

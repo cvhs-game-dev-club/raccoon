@@ -1695,13 +1695,13 @@ terrain_set_0/terrain_0/name = "autotile"
 terrain_set_0/terrain_0/color = Color(0.716168, 0, 0.259985, 1)
 sources/2 = SubResource("TileSetAtlasSource_ergjh")
 
-[sub_resource type="LabelSettings" id="LabelSettings_tby5c"]
-font = ExtResource("21_mj6i7")
-font_size = 36
-font_color = Color(0, 0, 0, 1)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8g7ua"]
 size = Vector2(20, 471)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4kaur"]
+font = ExtResource("21_mj6i7")
+font_size = 24
+font_color = Color(0, 0, 0, 1)
 
 [node name="Level3" type="Node2D"]
 
@@ -1758,15 +1758,6 @@ topIdealPosPath = NodePath("../LoverCharacter")
 position = Vector2(12, -66)
 zoom = Vector2(1.56, 1.56)
 
-[node name="Label" type="Label" parent="."]
-offset_left = -355.0
-offset_top = -258.0
-offset_right = 140.0
-offset_bottom = -165.0
-text = "Climb on each other 
-to get over obstacles"
-label_settings = SubResource("LabelSettings_tby5c")
-
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
 position = Vector2(535, 351)
 scale = Vector2(-2.81477, 43.7681)
@@ -1804,5 +1795,15 @@ shape = SubResource("RectangleShape2D_8g7ua")
 position = Vector2(1.7053e-11, -261)
 rotation = -3.14159
 scale = Vector2(1.32847, -1.19197)
+
+[node name="Label2" type="Label" parent="."]
+offset_left = -350.0
+offset_top = -250.0
+offset_right = 275.0
+offset_bottom = -154.0
+text = "Use G on Tall to extend
+
+You can launch the sneaky if he is on top of the three"
+label_settings = SubResource("LabelSettings_4kaur")
 
 [editable path="SceneChanger"]
