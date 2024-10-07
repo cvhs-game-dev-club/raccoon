@@ -1,0 +1,96 @@
+[gd_scene load_steps=7 format=3 uid="uid://bbv83qkol0vd2"]
+
+[ext_resource type="Script" path="res://platform(lever).gd" id="1_jih8h"]
+[ext_resource type="Texture2D" uid="uid://i2abwmhj46ac" path="res://assets/3 Objects/kenny_objects/tile_0069.png" id="2_7kv0r"]
+[ext_resource type="Texture2D" uid="uid://dbu08xr3sqyva" path="res://assets/3 Objects/kenny_objects/tile_0089.png" id="3_hp7ca"]
+[ext_resource type="Texture2D" uid="uid://cjs1xhxgphol0" path="res://assets/3 Objects/kenny_objects/tile_0047.png" id="4_3c0ul"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k842e"]
+size = Vector2(74, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ecfjg"]
+size = Vector2(74, 20)
+
+[node name="platform(lever)" type="Node2D"]
+script = ExtResource("1_jih8h")
+
+[node name="platformPhys" type="StaticBody2D" parent="."]
+unique_name_in_owner = true
+
+[node name="PlatformArea2D" type="Area2D" parent="platformPhys"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platformPhys/PlatformArea2D"]
+shape = SubResource("RectangleShape2D_k842e")
+
+[node name="platformMesh" type="Node2D" parent="platformPhys"]
+
+[node name="Tile0069" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-22, -86)
+texture = ExtResource("2_7kv0r")
+
+[node name="Tile0090" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-22, -50)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0091" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-22, -32)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0092" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-22, -14)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0093" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-22, 4)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0089" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-22, -68)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0070" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(22, -86)
+texture = ExtResource("2_7kv0r")
+
+[node name="Tile0094" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(22, -50)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0095" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(22, -32)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0096" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(22, -14)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0097" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(22, 4)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0098" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(22, -68)
+texture = ExtResource("3_hp7ca")
+
+[node name="Tile0047" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-27, 16)
+texture = ExtResource("4_3c0ul")
+
+[node name="Tile0048" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(-9, 16)
+texture = ExtResource("4_3c0ul")
+
+[node name="Tile0049" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(9, 16)
+texture = ExtResource("4_3c0ul")
+
+[node name="Tile0050" type="Sprite2D" parent="platformPhys/platformMesh"]
+position = Vector2(27, 16)
+texture = ExtResource("4_3c0ul")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="platformPhys"]
+position = Vector2(0, 16)
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_ecfjg")
+
+[connection signal="body_entered" from="platformPhys/PlatformArea2D" to="." method="_on_platform_area_2d_body_entered"]

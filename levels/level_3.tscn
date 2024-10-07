@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=50 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_lpqjl"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_g0kye"]
@@ -24,6 +24,8 @@
 [ext_resource type="PackedScene" uid="uid://chsqwcq1647rw" path="res://objects/key.tscn" id="22_gapre"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
 [ext_resource type="PackedScene" uid="uid://b8dghy5hqorkm" path="res://objects/door.tscn" id="24_0nobo"]
+[ext_resource type="PackedScene" uid="uid://bagyidhuwkiuw" path="res://lever.tscn" id="25_32asd"]
+[ext_resource type="PackedScene" uid="uid://bbv83qkol0vd2" path="res://platform(lever).tscn" id="26_yrdtk"]
 
 [sub_resource type="GDScript" id="GDScript_tp7yp"]
 script/source = "extends Node2D
@@ -1837,7 +1839,7 @@ position = Vector2(356, -24)
 keyName = "key1"
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
-position = Vector2(409, -242)
+position = Vector2(403, -144)
 rotation = -3.14159
 scale = Vector2(10.9898, -7.94646)
 
@@ -1846,5 +1848,14 @@ offset_left = -2936.45
 offset_top = -1246.22
 offset_right = -2896.45
 offset_bottom = -1206.22
+
+[node name="lever" parent="." instance=ExtResource("25_32asd")]
+position = Vector2(133, 25)
+
+[node name="platform(lever)" parent="." instance=ExtResource("26_yrdtk")]
+position = Vector2(0, -107)
+locationLeft = -20.0
+locationRight = 20.0
+leverPath = NodePath("../lever")
 
 [editable path="SceneChanger"]

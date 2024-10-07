@@ -1786,7 +1786,7 @@ to get over obstacles"
 label_settings = SubResource("LabelSettings_5ta21")
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_b025k")]
-position = Vector2(487, -146)
+position = Vector2(487, -96)
 scale = Vector2(10.5662, 8.39341)
 sceneToChange = "res://levels/level_3.tscn"
 
@@ -1795,9 +1795,9 @@ position = Vector2(0, -11.6758)
 
 [node name="ColorRect" parent="SceneChanger/Node2D" index="0"]
 offset_left = -2940.7
-offset_top = -1261.35
+offset_top = -1256.94
 offset_right = -2900.7
-offset_bottom = -1221.35
+offset_bottom = -1216.94
 metadata/_edit_use_anchors_ = true
 
 [node name="Walls" type="Node2D" parent="."]

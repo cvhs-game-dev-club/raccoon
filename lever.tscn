@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bagyidhuwkiuw"]
+
+[ext_resource type="Script" path="res://lever.gd" id="1_kfea7"]
+[ext_resource type="Texture2D" uid="uid://da8k4uujjd5uf" path="res://assets/3 Objects/kenny_objects/tile_0064.png" id="2_1b2gt"]
+[ext_resource type="Texture2D" uid="uid://btxr1xpq0eq55" path="res://assets/3 Objects/kenny_objects/tile_0065.png" id="3_jn1ru"]
+[ext_resource type="Texture2D" uid="uid://bjthnxxo46s8y" path="res://assets/3 Objects/kenny_objects/tile_0066.png" id="4_7pgbu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gsbsv"]
+
+[node name="lever" type="Node2D"]
+script = ExtResource("1_kfea7")
+
+[node name="leverLeft" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("2_1b2gt")
+
+[node name="leverUp" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("3_jn1ru")
+
+[node name="leverRight" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("4_7pgbu")
+
+[node name="LeverArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LeverArea2D"]
+shape = SubResource("RectangleShape2D_gsbsv")
+
+[connection signal="body_entered" from="LeverArea2D" to="." method="_on_lever_area_2d_body_entered"]

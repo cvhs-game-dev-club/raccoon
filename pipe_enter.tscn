@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbwe4qnaxaarq"]
+
+[ext_resource type="Script" path="res://pipe_enter.gd" id="1_844yn"]
+[ext_resource type="Texture2D" uid="uid://c8u704a561ukd" path="res://assets/3 Objects/kenny_objects/tile_0095.png" id="2_xt1kf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q8jjp"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tpf7u"]
+size = Vector2(20, 10)
+
+[node name="pipeEnter" type="Node2D"]
+script = ExtResource("1_844yn")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+rotation = 3.14159
+shape = SubResource("RectangleShape2D_q8jjp")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("2_xt1kf")
+
+[node name="PipeEnterArea2D" type="Area2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -23)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PipeEnterArea2D"]
+position = Vector2(0, -15)
+shape = SubResource("RectangleShape2D_tpf7u")
+
+[connection signal="body_entered" from="PipeEnterArea2D" to="." method="_on_pipe_enter_area_2d_body_entered"]
+[connection signal="body_exited" from="PipeEnterArea2D" to="." method="_on_pipe_enter_area_2d_body_exited"]
