@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://d216dkquocyrk"]
+[gd_scene load_steps=46 format=4 uid="uid://d216dkquocyrk"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_2fgcy"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_f46ni"]
@@ -21,9 +21,10 @@
 [ext_resource type="PackedScene" uid="uid://f8wuowp4nau7" path="res://characters/sneakyTop.tscn" id="18_qbuhi"]
 [ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="19_trunn"]
 [ext_resource type="Script" path="res://characters/top.gd" id="20_keu6p"]
-[ext_resource type="PackedScene" path="res://arrow.tscn" id="21_1movd"]
+[ext_resource type="PackedScene" uid="uid://df6yepulalalp" path="res://arrow.tscn" id="21_1movd"]
 [ext_resource type="PackedScene" uid="uid://bbv83qkol0vd2" path="res://platform(lever).tscn" id="22_mccjd"]
 [ext_resource type="PackedScene" uid="uid://bagyidhuwkiuw" path="res://lever.tscn" id="23_x7b72"]
+[ext_resource type="PackedScene" uid="uid://bi4dqv4sgmva7" path="res://button.tscn" id="25_716p2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_u4olr"]
 texture = ExtResource("1_2fgcy")
@@ -1802,6 +1803,10 @@ leverPath = NodePath("../lever")
 
 [node name="lever" parent="." instance=ExtResource("23_x7b72")]
 position = Vector2(-117, 60)
+
+[node name="button" parent="." instance=ExtResource("25_716p2")]
+position = Vector2(616, 68)
+groundPath = NodePath("../Node2D/Floor2")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(205, 16)

@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bi4dqv4sgmva7"]
+
+[ext_resource type="Script" path="res://button.gd" id="1_84se7"]
+[ext_resource type="Texture2D" uid="uid://xqne6205ngs" path="res://assets/3 Objects/kenny_objects/tile_0148.png" id="1_kexcm"]
+[ext_resource type="Texture2D" uid="uid://becqrspd1vb3v" path="res://assets/3 Objects/kenny_objects/tile_0149.png" id="2_6tstj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qrmwd"]
+size = Vector2(16, 67)
+
+[node name="button" type="Node2D"]
+script = ExtResource("1_84se7")
+
+[node name="up" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -5)
+texture = ExtResource("1_kexcm")
+
+[node name="down" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(0, -5)
+texture = ExtResource("2_6tstj")
+
+[node name="ButtonArea2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ButtonArea2D"]
+position = Vector2(0, -29.5)
+shape = SubResource("RectangleShape2D_qrmwd")
+
+[connection signal="body_entered" from="ButtonArea2D" to="." method="_on_button_area_2d_body_entered"]
