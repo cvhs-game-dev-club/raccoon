@@ -33,6 +33,12 @@ func _ready() -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	
+	if (!$RayCast2D.is_colliding()):
+		onSomeHead = false
+		if ($RayCast2D.get_collider() != null and $RayCast2D.get_collider().name.contains(\"Character\")):
+			onSomeHead = true
+		
 	#print(onSomeHead, \"tall\")
 	#if(not is_on_floor()):
 		#inAir = true
@@ -370,6 +376,9 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RiseCheker"]
 position = Vector2(0, -112.5)
 shape = SubResource("RectangleShape2D_ssdjj")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 15)
 
 [connection signal="body_entered" from="tallArea" to="." method="_on_tall_area_body_entered"]
 [connection signal="body_exited" from="tallArea" to="." method="_on_tall_area_body_exited"]

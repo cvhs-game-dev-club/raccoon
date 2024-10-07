@@ -29,6 +29,8 @@ func _physics_process(delta: float) -> void:
 	
 	if (!$RayCast2D.is_colliding()):
 		onSomeHead = false
+		if ($RayCast2D.get_collider() != null and $RayCast2D.get_collider().name.contains(\"Character\")):
+			onSomeHead = true
 	if(not is_on_floor()):
 		inAir = true
 	else: 

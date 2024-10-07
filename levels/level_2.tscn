@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=4 uid="uid://dv4kkrk13chnn"]
+[gd_scene load_steps=49 format=4 uid="uid://dv4kkrk13chnn"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_q2fu3"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_tq4yy"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_b025k"]
 [ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="23_ljsfo"]
 [ext_resource type="PackedScene" path="res://arrow.tscn" id="24_2uiv3"]
+[ext_resource type="PackedScene" uid="uid://dq4yawa2biqq8" path="res://barrel.tscn" id="24_o4lhj"]
 
 [sub_resource type="GDScript" id="GDScript_pdvab"]
 script/source = "extends Node2D
@@ -1712,13 +1713,34 @@ terrain_set_0/terrain_0/name = "autotile"
 terrain_set_0/terrain_0/color = Color(0.716168, 0, 0.259985, 1)
 sources/2 = SubResource("TileSetAtlasSource_jbopb")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4726"]
+size = Vector2(20, 471)
+
 [sub_resource type="LabelSettings" id="LabelSettings_5ta21"]
 font = ExtResource("23_ljsfo")
 font_size = 36
 font_color = Color(0, 0, 0, 1)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4726"]
-size = Vector2(20, 471)
+[sub_resource type="GDScript" id="GDScript_skw6d"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var z = 0
+	if (has_overlapping_bodies()):
+		var a = get_overlapping_bodies()
+		if (len(a) == 3):
+			$\"../SceneChanger\".switch()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r5b45"]
+size = Vector2(111, 205)
 
 [node name="Level2" type="Node2D"]
 script = SubResource("GDScript_pdvab")
@@ -1744,6 +1766,31 @@ tile_set = SubResource("TileSet_uodao")
 tile_map_data = PackedByteArray("AAD6/wEAAgABAAAAAAD7/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAEAAAAIAAEAAgABAAEAAAAJAAEAAgABAAEAAAAKAAEAAgABAAEAAAAKAAIAAgABAAEAAAALAAIAAgACAAEAAAALAAMAAgACAAEAAAAKAAMAAgABAAEAAAAJAAIAAgABAAEAAAAIAAIAAgABAAEAAAAHAAIAAgABAAEAAAAGAAIAAgABAAEAAAAFAAIAAgABAAEAAAAEAAIAAgABAAEAAAADAAIAAgABAAEAAAACAAIAAgABAAEAAAABAAIAAgABAAEAAAAAAAIAAgABAAEAAAD//wIAAgABAAEAAAD+/wIAAgABAAEAAAD9/wIAAgABAAEAAAD8/wIAAgABAAEAAAD7/wIAAgABAAEAAAD6/wIAAgABAAEAAAD6/wMAAgABAAEAAAD7/wMAAgABAAEAAAD8/wMAAgABAAEAAAD9/wMAAgABAAEAAAD+/wMAAgABAAEAAAD//wMAAgABAAEAAAAAAAMAAgABAAEAAAABAAMAAgABAAEAAAACAAMAAgABAAEAAAADAAMAAgABAAEAAAAEAAMAAgABAAEAAAAFAAMAAgABAAEAAAAGAAMAAgABAAEAAAAHAAMAAgABAAEAAAAIAAMAAgABAAEAAAAJAAMAAgABAAEAAAALAAEAAgACAAEAAAD5/wEAAgABAAAAAAD4/wEAAgABAAAAAAD3/wEAAgABAAAAAAD2/wEAAgABAAAAAAD1/wEAAgABAAAAAAD1/wIAAgABAAEAAAD1/wMAAgABAAEAAAD2/wMAAgABAAEAAAD3/wMAAgABAAEAAAD4/wMAAgABAAEAAAD5/wMAAgABAAEAAAD5/wIAAgABAAEAAAD4/wIAAgABAAEAAAD3/wIAAgABAAEAAAD2/wIAAgABAAEAAAD0/wEAAgAAAAAAAAD0/wIAAgAAAAEAAAD0/wMAAgAAAAEAAAD0/wQAAgAAAAIAAAD1/wQAAgABAAIAAAD2/wQAAgABAAIAAAD3/wQAAgABAAIAAAD4/wQAAgABAAIAAAD5/wQAAgABAAIAAAD6/wQAAgABAAIAAAD7/wQAAgABAAIAAAD8/wQAAgABAAIAAAD9/wQAAgABAAIAAAD+/wQAAgABAAIAAAD//wQAAgABAAIAAAAAAAQAAgABAAIAAAABAAQAAgABAAIAAAACAAQAAgABAAIAAAADAAQAAgABAAIAAAAEAAQAAgABAAIAAAAFAAQAAgABAAIAAAAGAAQAAgABAAIAAAAHAAQAAgABAAIAAAAIAAQAAgABAAIAAAAJAAQAAgABAAIAAAAKAAQAAgABAAIAAAALAAQAAgACAAIAAAAHAAAAAgAAAAEAAAAIAAAAAgABAAEAAAAJAAAAAgABAAEAAAAKAAAAAgABAAEAAAALAAAAAgABAAEAAAALAP//AgABAAEAAAAKAP//AgABAAEAAAAJAP//AgABAAEAAAAIAP//AgABAAEAAAAHAP//AgAAAAEAAAAHAP7/AgAAAAAAAAAIAP7/AgABAAAAAAAJAP7/AgABAAAAAAAKAP7/AgABAAAAAAALAP7/AgABAAAAAAAMAP7/AgABAAAAAAAMAP//AgABAAEAAAAMAAAAAgABAAIAAAANAP//AgABAAEAAAANAP7/AgABAAAAAAAOAP7/AgABAAAAAAAOAP//AgABAAEAAAAPAP//AgABAAEAAAAPAP7/AgABAAAAAAAQAP7/AgACAAAAAAAQAP//AgACAAEAAAAQAAAAAgACAAIAAAAPAAAAAgABAAIAAAAOAAAAAgABAAIAAAANAAAAAgABAAIAAAA=")
 tile_set = SubResource("TileSet_m4vma")
 
+[node name="Walls" type="Node2D" parent="Node2D"]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(-394, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_w4726")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(142, -299)
+rotation = 1.57308
+scale = Vector2(1, 3.15999)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D2"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_w4726")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(395, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D3"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_w4726")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(12, -66)
 zoom = Vector2(1.56, 1.56)
@@ -1758,7 +1805,7 @@ to get over obstacles"
 label_settings = SubResource("LabelSettings_5ta21")
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_b025k")]
-position = Vector2(487, -96)
+position = Vector2(704, -80)
 scale = Vector2(10.5662, 8.39341)
 sceneToChange = "res://levels/level_3.tscn"
 
@@ -1772,26 +1819,8 @@ offset_right = -2900.7
 offset_bottom = -1216.94
 metadata/_edit_use_anchors_ = true
 
-[node name="Walls" type="Node2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
-position = Vector2(-394, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
-position = Vector2(0, -62.5)
-shape = SubResource("RectangleShape2D_w4726")
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
-position = Vector2(142, -299)
-rotation = 1.57308
-scale = Vector2(1, 3.15999)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
-position = Vector2(0, -62.5)
-shape = SubResource("RectangleShape2D_w4726")
-
 [node name="Arrow" parent="." instance=ExtResource("24_2uiv3")]
-position = Vector2(3.05176e-05, -166)
+position = Vector2(2.54659e-11, -279)
 rotation = -3.14159
 scale = Vector2(1.32847, -1.19197)
 
@@ -1824,5 +1853,32 @@ jumpEffectTime = 0.25
 unique_name_in_owner = true
 script = ExtResource("20_t50tv")
 topIdealPosPath = NodePath("../LoverCharacter")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(327, -42)
+collision_layer = 3
+collision_mask = 3
+script = SubResource("GDScript_skw6d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -126.5)
+shape = SubResource("RectangleShape2D_r5b45")
+
+[node name="ColorRect" type="ColorRect" parent="Area2D"]
+offset_left = -56.0
+offset_top = -247.0
+offset_right = 22.0
+offset_bottom = -127.0
+scale = Vector2(1.41683, 1.88069)
+color = Color(0.321569, 0.462745, 0.270588, 0.470588)
+
+[node name="Node2D2" type="Node2D" parent="."]
+position = Vector2(122, -30)
+scale = Vector2(0.5, 0.5)
+
+[node name="barrel" parent="Node2D2" instance=ExtResource("24_o4lhj")]
+position = Vector2(250, -92)
+mass = 200.0
+gravity_scale = 8.0
 
 [editable path="SceneChanger"]
