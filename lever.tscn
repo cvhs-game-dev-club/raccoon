@@ -26,6 +26,8 @@ visible = false
 texture = ExtResource("4_7pgbu")
 
 [node name="LeverArea2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeverArea2D"]
 shape = SubResource("RectangleShape2D_gsbsv")

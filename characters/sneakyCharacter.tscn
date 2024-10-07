@@ -33,7 +33,7 @@ var holdItemName: String
 func _physics_process(delta: float) -> void:
 	# Add gravity only if not on the ladder.
 	#print(onSomeHead, \"sneak\")
-	print(str(someoneOnHead) + \" \" + str(onSomeHead) + \" \" + str(playerStorage))
+	#	print(str(someoneOnHead) + \" \" + str(onSomeHead) + \" \" + str(playerStorage))
 	if (!$RayCast2D.is_colliding()):
 		onSomeHead = false
 			

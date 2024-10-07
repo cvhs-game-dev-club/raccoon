@@ -1820,6 +1820,5 @@ shape = SubResource("RectangleShape2D_w4726")
 
 [node name="barrel" parent="." instance=ExtResource("23_mth3i")]
 position = Vector2(258, -106)
-velocityIdeal = Vector2(-20, 0)
 
 [editable path="SceneChanger"]
