@@ -1717,8 +1717,11 @@ func _process(delta: float) -> void:
 	var z = 0
 	if (has_overlapping_bodies()):
 		var a = get_overlapping_bodies()
-		if (len(a) == 3):
-			$\"../SceneChanger\".switch()
+		for x in a:
+			if x.name.contains(\"Char\"):
+				z += 1
+	if (z == 3):
+		$\"../SceneChanger\".switch()
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ba4oe"]
