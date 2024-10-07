@@ -1,4 +1,4 @@
-[gd_scene load_steps=42 format=4 uid="uid://3cbwna2a7do2"]
+[gd_scene load_steps=46 format=4 uid="uid://3cbwna2a7do2"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_lpqjl"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_g0kye"]
@@ -21,6 +21,8 @@
 [ext_resource type="PackedScene" uid="uid://uyppqxbxmb8b" path="res://characters/lover_top.tscn" id="19_6iv3w"]
 [ext_resource type="Script" path="res://characters/top.gd" id="20_grwsq"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
+[ext_resource type="PackedScene" path="res://arrow.tscn" id="25_x6h88"]
+[ext_resource type="PackedScene" uid="uid://dq4yawa2biqq8" path="res://barrel.tscn" id="29_2ixyl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_e75i3"]
 texture = ExtResource("1_lpqjl")
@@ -1696,6 +1698,29 @@ sources/2 = SubResource("TileSetAtlasSource_rfkwu")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fnma4"]
 size = Vector2(20, 733)
 
+[sub_resource type="GDScript" id="GDScript_tng1u"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var z = 0
+	if (has_overlapping_bodies()):
+		var a = get_overlapping_bodies()
+		for x in a:
+			if (x.name.contains(\"Sneaky\")):
+				$\"../SceneChanger\".switch()
+			
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5hfg8"]
+size = Vector2(111, 205)
+
 [node name="Level3" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1742,6 +1767,15 @@ collision_mask = 3
 position = Vector2(0, -62.5)
 shape = SubResource("RectangleShape2D_fnma4")
 
+[node name="StaticBody2D3" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(393, -3)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D3"]
+position = Vector2(2, -184)
+shape = SubResource("RectangleShape2D_fnma4")
+
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(-2, -57)
 zoom = Vector2(1.505, 1.505)
@@ -1777,6 +1811,30 @@ script = ExtResource("20_grwsq")
 topIdealPosPath = NodePath("../LoverCharacter")
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
-position = Vector2(379, -61)
+position = Vector2(483, -67)
 scale = Vector2(-2.80705, 106.753)
 sceneToChange = "res://levels/level_4.tscn"
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(327, -42)
+collision_layer = 3
+collision_mask = 3
+script = SubResource("GDScript_tng1u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(0, -126.5)
+shape = SubResource("RectangleShape2D_5hfg8")
+
+[node name="ColorRect" type="ColorRect" parent="Area2D"]
+offset_left = -56.0
+offset_top = -247.0
+offset_right = 22.0
+offset_bottom = -127.0
+scale = Vector2(1.41683, 1.88069)
+color = Color(0.25636, 0.384503, 0.771867, 0.470588)
+
+[node name="Arrow" parent="." instance=ExtResource("25_x6h88")]
+position = Vector2(0, -269)
+
+[node name="barrel" parent="Arrow" instance=ExtResource("29_2ixyl")]
+position = Vector2(329, 182)
