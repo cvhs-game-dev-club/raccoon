@@ -1806,3 +1806,8 @@ label_settings = SubResource("LabelSettings_vn1ev")
 
 [node name="SceneChanger" parent="." instance=ExtResource("23_peqej")]
 sceneToChange = "res://levels/level_6.tscn"
+
+[node name="SceneChanger2" parent="." instance=ExtResource("23_peqej")]
+position = Vector2(196, 364)
+scale = Vector2(29.9413, -13.7595)
+sceneToChange = "res://levels/level_5.tscn"

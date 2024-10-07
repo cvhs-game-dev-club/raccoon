@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://characters/top.gd" id="20_t50tv"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_b025k"]
 [ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="23_ljsfo"]
-[ext_resource type="PackedScene" uid="uid://df6yepulalalp" path="res://arrow.tscn" id="24_2uiv3"]
+[ext_resource type="PackedScene" path="res://arrow.tscn" id="24_2uiv3"]
 
 [sub_resource type="GDScript" id="GDScript_pdvab"]
 script/source = "extends Node2D
