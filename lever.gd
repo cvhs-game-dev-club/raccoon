@@ -21,7 +21,7 @@ func _process(delta):
 	#leverRight.visible = true
 	#leverUp.visible = true
 	#leverLeft.visible = true
-	if(entered and Input.is_action_just_pressed("interact") and global_transform.origin.distance_to(playerStorage.global_transform.origin) <= 40):
+	if(entered and Input.is_action_just_pressed("interact") and global_transform.origin.distance_to(playerStorage.global_transform.origin) <= 40 and playerStorage.index == Global.current):
 		for i in leverArr:
 			i.visible = false
 		arrIndex += 1

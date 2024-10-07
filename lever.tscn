@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bjthnxxo46s8y" path="res://assets/3 Objects/kenny_objects/tile_0066.png" id="4_7pgbu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gsbsv"]
+size = Vector2(31, 20)
 
 [node name="lever" type="Node2D"]
 script = ExtResource("1_kfea7")
@@ -30,6 +31,7 @@ collision_layer = 3
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeverArea2D"]
+position = Vector2(1.5, 0)
 shape = SubResource("RectangleShape2D_gsbsv")
 
 [connection signal="body_entered" from="LeverArea2D" to="." method="_on_lever_area_2d_body_entered"]

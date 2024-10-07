@@ -1733,7 +1733,6 @@ tile_map_data = PackedByteArray("AAD6//n/AgAGAAIAAAD6//r/AgAGAAMAAAD6//v/AgAGAAQ
 tile_set = SubResource("TileSet_vx7ci")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Node2D"]
-tile_map_data = PackedByteArray("AAApAAIAAQAIAAQAAAA=")
 tile_set = SubResource("TileSet_xltws")
 
 [node name="Ladder" type="TileMapLayer" parent="Node2D"]

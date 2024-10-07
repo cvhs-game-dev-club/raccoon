@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=4 uid="uid://dqbphjtpocam5"]
+[gd_scene load_steps=57 format=4 uid="uid://dqbphjtpocam5"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_k3mwi"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_ml6wh"]
@@ -1745,6 +1745,30 @@ func _process(delta: float) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4glam"]
 size = Vector2(188, 153.847)
 
+[sub_resource type="GDScript" id="GDScript_fsebc"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var z = 0
+	if (has_overlapping_bodies()):
+		var a = get_overlapping_bodies()
+		for x in a:
+			if x.name.contains(\"Char\"):
+				z += 1
+	if (z == 3):
+		$\"../SceneChanger\".switch()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xjf5n"]
+size = Vector2(54, 331)
+
 [node name="Level3" type="Node2D"]
 position = Vector2(0, -12)
 script = SubResource("GDScript_tp7yp")
@@ -1867,7 +1891,7 @@ position = Vector2(356, -24)
 keyName = "key1"
 
 [node name="SceneChanger" parent="." instance=ExtResource("25_ri5nm")]
-position = Vector2(443, -158)
+position = Vector2(572, -39)
 rotation = -3.14159
 scale = Vector2(10.9898, -7.94646)
 
@@ -1938,6 +1962,24 @@ position = Vector2(-335, 191)
 [node name="button" parent="." instance=ExtResource("30_4l4ii")]
 position = Vector2(202, 29)
 groundPath = NodePath("../Node2D/Floor4")
+
+[node name="Area2D3" type="Area2D" parent="."]
+position = Vector2(432, -10)
+collision_layer = 3
+collision_mask = 3
+script = SubResource("GDScript_fsebc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D3"]
+position = Vector2(-74, -126.5)
+shape = SubResource("RectangleShape2D_xjf5n")
+
+[node name="ColorRect" type="ColorRect" parent="Area2D3"]
+offset_left = -101.0
+offset_top = -450.0
+offset_right = -65.0
+offset_bottom = -189.0
+scale = Vector2(1.41683, 1.88069)
+color = Color(0.321569, 0.462745, 0.270588, 0.470588)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
 [connection signal="body_entered" from="Area2D2" to="Area2D2" method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=4 uid="uid://d216dkquocyrk"]
+[gd_scene load_steps=49 format=4 uid="uid://d216dkquocyrk"]
 
 [ext_resource type="Texture2D" uid="uid://dblhs00osbapp" path="res://assets/3 Objects/kenny_objects/Tilemap/tilemap.png" id="1_2fgcy"]
 [ext_resource type="Texture2D" uid="uid://ci7u5it8t6wco" path="res://assets/1 Tiles/Tileset.png" id="2_f46ni"]
@@ -1701,6 +1701,30 @@ sources/2 = SubResource("TileSetAtlasSource_0h2t1")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mv8er"]
 size = Vector2(76, 1323)
 
+[sub_resource type="GDScript" id="GDScript_yo2il"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var z = 0
+	if (has_overlapping_bodies()):
+		var a = get_overlapping_bodies()
+		for x in a:
+			if x.name.contains(\"Char\"):
+				z += 1
+	if (z == 3):
+		$\"../SceneChanger\".switch()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4w5f8"]
+size = Vector2(123, 316)
+
 [node name="Level6" type="Node2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
@@ -1729,7 +1753,39 @@ position = Vector2(0, 41)
 tile_map_data = PackedByteArray("AAD+/wcAAgAAAAAAAAD+/wgAAgAAAAEAAAD+/wkAAgAAAAEAAAD+/woAAgAAAAEAAAD+/wsAAgAAAAEAAAD+/wwAAgAAAAEAAAD+/w0AAgAAAAEAAAD+/w4AAgAAAAEAAAD+/w8AAgAAAAEAAAD+/xAAAgAAAAIAAAD//wcAAgABAAAAAAAAAAcAAgABAAAAAAABAAcAAgABAAAAAAACAAcAAgABAAAAAAADAAcAAgABAAAAAAAEAAcAAgABAAAAAAAFAAcAAgABAAAAAAAGAAcAAgABAAAAAAAHAAcAAgABAAAAAAAIAAcAAgABAAAAAAAJAAcAAgABAAAAAAAKAAcAAgABAAAAAAALAAcAAgABAAAAAAAMAAcAAgABAAAAAAANAAcAAgABAAAAAAAOAAcAAgABAAAAAAAPAAcAAgABAAAAAAAQAAcAAgACAAAAAAAQAAgAAgACAAEAAAAQAAkAAgACAAEAAAAQAAoAAgACAAEAAAAQAAsAAgACAAEAAAAQAAwAAgACAAEAAAAQAA0AAgACAAEAAAAQAA4AAgACAAEAAAAQAA8AAgACAAEAAAAQABAAAgACAAIAAAAPABAAAgABAAIAAAAOABAAAgABAAIAAAANABAAAgABAAIAAAAMABAAAgABAAIAAAALABAAAgABAAIAAAAKABAAAgABAAIAAAAKAA8AAgABAAEAAAAJAA8AAgABAAEAAAAIAA8AAgABAAEAAAAHAA8AAgABAAEAAAAGAA8AAgABAAEAAAAFAA8AAgABAAEAAAAEAA8AAgABAAEAAAADAA8AAgABAAEAAAACAA8AAgABAAEAAAABAA8AAgABAAEAAAAAAA8AAgABAAEAAAAAABAAAgABAAIAAAD//xAAAgABAAIAAAABABAAAgABAAIAAAACABAAAgABAAIAAAADABAAAgABAAIAAAAEABAAAgABAAIAAAAFABAAAgABAAIAAAAGABAAAgABAAIAAAAHABAAAgABAAIAAAAIABAAAgABAAIAAAAJABAAAgABAAIAAAAOAA8AAgABAAEAAAAPAA8AAgABAAEAAAAPAA4AAgABAAEAAAAOAA4AAgABAAEAAAAOAA0AAgABAAEAAAAOAAwAAgABAAEAAAAOAAsAAgABAAEAAAAOAAoAAgABAAEAAAAOAAkAAgABAAEAAAAPAAkAAgABAAEAAAAPAAgAAgABAAEAAAAPAAoAAgABAAEAAAAPAAsAAgABAAEAAAAPAAwAAgABAAEAAAAPAA0AAgABAAEAAAAOAAgAAgABAAEAAAANAAgAAgABAAEAAAAMAAgAAgABAAEAAAALAAgAAgABAAEAAAAKAAgAAgABAAEAAAAJAAgAAgABAAEAAAAIAAgAAgABAAEAAAAHAAgAAgABAAEAAAAGAAgAAgABAAEAAAAFAAgAAgABAAEAAAAEAAgAAgABAAEAAAADAAgAAgABAAEAAAACAAgAAgABAAEAAAABAAgAAgABAAEAAAAAAAgAAgABAAEAAAD//wgAAgABAAEAAAD//wkAAgABAAEAAAD//woAAgABAAEAAAD//wsAAgABAAEAAAD//wwAAgABAAEAAAD//w0AAgABAAEAAAD//w4AAgABAAEAAAD//w8AAgABAAEAAAAAAA4AAgABAAEAAAABAA4AAgABAAEAAAABAA0AAgABAAEAAAAAAA0AAgABAAEAAAAAAAwAAgABAAEAAAAAAAsAAgABAAEAAAAAAAoAAgABAAEAAAAAAAkAAgABAAEAAAABAAoAAgABAAEAAAABAAsAAgABAAEAAAABAAwAAgABAAEAAAABAAkAAgABAAEAAAACAAkAAgABAAEAAAADAAkAAgABAAEAAAAEAAkAAgABAAEAAAAFAAkAAgABAAEAAAAGAAkAAgABAAEAAAAHAAkAAgABAAEAAAAIAAkAAgABAAEAAAAJAAkAAgABAAEAAAAKAAkAAgABAAEAAAALAAkAAgABAAEAAAAMAAkAAgABAAEAAAANAAkAAgABAAEAAAANAAoAAgABAAEAAAANAA8AAgABAAEAAAANAA4AAgABAAEAAAANAA0AAgABAAEAAAANAAwAAgABAAEAAAANAAsAAgABAAEAAAAMAAwAAgABAAEAAAAMAA0AAgABAAEAAAAMAA4AAgABAAEAAAAMAA8AAgABAAEAAAAMAAsAAgABAAEAAAAMAAoAAgABAAEAAAALAAoAAgABAAEAAAALAAsAAgABAAEAAAALAAwAAgABAAEAAAALAA0AAgABAAEAAAALAA4AAgABAAEAAAALAA8AAgABAAEAAAAKAA4AAgABAAEAAAAKAA0AAgABAAEAAAAKAAwAAgABAAEAAAAKAAsAAgABAAEAAAAKAAoAAgABAAEAAAAJAAoAAgABAAEAAAAIAAoAAgABAAEAAAAHAAoAAgABAAEAAAAGAAoAAgABAAEAAAAFAAoAAgABAAEAAAAEAAoAAgABAAEAAAADAAoAAgABAAEAAAACAAoAAgABAAEAAAACAAsAAgABAAEAAAACAAwAAgABAAEAAAACAA0AAgABAAEAAAACAA4AAgABAAEAAAADAAsAAgABAAEAAAADAAwAAgABAAEAAAADAA0AAgABAAEAAAADAA4AAgABAAEAAAAEAAsAAgABAAEAAAAEAAwAAgABAAEAAAAEAA0AAgABAAEAAAAEAA4AAgABAAEAAAAFAAwAAgABAAEAAAAFAA0AAgABAAEAAAAFAA4AAgABAAEAAAAFAAsAAgABAAEAAAAGAA0AAgABAAEAAAAGAAwAAgABAAEAAAAGAAsAAgABAAEAAAAGAA4AAgABAAEAAAAHAA4AAgABAAEAAAAHAA0AAgABAAEAAAAHAAwAAgABAAEAAAAHAAsAAgABAAEAAAAIAA0AAgABAAEAAAAIAA4AAgABAAEAAAAIAAwAAgABAAEAAAAIAAsAAgABAAEAAAAJAA4AAgABAAEAAAAJAA0AAgABAAEAAAAJAAwAAgABAAEAAAAJAAsAAgABAAEAAAA=")
 tile_set = SubResource("TileSet_n6f65")
 script = ExtResource("15_hl8rn")
-moveTo = -200
+moveTo = -300
+
+[node name="Walls" type="Node2D" parent="Node2D"]
+position = Vector2(1, -104)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(-394, 0)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D"]
+position = Vector2(-33, -544)
+shape = SubResource("RectangleShape2D_mv8er")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(144, -1233)
+rotation = 1.57308
+scale = Vector2(1, 3.15999)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D2"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_mv8er")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(865, 9)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D3"]
+position = Vector2(-33, -544)
+shape = SubResource("RectangleShape2D_mv8er")
 
 [node name="Characters" type="Node2D" parent="."]
 
@@ -1762,40 +1818,9 @@ script = ExtResource("20_keu6p")
 topIdealPosPath = NodePath("../LoverCharacter")
 
 [node name="Arrow" parent="." instance=ExtResource("21_1movd")]
-position = Vector2(202, -256)
+position = Vector2(194, -294)
 rotation = -3.14159
 scale = Vector2(1.32847, -1.19197)
-
-[node name="Walls" type="Node2D" parent="."]
-
-[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
-position = Vector2(-394, 0)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
-position = Vector2(-33, -544)
-shape = SubResource("RectangleShape2D_mv8er")
-
-[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
-position = Vector2(144, -1233)
-rotation = 1.57308
-scale = Vector2(1, 3.15999)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
-position = Vector2(0, -62.5)
-shape = SubResource("RectangleShape2D_mv8er")
-
-[node name="StaticBody2D3" type="StaticBody2D" parent="Walls"]
-position = Vector2(865, 9)
-collision_layer = 3
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D3"]
-position = Vector2(-33, -544)
-shape = SubResource("RectangleShape2D_mv8er")
 
 [node name="platform(lever)" parent="." instance=ExtResource("22_mccjd")]
 position = Vector2(-67, -2)
@@ -1804,7 +1829,7 @@ locationRight = 600.0
 leverPath = NodePath("../lever")
 
 [node name="lever" parent="." instance=ExtResource("23_x7b72")]
-position = Vector2(-117, 60)
+position = Vector2(-117, 62)
 
 [node name="button" parent="." instance=ExtResource("25_716p2")]
 position = Vector2(616, 68)
@@ -1814,6 +1839,30 @@ groundPath = NodePath("../Node2D/Floor2")
 position = Vector2(205, 16)
 
 [node name="SceneChanger" parent="." instance=ExtResource("26_iubmb")]
+position = Vector2(935, 57)
+rotation = -1.54222
+scale = Vector2(42.9701, 13.1361)
+sceneToChange = "res://levels/level_7.tscn"
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(771, 95)
+collision_layer = 3
+collision_mask = 3
+script = SubResource("GDScript_yo2il")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-39.5, -182)
+shape = SubResource("RectangleShape2D_4w5f8")
+
+[node name="ColorRect" type="ColorRect" parent="Area2D"]
+offset_left = -101.0
+offset_top = -450.0
+offset_right = -12.0
+offset_bottom = -222.0
+scale = Vector2(1.41683, 1.88069)
+color = Color(0.321569, 0.462745, 0.270588, 0.470588)
+
+[node name="SceneChanger2" parent="." instance=ExtResource("26_iubmb")]
 position = Vector2(230, 336)
 scale = Vector2(42.9701, 13.1361)
 sceneToChange = "res://levels/level_6.tscn"
