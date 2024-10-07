@@ -1,24 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://cp34lsdl8f0gg"]
+[gd_scene load_steps=4 format=3 uid="uid://cp34lsdl8f0gg"]
 
 [ext_resource type="AudioStream" uid="uid://dkypnsq0jxdyn" path="res://assets/music/chill.mp3" id="1_ssuju"]
-[ext_resource type="AudioStream" uid="uid://phw26ndw4i54" path="res://assets/music/pop.mp3" id="2_7iwh4"]
 [ext_resource type="AudioStream" uid="uid://y27g3umxevqo" path="res://assets/music/tech.mp3" id="3_pcn34"]
 
 [sub_resource type="GDScript" id="GDScript_5a8d0"]
 script/source = "extends Node2D
 
 @onready var chill: AudioStreamPlayer2D = $chill
-@onready var pop: AudioStreamPlayer2D = $pop
 @onready var tech: AudioStreamPlayer2D = $tech
 
-@onready var ray = [chill, pop, tech]
+@onready var ray = [chill, tech]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	start_song()
 	
 func start_song():
 	if ray.size() == 0:
-		ray = [chill, pop, tech]
+		ray = [chill, tech]
 	randomize()  # Initialize the random number generator
 	var random_index = randi() % ray.size()
 	var random_value = ray[random_index]
@@ -49,12 +47,8 @@ script = SubResource("GDScript_5a8d0")
 [node name="chill" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("1_ssuju")
 
-[node name="pop" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_7iwh4")
-
 [node name="tech" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_pcn34")
 
 [connection signal="finished" from="chill" to="." method="_on_chill_finished"]
-[connection signal="finished" from="pop" to="." method="_on_pop_finished"]
 [connection signal="finished" from="tech" to="." method="_on_tech_finished"]
