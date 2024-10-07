@@ -60,4 +60,3 @@ func _on_platform_area_2d_body_entered(body):
 
 func _on_platform_area_2d_body_exited(body):
 	entered = false
-
