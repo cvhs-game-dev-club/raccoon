@@ -25,7 +25,7 @@
 [ext_resource type="PackedScene" uid="uid://chsqwcq1647rw" path="res://objects/key.tscn" id="22_gapre"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="22_j26l3"]
 [ext_resource type="PackedScene" uid="uid://b8dghy5hqorkm" path="res://objects/door.tscn" id="24_0nobo"]
-[ext_resource type="PackedScene" uid="uid://df6yepulalalp" path="res://arrow.tscn" id="25_x6h88"]
+[ext_resource type="PackedScene" path="res://arrow.tscn" id="25_x6h88"]
 [ext_resource type="Script" path="res://levels/area_2d.gd" id="27_e4nnn"]
 [ext_resource type="PackedScene" uid="uid://cbwe4qnaxaarq" path="res://pipe_enter.tscn" id="28_cfkih"]
 [ext_resource type="PackedScene" uid="uid://dq4yawa2biqq8" path="res://barrel.tscn" id="29_2ixyl"]
@@ -1834,7 +1834,6 @@ index = 2
 
 [node name="tallCharacter" parent="Characters" instance=ExtResource("17_nr10b")]
 position = Vector2(-149, -43)
-rotation = -0.0375353
 collision_layer = 3
 collision_mask = 3
 index = 3
@@ -1868,7 +1867,7 @@ position = Vector2(356, -24)
 keyName = "key1"
 
 [node name="SceneChanger" parent="." instance=ExtResource("22_j26l3")]
-position = Vector2(403, -144)
+position = Vector2(443, -158)
 rotation = -3.14159
 scale = Vector2(10.9898, -7.94646)
 
@@ -1876,10 +1875,10 @@ scale = Vector2(10.9898, -7.94646)
 position = Vector2(-0.0909992, 3.14605)
 
 [node name="ColorRect" parent="SceneChanger/Node2D" index="0"]
-offset_left = -2936.45
-offset_top = -1246.22
-offset_right = -2896.45
-offset_bottom = -1206.22
+offset_left = -2941.36
+offset_top = -1245.97
+offset_right = -2901.36
+offset_bottom = -1205.97
 
 [node name="Arrow" parent="." instance=ExtResource("25_x6h88")]
 position = Vector2(3.05176e-05, -166)

@@ -22,7 +22,7 @@
 [ext_resource type="Script" path="res://characters/top.gd" id="21_kxjy7"]
 [ext_resource type="PackedScene" uid="uid://c870xywo6b1uu" path="res://objects/scene_changer.tscn" id="21_nw4ag"]
 [ext_resource type="FontFile" uid="uid://b2h2llbg3ohwc" path="res://assets/font/PixelifySans-VariableFont_wght.ttf" id="22_ss8l1"]
-[ext_resource type="PackedScene" uid="uid://df6yepulalalp" path="res://arrow.tscn" id="23_xaew8"]
+[ext_resource type="PackedScene" path="res://arrow.tscn" id="23_xaew8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_db1gy"]
 texture = ExtResource("1_ifagc")
