@@ -1694,13 +1694,13 @@ terrain_set_0/terrain_0/name = "autotile"
 terrain_set_0/terrain_0/color = Color(0.716168, 0, 0.259985, 1)
 sources/2 = SubResource("TileSetAtlasSource_yqqma")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s52yw"]
+size = Vector2(20, 471)
+
 [sub_resource type="LabelSettings" id="LabelSettings_38kcs"]
 font = ExtResource("22_ss8l1")
 font_size = 36
 font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s52yw"]
-size = Vector2(20, 471)
 
 [node name="Level1" type="Node2D"]
 
@@ -1725,33 +1725,23 @@ tile_set = SubResource("TileSet_vx7ci")
 tile_map_data = PackedByteArray("AAD6/wEAAgABAAAAAAD7/wEAAgABAAAAAAD8/wEAAgABAAAAAAD9/wEAAgABAAAAAAD+/wEAAgABAAAAAAD//wEAAgABAAAAAAAAAAEAAgABAAAAAAABAAEAAgABAAAAAAACAAEAAgABAAAAAAADAAEAAgABAAAAAAAEAAEAAgABAAAAAAAFAAEAAgABAAAAAAAGAAEAAgABAAAAAAAHAAEAAgABAAAAAAAIAAEAAgABAAAAAAAJAAEAAgABAAAAAAAKAAEAAgABAAAAAAAKAAIAAgABAAEAAAALAAIAAgACAAEAAAALAAMAAgACAAEAAAAKAAMAAgABAAEAAAAJAAIAAgABAAEAAAAIAAIAAgABAAEAAAAHAAIAAgABAAEAAAAGAAIAAgABAAEAAAAFAAIAAgABAAEAAAAEAAIAAgABAAEAAAADAAIAAgABAAEAAAACAAIAAgABAAEAAAABAAIAAgABAAEAAAAAAAIAAgABAAEAAAD//wIAAgABAAEAAAD+/wIAAgABAAEAAAD9/wIAAgABAAEAAAD8/wIAAgABAAEAAAD7/wIAAgABAAEAAAD6/wIAAgABAAEAAAD6/wMAAgABAAEAAAD7/wMAAgABAAEAAAD8/wMAAgABAAEAAAD9/wMAAgABAAEAAAD+/wMAAgABAAEAAAD//wMAAgABAAEAAAAAAAMAAgABAAEAAAABAAMAAgABAAEAAAACAAMAAgABAAEAAAADAAMAAgABAAEAAAAEAAMAAgABAAEAAAAFAAMAAgABAAEAAAAGAAMAAgABAAEAAAAHAAMAAgABAAEAAAAIAAMAAgABAAEAAAAJAAMAAgABAAEAAAALAAEAAgACAAAAAAD5/wEAAgABAAAAAAD4/wEAAgABAAAAAAD3/wEAAgABAAAAAAD2/wEAAgABAAAAAAD1/wEAAgABAAAAAAD1/wIAAgABAAEAAAD1/wMAAgABAAEAAAD2/wMAAgABAAEAAAD3/wMAAgABAAEAAAD4/wMAAgABAAEAAAD5/wMAAgABAAEAAAD5/wIAAgABAAEAAAD4/wIAAgABAAEAAAD3/wIAAgABAAEAAAD2/wIAAgABAAEAAAD0/wEAAgAAAAAAAAD0/wIAAgAAAAEAAAD0/wMAAgAAAAEAAAD0/wQAAgAAAAIAAAD1/wQAAgABAAIAAAD2/wQAAgABAAIAAAD3/wQAAgABAAIAAAD4/wQAAgABAAIAAAD5/wQAAgABAAIAAAD6/wQAAgABAAIAAAD7/wQAAgABAAIAAAD8/wQAAgABAAIAAAD9/wQAAgABAAIAAAD+/wQAAgABAAIAAAD//wQAAgABAAIAAAAAAAQAAgABAAIAAAABAAQAAgABAAIAAAACAAQAAgABAAIAAAADAAQAAgABAAIAAAAEAAQAAgABAAIAAAAFAAQAAgABAAIAAAAGAAQAAgABAAIAAAAHAAQAAgABAAIAAAAIAAQAAgABAAIAAAAJAAQAAgABAAIAAAAKAAQAAgABAAIAAAALAAQAAgACAAIAAAA=")
 tile_set = SubResource("TileSet_06tys")
 
-[node name="LoverCharacter" parent="." instance=ExtResource("16_cj4qc")]
-position = Vector2(-360, 30)
-collision_layer = 3
-collision_mask = 3
-index = 1
+[node name="Walls" type="Node2D" parent="Node2D"]
 
-[node name="SneakyCharacter" parent="." instance=ExtResource("17_uxe4r")]
-position = Vector2(-316, 28)
-collision_layer = 66
-collision_mask = 66
-index = 2
+[node name="StaticBody2D" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(-394, 0)
 
-[node name="tallCharacter" parent="." instance=ExtResource("18_ika5v")]
-position = Vector2(-272, 32)
-collision_layer = 3
-collision_mask = 3
-index = 3
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_s52yw")
 
-[node name="sneakytop" parent="." instance=ExtResource("19_b8cd2")]
-position = Vector2(162, -230)
-topIdealPosPath = NodePath("../SneakyCharacter")
-jumpEffectTime = 0.25
+[node name="StaticBody2D2" type="StaticBody2D" parent="Node2D/Walls"]
+position = Vector2(142, -299)
+rotation = 1.57308
+scale = Vector2(1, 3.15999)
 
-[node name="loverTop" parent="." instance=ExtResource("20_ln20d")]
-unique_name_in_owner = true
-script = ExtResource("21_kxjy7")
-topIdealPosPath = NodePath("../LoverCharacter")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/Walls/StaticBody2D2"]
+position = Vector2(0, -62.5)
+shape = SubResource("RectangleShape2D_s52yw")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(12, -66)
@@ -1771,20 +1761,32 @@ text = "Move with WASD
 Switch character with Q & E"
 label_settings = SubResource("LabelSettings_38kcs")
 
-[node name="Walls" type="Node2D" parent="."]
+[node name="Character" type="Node2D" parent="."]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="Walls"]
-position = Vector2(-394, 0)
+[node name="LoverCharacter" parent="Character" instance=ExtResource("16_cj4qc")]
+position = Vector2(-360, 30)
+collision_layer = 3
+collision_mask = 3
+index = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D"]
-position = Vector2(0, -62.5)
-shape = SubResource("RectangleShape2D_s52yw")
+[node name="SneakyCharacter" parent="Character" instance=ExtResource("17_uxe4r")]
+position = Vector2(-316, 28)
+collision_layer = 66
+collision_mask = 66
+index = 2
 
-[node name="StaticBody2D2" type="StaticBody2D" parent="Walls"]
-position = Vector2(142, -299)
-rotation = 1.57308
-scale = Vector2(1, 3.15999)
+[node name="tallCharacter" parent="Character" instance=ExtResource("18_ika5v")]
+position = Vector2(-272, 32)
+collision_layer = 3
+collision_mask = 3
+index = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/StaticBody2D2"]
-position = Vector2(0, -62.5)
-shape = SubResource("RectangleShape2D_s52yw")
+[node name="sneakytop" parent="Character" instance=ExtResource("19_b8cd2")]
+position = Vector2(162, -230)
+topIdealPosPath = NodePath("../SneakyCharacter")
+jumpEffectTime = 0.25
+
+[node name="loverTop" parent="Character" instance=ExtResource("20_ln20d")]
+unique_name_in_owner = true
+script = ExtResource("21_kxjy7")
+topIdealPosPath = NodePath("../LoverCharacter")

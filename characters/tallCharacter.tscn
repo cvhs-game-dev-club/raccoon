@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cxfkas0dug2l0"]
+[gd_scene load_steps=19 format=3 uid="uid://cxfkas0dug2l0"]
 
 [ext_resource type="Texture2D" uid="uid://du32fbbiixrkx" path="res://assets/characters/tall.png" id="1_k8pek"]
 [ext_resource type="Texture2D" uid="uid://c6veyt3hf7tgw" path="res://assets/Base Character - Free/Spritesheet_UI_Flat_Animated.png" id="2_57rqu"]
+[ext_resource type="Texture2D" uid="uid://i0k2apfy863f" path="res://assets/characters/tall/TallRac_Untail.png" id="3_hbteo"]
 
 [sub_resource type="GDScript" id="GDScript_pvwe8"]
 script/source = "extends CharacterBody2D
@@ -12,6 +13,7 @@ const JUMP_VELOCITY = -400.0
 var someoneOnHead: bool = false
 var onSomeHead: bool = false
 var playerStorage
+var isRisen := false
 #var inAir: bool = false
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -19,6 +21,16 @@ var playerStorage
 
 @export var index : int = 0
 @export var height: float
+
+
+func _ready() -> void:
+	$tallCol.set_deferred(\"disabled\", true)
+	$AnimationPlayer.play(\"default\")
+	$selectAnimation.play(\"selectLow\")
+	$select2.set_deferred(\"visible\", false)
+	$select.set_deferred(\"visible\", false)
+	
+	
 
 func _physics_process(delta: float) -> void:
 	#print(onSomeHead, \"tall\")
@@ -31,26 +43,48 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	if (Global.current == index):
-		animation_player.play(\"select\")
-		$select.visible = true
+		if (isRisen):
+			$selectAnimation.play(\"selectHigh\")
+			$select.set_deferred(\"visible\", true)
+		else:
+			$selectAnimation.play(\"selectLow\")
+			$select2.set_deferred(\"visible\", true)
+		if Input.is_action_just_pressed(\"ability\"):
+			if isRisen:
+				fall()
+				print(\"fall\")
+				isRisen = false
+			else:
+				rise()
+				print(\"rise\")
+				isRisen = true
+			return
+				
+			
+		#animation_player.play(\"select\")
 
 		# Handle jump.
-		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and !someoneOnHead:
+		if Input.is_action_just_pressed(\"ui_up\") and is_on_floor() and !someoneOnHead and !isRisen:
 			velocity.y = JUMP_VELOCITY
 		# Handle movement input.
 		var direction := Input.get_axis(\"ui_left\", \"ui_right\")
-		if direction:
+		if direction and !isRisen:
 			velocity.x = direction * SPEED
-		else:
+		elif !isRisen:
 			velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	else:
-		$select.visible = false
+		$select2.set_deferred(\"visible\", false)
+		$select.set_deferred(\"visible\", false)
 		
-	if someoneOnHead and Global.current == index:
+	if someoneOnHead and Global.current == index and !isRisen:
 		# Align the character on top to the character below
 		playerStorage.transform.origin.x = transform.origin.x
 		playerStorage.transform.origin.y = transform.origin.y - height
+		
+	if (Global.current != index):
+		$select2.set_deferred(\"visible\", false)
+		$select.set_deferred(\"visible\", false)
 	if (Global.current != index and onSomeHead):
 		velocity.x = 0
 	else:
@@ -70,13 +104,37 @@ func _on_tall_area_body_exited(body):
 	if body.name.contains(\"Character\") and body.index != index:
 		someoneOnHead = false
 		playerStorage.onSomeHead = false
+		
+func rise():
+	if $RiseCheker.has_overlapping_bodies():
+		for x in $RiseCheker.get_overlapping_bodies():
+		# Move the playerStorage up by 5 units
+			x.transform.origin.y -= 20
+			
+			#playerStorage.transform.origin.y -= 50
+			
+	$AnimationPlayer.play(\"rise\")
+	$selectAnimation.play(\"selectHigh\")
+	$tallCol.set_deferred(\"disabled\", false)
+	$default.set_deferred(\"disabled\", true)
+	$select2.set_deferred(\"visible\", false)
+	$select.set_deferred(\"visible\", true)
+
+	
+func fall():
+	$AnimationPlayer.play(\"fall\")
+	$selectAnimation.play(\"selectLow\")
+	$tallCol.set_deferred(\"disabled\", true)
+	$default.set_deferred(\"disabled\", false)
+	$select2.set_deferred(\"visible\", true)
+	$select.set_deferred(\"visible\", false)
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vqmwe"]
 size = Vector2(22, 8)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tr46f"]
-size = Vector2(42, 85)
+size = Vector2(46, 62.75)
 
 [sub_resource type="Animation" id="Animation_f1bn4"]
 length = 0.001
@@ -91,6 +149,65 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_qwd2t"]
+resource_name = "default"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [5]
+}
+
+[sub_resource type="Animation" id="Animation_n5gl5"]
+resource_name = "rise"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.49012e-08, 0.133333, 0.266667, 0.366667, 0.466667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_5f8lm"]
+resource_name = "rise"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.133333, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [5, 4, 2, 1, 0]
 }
 
 [sub_resource type="Animation" id="Animation_seube"]
@@ -112,27 +229,121 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o606c"]
 _data = {
 "RESET": SubResource("Animation_f1bn4"),
+"default": SubResource("Animation_qwd2t"),
+"fall": SubResource("Animation_n5gl5"),
+"rise": SubResource("Animation_5f8lm"),
 "select": SubResource("Animation_seube")
 }
 
+[sub_resource type="Animation" id="Animation_d7616"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("select:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("select2:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_tokwp"]
+resource_name = "selectLow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("select:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.566667, 0.866667),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_1ui3t"]
+resource_name = "selectLow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("select2:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.566667, 0.933333),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1ay1o"]
+_data = {
+"RESET": SubResource("Animation_d7616"),
+"selectHigh": SubResource("Animation_tokwp"),
+"selectLow": SubResource("Animation_1ui3t")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xji5t"]
+size = Vector2(46, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ssdjj"]
+size = Vector2(20, 93)
+
 [node name="tallCharacter" type="CharacterBody2D"]
 script = SubResource("GDScript_pvwe8")
-height = 95.0
+height = 65.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
 position = Vector2(0, -48)
 texture = ExtResource("1_k8pek")
 
 [node name="tallArea" type="Area2D" parent="."]
-position = Vector2(0, -48)
+position = Vector2(1, -19)
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tallArea"]
 position = Vector2(0, -50)
 shape = SubResource("RectangleShape2D_vqmwe")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -42.5)
+[node name="default" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -31.625)
 shape = SubResource("RectangleShape2D_tr46f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_o606c")
+}
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(6, -34)
+texture = ExtResource("3_hbteo")
+hframes = 4
+vframes = 2
+frame = 3
+
+[node name="select2" type="Sprite2D" parent="."]
+position = Vector2(0, -50)
+texture = ExtResource("2_57rqu")
+hframes = 4
+vframes = 4
 
 [node name="select" type="Sprite2D" parent="."]
 position = Vector2(0, -77)
@@ -140,10 +351,23 @@ texture = ExtResource("2_57rqu")
 hframes = 4
 vframes = 4
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="selectAnimation" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_o606c")
+"": SubResource("AnimationLibrary_1ay1o")
 }
+
+[node name="tallCol" type="CollisionShape2D" parent="."]
+position = Vector2(0, -50)
+shape = SubResource("RectangleShape2D_xji5t")
+
+[node name="RiseCheker" type="Area2D" parent="."]
+position = Vector2(0, 2)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RiseCheker"]
+position = Vector2(0, -112.5)
+shape = SubResource("RectangleShape2D_ssdjj")
 
 [connection signal="body_entered" from="tallArea" to="." method="_on_tall_area_body_entered"]
 [connection signal="body_exited" from="tallArea" to="." method="_on_tall_area_body_exited"]

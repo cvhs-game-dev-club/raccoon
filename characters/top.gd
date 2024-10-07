@@ -1,5 +1,6 @@
 extends Sprite2D
 
+
 @export var topIdealPosPath: NodePath
 
 @onready var topIdealPosNode = get_node(topIdealPosPath)
@@ -9,6 +10,7 @@ var jumpEffect: bool = false
 var startJumpEffectTime: float
 
 @export var jumpEffectTime: float
+var isOn := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
