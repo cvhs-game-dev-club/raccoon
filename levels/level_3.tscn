@@ -1855,8 +1855,8 @@ position = Vector2(133, 25)
 
 [node name="platform(lever)" parent="." instance=ExtResource("26_yrdtk")]
 position = Vector2(0, -107)
-locationLeft = -20.0
-locationRight = 20.0
+locationLeft = -200.0
+locationRight = 200.0
 leverPath = NodePath("../lever")
 
 [node name="Arrow" parent="." instance=ExtResource("25_x6h88")]

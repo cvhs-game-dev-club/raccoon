@@ -6,6 +6,7 @@ var locationIdeal: float = 0
 var entered: bool = false
 var playerStorage
 var previousPlatformPos: float
+var PlatformPosOGy: float
 
 @export var locationLeft: float
 @export var locationMid: float
@@ -19,30 +20,30 @@ var previousPlatformPos: float
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rotationOG = rotation
-
+	PlatformPosOGy = platform.global_transform.origin.y
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta):
+func _process(delta):
+	platform.global_transform.origin.y = PlatformPosOGy
+	
 	if(lever.arrIndex == 0):
-		platform.global_transform.origin.x = easyLerp(platform.global_transform.origin.x, locationLeft, 20, delta)
 		locationIdeal = locationLeft
 	if(lever.arrIndex == 1):
-		platform.global_transform.origin.x = easyLerp(platform.global_transform.origin.x, locationMid, 20, delta)
 		locationIdeal = locationMid
 	if(lever.arrIndex == 2):
-		platform.global_transform.origin.x = easyLerp(platform.global_transform.origin.x, locationRight, 20, delta)
 		locationIdeal = locationRight
-	if(abs(previousPos - platform.global_transform.origin.x) <= 0.1):
-		#print(previousPos, platform.global_transform.origin.x)
+	if(abs(locationIdeal - platform.global_transform.origin.x) <= 5):
 		rotation = rotationOG
+		platform.global_transform.origin.x = locationIdeal
 	else:
+		platform.global_transform.origin.x = easyLerp(platform.global_transform.origin.x, locationIdeal, 500, delta)
 		if(abs(locationIdeal - platform.global_transform.origin.x) >= 1):
 			if(previousPos > platform.global_transform.origin.x):
 				rotation = rotationOG - deg_to_rad(3.5)
 			if(previousPos < platform.global_transform.origin.x):
 				rotation = rotationOG + deg_to_rad(3.5)
 	previousPos = platform.global_transform.origin.x
-	if(entered and global_transform.origin.distance_to(playerStorage.global_transform.origin) <= 80):
+	if(entered):
 		playerStorage.global_transform.origin.x += platform.global_transform.origin.x - previousPlatformPos 
 	previousPlatformPos = platform.global_transform.origin.x
 func easyLerp(from: float, to: float, weight: float, delta: float):
@@ -52,4 +53,10 @@ func easyLerp(from: float, to: float, weight: float, delta: float):
 func _on_platform_area_2d_body_entered(body):
 	entered = true
 	playerStorage = body
+
+
 	
+
+
+func _on_platform_area_2d_body_exited(body):
+	entered = false
