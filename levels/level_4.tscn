@@ -1801,7 +1801,7 @@ func _on_body_exited(body: Node2D) -> void:
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qb4vj"]
 size = Vector2(752, 172)
 
-[node name="Level3" type="Node2D"]
+[node name="Level4" type="Node2D"]
 script = SubResource("GDScript_tp7yp")
 
 [node name="Node2D" type="Node2D" parent="."]

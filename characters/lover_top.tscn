@@ -6,7 +6,6 @@
 [node name="loverTop" type="Sprite2D"]
 
 [node name="AnimatedSprite2D" type="Sprite2D" parent="."]
-visible = false
 texture = ExtResource("1_ojivn")
 
 [node name="AnimatedSprite2D2" type="Sprite2D" parent="."]
