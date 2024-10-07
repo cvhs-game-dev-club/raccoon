@@ -109,7 +109,7 @@ func rise():
 	if $RiseCheker.has_overlapping_bodies():
 		for x in $RiseCheker.get_overlapping_bodies():
 		# Move the playerStorage up by 5 units
-			x.transform.origin.y -= 50
+			x.transform.origin.y -= 20
 			
 			#playerStorage.transform.origin.y -= 50
 			

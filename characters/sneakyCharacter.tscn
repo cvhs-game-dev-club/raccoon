@@ -33,6 +33,11 @@ var holdItemName: String
 func _physics_process(delta: float) -> void:
 	# Add gravity only if not on the ladder.
 	#print(onSomeHead, \"sneak\")
+	print(str(someoneOnHead) + \" \" + str(onSomeHead) + \" \" + str(playerStorage))
+	if (!$RayCast2D.is_colliding()):
+		onSomeHead = false
+			
+		
 	if(not is_on_floor()):
 		inAir = true
 	else: 
@@ -235,6 +240,9 @@ visible = false
 position = Vector2(-2, -24)
 sprite_frames = SubResource("SpriteFrames_g5l16")
 animation = &"none"
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 14)
 
 [connection signal="body_entered" from="sneakyArea" to="." method="_on_sneaky_area_body_entered"]
 [connection signal="body_exited" from="sneakyArea" to="." method="_on_sneaky_area_body_exited"]
